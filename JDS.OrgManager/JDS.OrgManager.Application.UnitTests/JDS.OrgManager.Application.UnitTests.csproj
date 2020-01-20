@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoFixture" Version="4.11.0" />
+    <PackageReference Include="AutoFixture.Xunit2" Version="4.11.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
+    <PackageReference Include="xunit" Version="2.4.0" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
+    <PackageReference Include="coverlet.collector" Version="1.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\JDS.OrgManager.Application\JDS.OrgManager.Application.csproj" />
+    <ProjectReference Include="..\JDS.OrgManager.Utils\JDS.OrgManager.Utils.csproj" />
+  </ItemGroup>
+
+</Project>

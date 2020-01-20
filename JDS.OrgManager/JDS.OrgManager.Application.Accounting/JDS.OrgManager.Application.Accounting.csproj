@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Employees\**" />
+    <EmbeddedResource Remove="Employees\**" />
+    <None Remove="Employees\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\JDS.OrgManager.Application\JDS.OrgManager.Application.csproj" />
+    <ProjectReference Include="..\JDS.OrgManager.Domain\JDS.OrgManager.Domain.csproj" />
+  </ItemGroup>
+
+</Project>
