@@ -16,15 +16,9 @@ namespace JDS.OrgManager.Application.UnitTests.Common.Employees
 {
     public class EmployeeDomainToDbEntityMapperTests
     {
-        #region Private Fields
-
         private Fixture fixture;
 
         private EmployeeDomainToDbEntityMapper mapper;
-
-        #endregion
-
-        #region Public Constructors
 
         public EmployeeDomainToDbEntityMapperTests()
         {
@@ -36,10 +30,6 @@ namespace JDS.OrgManager.Application.UnitTests.Common.Employees
             fixture.Behaviors.Remove(new ThrowingRecursionBehavior());
             fixture.Behaviors.Add(new OmitOnRecursionBehavior());
         }
-
-        #endregion
-
-        #region Public Methods
 
         [Fact]
         public void MapToDbEntity_WorksAsExpected()
@@ -99,7 +89,5 @@ namespace JDS.OrgManager.Application.UnitTests.Common.Employees
             Assert.Null(e.PaidTimeOffPolicy);
             Assert.NotNull(e.Subordinates);
         }
-
-        #endregion
     }
 }

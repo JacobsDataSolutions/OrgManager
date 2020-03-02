@@ -13,10 +13,6 @@ namespace JDS.OrgManager.Common.Abstractions.Dates
 {
     public interface IDateTimeService
     {
-        #region Public Properties + Indexers
-
         DateTime UtcNow { get; }
-
-        #endregion
     }
 }

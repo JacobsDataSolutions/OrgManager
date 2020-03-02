@@ -11,12 +11,8 @@ namespace JDS.OrgManager.Application.Abstractions.Serialization
 {
     public interface IByteSerializer
     {
-        #region Public Methods
-
         T Deserialize<T>(byte[] bytes);
 
         byte[] Serialize<T>(T obj);
-
-        #endregion
     }
 }

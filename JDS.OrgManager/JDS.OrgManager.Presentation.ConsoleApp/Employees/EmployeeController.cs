@@ -22,14 +22,8 @@ namespace JDS.OrgManager.Presentation.ConsoleApp
 {
     public class EmployeeController : BaseController
     {
-        #region Public Constructors
-
         public EmployeeController(IMediator mediator) : base(mediator)
         { }
-
-        #endregion
-
-        #region Public Methods
 
         public async Task<Result<GetEmployeeDetailViewModel>> GetEmployeeDetailsAsync(int id)
         {
@@ -95,7 +89,5 @@ namespace JDS.OrgManager.Presentation.ConsoleApp
                 return Result<VerifyOrganizationViewModel>.Failure(new[] { ex.Message });
             }
         }
-
-        #endregion
     }
 }

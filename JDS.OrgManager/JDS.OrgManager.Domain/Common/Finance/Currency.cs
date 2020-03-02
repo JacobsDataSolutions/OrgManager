@@ -6,7 +6,7 @@
 // http://www.apache.org/licenses/LICENSE-2.0
 
 // Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
-// CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+// CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. 
 using JDS.OrgManager.Domain.Models;
 using System;
 using System.Collections.Generic;
@@ -17,8 +17,6 @@ namespace JDS.OrgManager.Domain.Common.Finance
 {
     public class Currency : ValueObject
     {
-        #region Public Fields
-
         public static readonly Currency BTC = new Currency("BTC", "Bitcoin", "Bitcoins", '₿');
 
         public static readonly Currency EUR = new Currency("EUR", "Euro", "Euros", '€');
@@ -27,15 +25,7 @@ namespace JDS.OrgManager.Domain.Common.Finance
 
         public static readonly Currency USD = new Currency("USD", "Dollar", "Dollars", '$');
 
-        #endregion
-
-        #region Private Fields
-
         private static readonly IReadOnlyDictionary<string, Currency> lookup;
-
-        #endregion
-
-        #region Public Properties + Indexers
 
         public string Code { get; }
 
@@ -44,10 +34,6 @@ namespace JDS.OrgManager.Domain.Common.Finance
         public string PluralName { get; }
 
         public char Symbol { get; }
-
-        #endregion
-
-        #region Public Constructors
 
         static Currency() => lookup = new ReadOnlyDictionary<string, Currency>((from c in new[] { BTC, EUR, GBP, USD } select (c.Code, c)).ToDictionary(tup => tup.Code, tup => tup.c));
 
@@ -71,10 +57,6 @@ namespace JDS.OrgManager.Domain.Common.Finance
             Symbol = symbol;
         }
 
-        #endregion
-
-        #region Public Methods
-
         public static IReadOnlyList<Currency> GetAll() => lookup.Values.OrderBy(c => c.Code).ToList();
 
         public static Currency GetByCode(string code)
@@ -89,15 +71,9 @@ namespace JDS.OrgManager.Domain.Common.Finance
             }
         }
 
-        #endregion
-
-        #region Protected Methods
-
         protected override IEnumerable<object> GetAtomicValues()
         {
             yield return Code;
         }
-
-        #endregion
     }
 }

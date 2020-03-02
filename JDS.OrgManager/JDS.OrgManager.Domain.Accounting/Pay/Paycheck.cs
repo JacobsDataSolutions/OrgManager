@@ -16,8 +16,6 @@ namespace JDS.OrgManager.Domain.Accounting.Pay
 {
     public class Paycheck : DomainEntity<Paycheck>
     {
-        #region Public Properties + Indexers
-
         public Address AddressOnFile { get; private set; }
 
         public DateTime CheckDate { get; private set; }
@@ -39,10 +37,6 @@ namespace JDS.OrgManager.Domain.Accounting.Pay
         public string RecipientName { get; private set; }
 
         public Money StateWithholding { get; private set; }
-
-        #endregion
-
-        #region Public Constructors
 
         public Paycheck(
             Address addressOnFile,
@@ -69,7 +63,5 @@ namespace JDS.OrgManager.Domain.Accounting.Pay
             RecipientName = recipientName ?? throw new ArgumentNullException(nameof(recipientName));
             StateWithholding = stateWithholding ?? throw new ArgumentNullException(nameof(stateWithholding));
         }
-
-        #endregion
     }
 }

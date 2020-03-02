@@ -21,8 +21,6 @@ namespace JDS.OrgManager.Application.System.Commands.SeedInitialData
 {
     public class InitialDataSeeder
     {
-        #region Private Fields
-
         // Hard-coded for the time being.
         private const int TenantId = 1;
 
@@ -30,19 +28,11 @@ namespace JDS.OrgManager.Application.System.Commands.SeedInitialData
 
         private readonly ILogger logger;
 
-        #endregion
-
-        #region Public Constructors
-
         public InitialDataSeeder(IOrgManagerDbContext context, ILogger logger)
         {
             this.context = context ?? throw new ArgumentNullException(nameof(context));
             this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
-
-        #endregion
-
-        #region Public Methods
 
         public async Task SeedAllAsync(CancellationToken cancellationToken)
         {
@@ -56,10 +46,6 @@ namespace JDS.OrgManager.Application.System.Commands.SeedInitialData
             await SeedCurrenciesAsync();
             await context.SaveChangesAsync(cancellationToken);
         }
-
-        #endregion
-
-        #region Private Methods
 
         private async Task SeedCurrenciesAsync()
         {
@@ -85,7 +71,5 @@ namespace JDS.OrgManager.Application.System.Commands.SeedInitialData
                 new PaidTimeOffPolicyEntity { TenantId = TenantId, EmployeeLevel = 10, Name = "Unlimited 10", IsDefaultForEmployeeLevel = false, AllowsUnlimitedPto = true },
             });
         }
-
-        #endregion
     }
 }

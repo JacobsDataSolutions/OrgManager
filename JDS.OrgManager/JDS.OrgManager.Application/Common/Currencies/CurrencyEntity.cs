@@ -13,10 +13,6 @@ namespace JDS.OrgManager.Application.Common.Currencies
 {
     public class CurrencyEntity : IDbEntity
     {
-        #region Public Properties + Indexers
-
         public string Code { get; set; }
-
-        #endregion
     }
 }

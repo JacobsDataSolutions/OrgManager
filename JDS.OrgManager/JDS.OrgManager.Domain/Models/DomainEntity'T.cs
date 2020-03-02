@@ -13,18 +13,10 @@ namespace JDS.OrgManager.Domain.Models
 {
     public abstract class DomainEntity<TEntity> : DomainEntity where TEntity : IDomainEntity
     {
-        #region Public Methods
-
         public virtual void AssertAggregates()
         {
         }
 
-        #endregion
-
-        #region Protected Methods
-
         protected TEntity CreateShallowCopy() => (TEntity)MemberwiseClone();
-
-        #endregion
     }
 }

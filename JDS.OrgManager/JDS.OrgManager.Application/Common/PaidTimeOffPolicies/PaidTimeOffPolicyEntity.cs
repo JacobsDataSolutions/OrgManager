@@ -13,8 +13,6 @@ namespace JDS.OrgManager.Application.Common.PaidTimeOffPolicies
 {
     public class PaidTimeOffPolicyEntity : AuditableDbEntity
     {
-        #region Public Properties + Indexers
-
         public bool AllowsUnlimitedPto { get; set; }
 
         public int EmployeeLevel { get; set; }
@@ -30,7 +28,5 @@ namespace JDS.OrgManager.Application.Common.PaidTimeOffPolicies
         public decimal? PtoAccrualRate { get; set; }
 
         public int TenantId { get; set; }
-
-        #endregion
     }
 }

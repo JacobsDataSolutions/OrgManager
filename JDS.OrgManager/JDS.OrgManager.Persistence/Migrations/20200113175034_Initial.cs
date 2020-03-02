@@ -14,8 +14,6 @@ namespace JDS.OrgManager.Persistence.Migrations
 {
     public partial class Initial : Migration
     {
-        #region Protected Methods
-
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
@@ -152,7 +150,5 @@ namespace JDS.OrgManager.Persistence.Migrations
                 table: "Employees",
                 columns: new[] { "TenantId", "PaidTimeOffPolicyId" });
         }
-
-        #endregion
     }
 }

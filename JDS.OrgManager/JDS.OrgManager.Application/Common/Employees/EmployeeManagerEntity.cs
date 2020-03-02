@@ -14,8 +14,6 @@ namespace JDS.OrgManager.Application.Common.Employees
     // TODO: reimplement this using Closure Table pattern. See SQL Antipatterns p.36.
     public class EmployeeManagerEntity : IDbEntity
     {
-        #region Public Properties + Indexers
-
         public EmployeeEntity Employee { get; set; }
 
         public int EmployeeId { get; set; }
@@ -25,7 +23,5 @@ namespace JDS.OrgManager.Application.Common.Employees
         public int ManagerId { get; set; }
 
         public int TenantId { get; set; }
-
-        #endregion
     }
 }

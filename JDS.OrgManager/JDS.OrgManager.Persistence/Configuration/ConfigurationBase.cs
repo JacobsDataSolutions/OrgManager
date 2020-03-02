@@ -15,14 +15,10 @@ namespace JDS.OrgManager.Persistence.Configuration
 {
     public abstract class ConfigurationBase<TEntity> : IEntityTypeConfiguration<TEntity> where TEntity : AuditableDbEntity
     {
-        #region Public Methods
-
         public virtual void Configure(EntityTypeBuilder<TEntity> builder)
         {
             builder.Property(e => e.CreatedBy).HasMaxLength(10);
             builder.Property(e => e.LastModifiedBy).HasMaxLength(10);
         }
-
-        #endregion
     }
 }

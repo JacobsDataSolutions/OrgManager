@@ -15,12 +15,8 @@ namespace JDS.OrgManager.Infrastructure.Serialization
 {
     public class ByteSerializer : IByteSerializer
     {
-        #region Public Methods
-
         public T Deserialize<T>(byte[] bytes) => JsonConvert.DeserializeObject<T>(Encoding.Default.GetString(bytes));
 
         public byte[] Serialize<T>(T obj) => Encoding.Default.GetBytes(JsonConvert.SerializeObject(obj));
-
-        #endregion
     }
 }

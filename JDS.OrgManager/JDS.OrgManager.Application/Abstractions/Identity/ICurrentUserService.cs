@@ -11,12 +11,8 @@ namespace JDS.OrgManager.Application.Abstractions.Identity
 {
     public interface ICurrentUserService
     {
-        #region Public Properties + Indexers
-
         bool IsAuthenticated { get; }
 
         string UserId { get; }
-
-        #endregion
     }
 }

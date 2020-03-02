@@ -14,8 +14,6 @@ namespace JDS.OrgManager.Application
 {
     public class ApplicationLayerException : Exception
     {
-        #region Public Constructors
-
         public ApplicationLayerException()
         {
         }
@@ -31,7 +29,5 @@ namespace JDS.OrgManager.Application
         public ApplicationLayerException(SerializationInfo info, StreamingContext context) : base(info, context)
         {
         }
-
-        #endregion
     }
 }

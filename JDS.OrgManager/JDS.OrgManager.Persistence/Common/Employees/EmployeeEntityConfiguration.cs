@@ -16,8 +16,6 @@ namespace JDS.OrgManager.Persistence.Common.Employees
 {
     public class EmployeeEntityConfiguration : ConfigurationBase<EmployeeEntity>
     {
-        #region Public Methods
-
         public override void Configure(EntityTypeBuilder<EmployeeEntity> builder)
         {
             base.Configure(builder);
@@ -39,7 +37,5 @@ namespace JDS.OrgManager.Persistence.Common.Employees
             builder.HasOne(e => e.Currency).WithMany();
             builder.HasOne(e => e.PaidTimeOffPolicy).WithMany().HasForeignKey(e => new { e.TenantId, e.PaidTimeOffPolicyId });
         }
-
-        #endregion
     }
 }

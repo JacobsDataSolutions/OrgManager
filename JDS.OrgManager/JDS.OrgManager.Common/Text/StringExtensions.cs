@@ -13,20 +13,12 @@ namespace JDS.OrgManager.Common.Text
 {
     public static class StringExtensions
     {
-        #region Private Fields
-
         private static readonly Regex digitsRegex = new Regex(@"\d", RegexOptions.Compiled | RegexOptions.Singleline);
 
         private static readonly Regex nonDigitsRegex = new Regex(@"\D", RegexOptions.Compiled | RegexOptions.Singleline);
 
-        #endregion
-
-        #region Public Methods
-
         public static string ReplaceDigits(this string text, string replacement) => digitsRegex.Replace(text ?? "", replacement);
 
         public static string StripNonDigits(this string text) => nonDigitsRegex.Replace(text ?? "", "");
-
-        #endregion
     }
 }

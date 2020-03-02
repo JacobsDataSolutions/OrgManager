@@ -14,10 +14,6 @@ namespace JDS.OrgManager.Domain.Abstractions.Events
 {
     public interface IDomainEvent : INotification
     {
-        #region Public Properties + Indexers
-
         DateTime DateTimeOccurredUtc { get; }
-
-        #endregion
     }
 }

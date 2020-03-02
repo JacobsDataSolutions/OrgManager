@@ -14,12 +14,8 @@ namespace JDS.OrgManager.Application.Abstractions.Mapping
 {
     public interface IViewModelToDomainEntityMapper<TViewModel, TDomainEntity> where TDomainEntity : IDomainEntity where TViewModel : IViewModel
     {
-        #region Public Methods
-
         TDomainEntity MapToDomainEntity(TViewModel viewModel);
 
         TViewModel MapToViewModel(TDomainEntity domainEntity);
-
-        #endregion
     }
 }

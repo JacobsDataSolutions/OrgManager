@@ -11,10 +11,6 @@ namespace JDS.OrgManager.Domain.Abstractions.Models
 {
     public interface IDomainEntity
     {
-        #region Public Properties + Indexers
-
         int? Id { get; }
-
-        #endregion
     }
 }

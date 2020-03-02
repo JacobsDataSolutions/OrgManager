@@ -15,15 +15,9 @@ namespace JDS.OrgManager.Domain.Common.Addresses
 {
     public class State : ValueObject
     {
-        #region Public Properties + Indexers
-
         public string Abbreviation { get; }
 
         public string Name { get; }
-
-        #endregion
-
-        #region Public Constructors
 
         public State(string abbreviation, string name = null)
         {
@@ -31,25 +25,15 @@ namespace JDS.OrgManager.Domain.Common.Addresses
             Name = name ?? "";
         }
 
-        #endregion
-
-        #region Public Methods
-
         public static explicit operator State(string value) => new State(value);
 
         public static implicit operator string(State state) => state.Abbreviation;
 
         public override string ToString() => Abbreviation;
 
-        #endregion
-
-        #region Protected Methods
-
         protected override IEnumerable<object> GetAtomicValues()
         {
             yield return Abbreviation;
         }
-
-        #endregion
     }
 }

@@ -15,19 +15,9 @@ namespace JDS.OrgManager.Application.Common.PaidTimeOffPolicies
 {
     public class PaidTimeOffPolicyDomainToDbEntityMapper : IDomainEntityToDbEntityMapper<PaidTimeOffPolicy, PaidTimeOffPolicyEntity>
     {
-        #region Private Fields
-
         private readonly TypeAdapterConfig config = new TypeAdapterConfig();
 
-        #endregion
-
-        #region Public Constructors
-
         public PaidTimeOffPolicyDomainToDbEntityMapper() => ApplyMappingConfiguration();
-
-        #endregion
-
-        #region Public Methods
 
         public void ApplyMappingConfiguration()
         {
@@ -36,7 +26,5 @@ namespace JDS.OrgManager.Application.Common.PaidTimeOffPolicies
         public PaidTimeOffPolicyEntity MapToDbEntity(PaidTimeOffPolicy domainEntity) => domainEntity.Adapt<PaidTimeOffPolicyEntity>(config);
 
         public PaidTimeOffPolicy MapToDomainEntity(PaidTimeOffPolicyEntity dbEntity) => dbEntity.Adapt<PaidTimeOffPolicy>(config);
-
-        #endregion
     }
 }

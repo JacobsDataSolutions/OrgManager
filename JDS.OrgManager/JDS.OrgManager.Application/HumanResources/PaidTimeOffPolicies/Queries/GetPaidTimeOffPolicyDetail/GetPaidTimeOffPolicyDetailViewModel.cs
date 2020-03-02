@@ -13,8 +13,6 @@ namespace JDS.OrgManager.Application.HumanResources.PaidTimeOffPolicies.Queries.
 {
     public class GetPaidTimeOffPolicyDetailViewModel : ViewModel
     {
-        #region Public Properties + Indexers
-
         public bool AllowsUnlimitedPto { get; set; }
 
         public int EmployeeLevel { get; set; }
@@ -28,7 +26,5 @@ namespace JDS.OrgManager.Application.HumanResources.PaidTimeOffPolicies.Queries.
         public string Name { get; set; }
 
         public decimal? PtoAccrualRate { get; set; }
-
-        #endregion
     }
 }

@@ -14,19 +14,11 @@ namespace JDS.OrgManager.Presentation.ConsoleApp
 {
     public abstract class BaseController
     {
-        #region Protected Properties + Indexers
-
         protected IMediator Mediator { get; }
-
-        #endregion
-
-        #region Protected Constructors
 
         protected BaseController(IMediator mediator)
         {
             Mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
-
-        #endregion
     }
 }

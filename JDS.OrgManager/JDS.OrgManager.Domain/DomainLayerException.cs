@@ -14,8 +14,6 @@ namespace JDS.OrgManager.Domain
 {
     public class DomainLayerException : Exception
     {
-        #region Public Constructors
-
         public DomainLayerException()
         {
         }
@@ -31,7 +29,5 @@ namespace JDS.OrgManager.Domain
         public DomainLayerException(string message, Exception innerException) : base(message, innerException)
         {
         }
-
-        #endregion
     }
 }

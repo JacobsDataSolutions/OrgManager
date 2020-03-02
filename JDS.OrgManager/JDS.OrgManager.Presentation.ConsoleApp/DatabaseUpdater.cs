@@ -21,22 +21,12 @@ namespace JDS.OrgManager.Presentation.ConsoleApp
 {
     public class DatabaseUpdater
     {
-        #region Private Fields
-
         private readonly IServiceProvider services;
-
-        #endregion
-
-        #region Public Constructors
 
         public DatabaseUpdater(IServiceProvider services)
         {
             this.services = services ?? throw new ArgumentNullException(nameof(services));
         }
-
-        #endregion
-
-        #region Public Methods
 
         public async Task UpdateDatabaseAsync()
         {
@@ -47,7 +37,5 @@ namespace JDS.OrgManager.Presentation.ConsoleApp
             await mediator.Send(new ClearAndReinitializeAllDataCommand(), CancellationToken.None);
             await mediator.Send(new SeedInitialDataCommand(), CancellationToken.None);
         }
-
-        #endregion
     }
 }

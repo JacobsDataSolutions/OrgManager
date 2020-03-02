@@ -16,25 +16,13 @@ namespace JDS.OrgManager.Domain.Events
 {
     public class DomainEventDispatcher : IDomainEventDispatcher
     {
-        #region Private Fields
-
         private IMediator mediator;
-
-        #endregion
-
-        #region Public Constructors
 
         public DomainEventDispatcher(IMediator mediator)
         {
             this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
 
-        #endregion
-
-        #region Public Methods
-
         public Task PublishAsync<TEvent>(TEvent domainEvent) where TEvent : IDomainEvent => mediator.Publish(domainEvent);
-
-        #endregion
     }
 }

@@ -17,15 +17,9 @@ namespace JDS.OrgManager.Application.UnitTests.HumanResources.Employees.Commands
 {
     public class RegisterOrUpdateEmployeeDomainEntityMapperTests
     {
-        #region Private Fields
-
         private Fixture fixture;
 
         private RegisterOrUpdateEmployeeDomainEntityMapper mapper;
-
-        #endregion
-
-        #region Public Constructors
 
         public RegisterOrUpdateEmployeeDomainEntityMapperTests()
         {
@@ -37,10 +31,6 @@ namespace JDS.OrgManager.Application.UnitTests.HumanResources.Employees.Commands
             fixture.Behaviors.Remove(new ThrowingRecursionBehavior());
             fixture.Behaviors.Add(new OmitOnRecursionBehavior());
         }
-
-        #endregion
-
-        #region Public Methods
 
         [Fact]
         public void MapToDomainEntity_WorksAsExpected()
@@ -100,7 +90,5 @@ namespace JDS.OrgManager.Application.UnitTests.HumanResources.Employees.Commands
             var subIds = v.SubordinateIds;
             Assert.True(e.Subordinates.All(s => subIds.Contains((int)s.Id)));
         }
-
-        #endregion
     }
 }

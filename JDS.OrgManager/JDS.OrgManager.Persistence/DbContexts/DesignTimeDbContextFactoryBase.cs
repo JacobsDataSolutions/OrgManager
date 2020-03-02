@@ -18,15 +18,9 @@ namespace JDS.OrgManager.Persistence.DbContexts
     public abstract class DesignTimeDbContextFactoryBase<TContext> :
         IDesignTimeDbContextFactory<TContext> where TContext : DbContext
     {
-        #region Private Fields
-
         private const string AspNetCoreEnvironment = "ASPNETCORE_ENVIRONMENT";
 
         private const string ConnectionStringName = "ApplicationDatabase";
-
-        #endregion
-
-        #region Public Methods
 
         public TContext CreateDbContext(string[] args)
         {
@@ -34,15 +28,7 @@ namespace JDS.OrgManager.Persistence.DbContexts
             return Create(basePath, Environment.GetEnvironmentVariable(AspNetCoreEnvironment));
         }
 
-        #endregion
-
-        #region Protected Methods
-
         protected abstract TContext CreateNewInstance(DbContextOptions<TContext> options);
-
-        #endregion
-
-        #region Private Methods
 
         private TContext Create(string basePath, string environmentName)
         {
@@ -74,7 +60,5 @@ namespace JDS.OrgManager.Persistence.DbContexts
 
             return CreateNewInstance(optionsBuilder.Options);
         }
-
-        #endregion
     }
 }

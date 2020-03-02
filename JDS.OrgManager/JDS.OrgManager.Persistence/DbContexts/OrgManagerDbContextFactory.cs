@@ -13,10 +13,6 @@ namespace JDS.OrgManager.Persistence.DbContexts
 {
     public class OrgManagerDbContextFactory : DesignTimeDbContextFactoryBase<OrgManagerDbContext>
     {
-        #region Protected Methods
-
         protected override OrgManagerDbContext CreateNewInstance(DbContextOptions<OrgManagerDbContext> options) => new OrgManagerDbContext(options);
-
-        #endregion
     }
 }

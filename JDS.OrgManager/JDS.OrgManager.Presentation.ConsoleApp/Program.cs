@@ -37,8 +37,6 @@ namespace JDS.OrgManager.Presentation.ConsoleApp
 {
     internal static class Program
     {
-        #region Private Fields
-
         private const int advancedOrgDepth = 3;
 
         private const int advancedOrgNumTrees = 4;
@@ -46,10 +44,6 @@ namespace JDS.OrgManager.Presentation.ConsoleApp
         private const int basicOrgDepth = 3;
 
         private const bool runAdvancedScenario = false;
-
-        #endregion
-
-        #region Public Methods
 
         public static async Task Main(string[] args)
         {
@@ -71,10 +65,6 @@ namespace JDS.OrgManager.Presentation.ConsoleApp
             Console.WriteLine("Done.");
             Console.ReadKey();
         }
-
-        #endregion
-
-        #region Private Methods
 
         private static async Task BuildAdvancedOrganization(IServiceProvider provider)
         {
@@ -323,7 +313,5 @@ namespace JDS.OrgManager.Presentation.ConsoleApp
                              reloadOnChange: true);
             return builder.Build();
         }
-
-        #endregion
     }
 }

@@ -13,8 +13,6 @@ namespace JDS.OrgManager.Application.HumanResources.Employees.Commands.RegisterO
 {
     public class RegisterOrUpdateEmployeeCommandValidator : AbstractValidator<RegisterOrUpdateEmployeeCommand>
     {
-        #region Public Constructors
-
         public RegisterOrUpdateEmployeeCommandValidator()
         {
             RuleFor(e => e.Address1).MaximumLength(50).NotEmpty();
@@ -28,7 +26,5 @@ namespace JDS.OrgManager.Application.HumanResources.Employees.Commands.RegisterO
             RuleFor(e => e.State).MaximumLength(2).NotEmpty();
             RuleFor(e => e.Zip).MaximumLength(10).NotEmpty();
         }
-
-        #endregion
     }
 }

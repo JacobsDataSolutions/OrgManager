@@ -20,8 +20,6 @@ namespace JDS.OrgManager.Application.Common.Employees
     [DebuggerDisplay("({Id}) {LastName}, {FirstName}")]
     public class EmployeeEntity : AuditableDbEntity
     {
-        #region Public Properties + Indexers
-
         public string Address1 { get; set; }
 
         public string Address2 { get; set; }
@@ -71,16 +69,10 @@ namespace JDS.OrgManager.Application.Common.Employees
 
         public string Zip { get; set; }
 
-        #endregion
-
-        #region Public Constructors
-
         public EmployeeEntity()
         {
             Subordinates = new HashSet<EmployeeManagerEntity>();
             Managers = new HashSet<EmployeeManagerEntity>();
         }
-
-        #endregion
     }
 }

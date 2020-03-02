@@ -29,14 +29,8 @@ namespace JDS.OrgManager.Application.HumanResources.Employees.Commands.RegisterO
 {
     public class RegisterOrUpdateEmployeeCommand : ViewModel, IRequest<RegisterOrUpdateEmployeeCommand>
     {
-        #region Private Fields
-
         // Hard-coded for the time being.
         private const int TenantId = 1;
-
-        #endregion
-
-        #region Public Properties + Indexers
 
         public string Address1 { get; set; }
 
@@ -80,14 +74,8 @@ namespace JDS.OrgManager.Application.HumanResources.Employees.Commands.RegisterO
 
         public string Zip { get; set; }
 
-        #endregion
-
-        #region Public Classes
-
         public class RegisterOrUpdateEmployeeCommandHandler : IRequestHandler<RegisterOrUpdateEmployeeCommand, RegisterOrUpdateEmployeeCommand>
         {
-            #region Private Fields
-
             private readonly IOrgManagerDbContext context;
 
             private readonly IDateTimeService dateTimeService;
@@ -97,10 +85,6 @@ namespace JDS.OrgManager.Application.HumanResources.Employees.Commands.RegisterO
             private readonly IViewModelToDomainEntityMapper<RegisterOrUpdateEmployeeCommand, Employee> employeeVmToDomainEntityMapper;
 
             private readonly IDomainEntityToDbEntityMapper<PaidTimeOffPolicy, PaidTimeOffPolicyEntity> ptoPolicyDomainToDbEntityMapper;
-
-            #endregion
-
-            #region Public Constructors
 
             public RegisterOrUpdateEmployeeCommandHandler(
                 IOrgManagerDbContext context,
@@ -115,10 +99,6 @@ namespace JDS.OrgManager.Application.HumanResources.Employees.Commands.RegisterO
                 this.ptoPolicyDomainToDbEntityMapper = ptoPolicyDomainToDbEntityMapper ?? throw new ArgumentNullException(nameof(ptoPolicyDomainToDbEntityMapper));
                 this.dateTimeService = dateTimeService ?? throw new ArgumentNullException(nameof(dateTimeService));
             }
-
-            #endregion
-
-            #region Public Methods
 
             public async Task<RegisterOrUpdateEmployeeCommand> Handle(RegisterOrUpdateEmployeeCommand request, CancellationToken cancellationToken)
             {
@@ -207,10 +187,6 @@ namespace JDS.OrgManager.Application.HumanResources.Employees.Commands.RegisterO
                 // Map from domain entity back to VM (command) and return that.
                 return employeeVmToDomainEntityMapper.MapToViewModel(employee);
             }
-
-            #endregion
         }
-
-        #endregion
     }
 }

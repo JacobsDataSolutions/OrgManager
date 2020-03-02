@@ -14,12 +14,8 @@ namespace JDS.OrgManager.Application.Abstractions.Mapping
 {
     public interface IDomainEntityToDbEntityMapper<TDomainEntity, TDbEntity> where TDomainEntity : IDomainEntity where TDbEntity : IDbEntity
     {
-        #region Public Methods
-
         TDbEntity MapToDbEntity(TDomainEntity domainEntity);
 
         TDomainEntity MapToDomainEntity(TDbEntity dbEntity);
-
-        #endregion
     }
 }

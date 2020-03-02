@@ -15,8 +15,6 @@ namespace JDS.OrgManager.Application.HumanResources.Employees.Queries.GetEmploye
 {
     public class GetEmployeeDetailViewModel : ViewModel
     {
-        #region Public Properties + Indexers
-
         public string Address1 { get; set; }
 
         public string Address2 { get; set; }
@@ -52,7 +50,5 @@ namespace JDS.OrgManager.Application.HumanResources.Employees.Queries.GetEmploye
         public string State { get; set; }
 
         public string Zip { get; set; }
-
-        #endregion
     }
 }

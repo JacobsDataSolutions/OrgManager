@@ -17,25 +17,15 @@ namespace JDS.OrgManager.Application.Behaviors
 {
     public class RequestLogger<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     {
-        #region Private Fields
-
         private readonly ICurrentUserService currentUserService;
 
         private readonly ILogger logger;
-
-        #endregion
-
-        #region Public Constructors
 
         public RequestLogger(ILogger<TRequest> logger, ICurrentUserService currentUserService)
         {
             this.logger = logger;
             this.currentUserService = currentUserService;
         }
-
-        #endregion
-
-        #region Public Methods
 
         public Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
         {
@@ -46,7 +36,5 @@ namespace JDS.OrgManager.Application.Behaviors
 
             return next();
         }
-
-        #endregion
     }
 }

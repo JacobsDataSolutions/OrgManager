@@ -15,8 +15,6 @@ namespace JDS.OrgManager.Application.HumanResources.Employees.Queries.GetEmploye
 {
     public class GetEmployeeListViewModel : ViewModel
     {
-        #region Public Properties + Indexers
-
         public DateTime? DateExited { get; set; }
 
         public DateTime DateHired { get; set; }
@@ -42,7 +40,5 @@ namespace JDS.OrgManager.Application.HumanResources.Employees.Queries.GetEmploye
         public string MiddleName { get; set; }
 
         public int NumSubordinates { get; set; }
-
-        #endregion
     }
 }

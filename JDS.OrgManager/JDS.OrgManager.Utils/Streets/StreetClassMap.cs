@@ -13,8 +13,6 @@ namespace JDS.OrgManager.Utils.Streets
 {
     public class StreetClassMap : ClassMap<Street>
     {
-        #region Public Constructors
-
         public StreetClassMap()
         {
             Map(m => m.FullName);
@@ -25,7 +23,5 @@ namespace JDS.OrgManager.Utils.Streets
             Map(m => m.MinAddress);
             Map(m => m.MaxAddress);
         }
-
-        #endregion
     }
 }

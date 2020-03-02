@@ -15,25 +15,15 @@ namespace JDS.OrgManager.Common
 {
     public class Result
     {
-        #region Public Properties + Indexers
-
         public string[] Errors { get; } = new string[0];
 
         public bool Succeeded { get; }
-
-        #endregion
-
-        #region Internal Constructors
 
         internal Result(bool succeeded, IEnumerable<string> errors = null)
         {
             Succeeded = succeeded;
             Errors = (errors ?? Enumerable.Empty<string>()).ToArray();
         }
-
-        #endregion
-
-        #region Public Methods
 
         public static Result Failure(IEnumerable<string> errors)
         {
@@ -45,7 +35,5 @@ namespace JDS.OrgManager.Common
         }
 
         public static Result Success() => new Result(true);
-
-        #endregion
     }
 }

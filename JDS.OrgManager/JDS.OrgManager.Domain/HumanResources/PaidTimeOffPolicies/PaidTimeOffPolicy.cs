@@ -14,8 +14,6 @@ namespace JDS.OrgManager.Domain.HumanResources.PaidTimeOffPolicies
 {
     public class PaidTimeOffPolicy : DomainEntity<PaidTimeOffPolicy>
     {
-        #region Public Properties + Indexers
-
         public bool AllowsUnlimitedPto { get; private set; }
 
         public int EmployeeLevel { get; private set; }
@@ -27,10 +25,6 @@ namespace JDS.OrgManager.Domain.HumanResources.PaidTimeOffPolicies
         public string Name { get; private set; }
 
         public decimal? PtoAccrualRate { get; private set; }
-
-        #endregion
-
-        #region Public Constructors
 
         public PaidTimeOffPolicy()
         { }
@@ -56,7 +50,5 @@ namespace JDS.OrgManager.Domain.HumanResources.PaidTimeOffPolicies
             Name = name;
             IsDefaultForEmployeeLevel = isDefaultForEmployeeLevel;
         }
-
-        #endregion
     }
 }

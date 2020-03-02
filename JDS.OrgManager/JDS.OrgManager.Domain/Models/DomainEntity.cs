@@ -17,24 +17,14 @@ namespace JDS.OrgManager.Domain.Models
 {
     public abstract class DomainEntity : IDomainEntity
     {
-        #region Private Fields
-
         private static IDomainEventDispatcher dispatcher = new NullDomainEventDispatcher();
 
         private List<IDomainEvent> domainEvents = new List<IDomainEvent>();
-
-        #endregion
-
-        #region Public Properties + Indexers
 
         public IReadOnlyCollection<IDomainEvent> DomainEvents => domainEvents?.AsReadOnly();
 
         // Slightly breaking the rules here by having a public setter.
         public int? Id { get; set; }
-
-        #endregion
-
-        #region Public Methods
 
         public void AddDomainEvent(IDomainEvent eventItem)
         {
@@ -62,12 +52,6 @@ namespace JDS.OrgManager.Domain.Models
 
         public void RemoveDomainEvent(IDomainEvent eventItem) => domainEvents?.Remove(eventItem);
 
-        #endregion
-
-        #region Internal Methods
-
         internal static void WireUpDispatcher(IDomainEventDispatcher dispatcher) => DomainEntity.dispatcher = dispatcher;
-
-        #endregion
     }
 }

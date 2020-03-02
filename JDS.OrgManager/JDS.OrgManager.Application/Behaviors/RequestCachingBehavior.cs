@@ -20,8 +20,6 @@ namespace JDS.OrgManager.Application.Behaviors
 {
     public class RequestCachingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     {
-        #region Private Fields
-
         private static readonly DistributedCacheEntryOptions options = new DistributedCacheEntryOptions() { SlidingExpiration = TimeSpan.FromHours(1.0) };
 
         private readonly IByteSerializer byteSerializer;
@@ -30,20 +28,12 @@ namespace JDS.OrgManager.Application.Behaviors
 
         private readonly ILogger logger;
 
-        #endregion
-
-        #region Public Constructors
-
         public RequestCachingBehavior(IDistributedCache cache, IByteSerializer byteSerializer, ILogger<TResponse> logger)
         {
             this.cache = cache ?? throw new ArgumentNullException(nameof(cache));
             this.byteSerializer = byteSerializer ?? throw new ArgumentNullException(nameof(byteSerializer));
             this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
-
-        #endregion
-
-        #region Public Methods
 
         public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
         {
@@ -91,7 +81,5 @@ namespace JDS.OrgManager.Application.Behaviors
                 return await next();
             }
         }
-
-        #endregion
     }
 }

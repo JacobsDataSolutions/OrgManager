@@ -16,25 +16,15 @@ namespace JDS.OrgManager.Common.Text
 {
     public class AsciiTreeNode<T>
     {
-        #region Public Properties + Indexers
-
         public List<AsciiTreeNode<T>> Children { get; }
 
         public T Value { get; }
-
-        #endregion
-
-        #region Public Constructors
 
         public AsciiTreeNode(T value, params AsciiTreeNode<T>[] children)
         {
             Value = value;
             Children = (children ?? new AsciiTreeNode<T>[0]).ToList();
         }
-
-        #endregion
-
-        #region Public Methods
 
         public void PrintPretty(Action<string> lineCallback)
         {
@@ -47,10 +37,6 @@ namespace JDS.OrgManager.Common.Text
             PrintPretty(s => sb.Append(s));
             return sb.ToString().Trim();
         }
-
-        #endregion
-
-        #region Private Methods
 
         private void PrintPretty(Action<string> writeCallback, string indent, bool last)
         {
@@ -72,7 +58,5 @@ namespace JDS.OrgManager.Common.Text
                 Children[i].PrintPretty(writeCallback, indent, i == Children.Count - 1);
             }
         }
-
-        #endregion
     }
 }

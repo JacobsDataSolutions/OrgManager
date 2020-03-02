@@ -20,8 +20,6 @@ namespace JDS.OrgManager.Domain.Accounting.Employees
 {
     public class Employee : DomainEntity<Employee>
     {
-        #region Public Properties + Indexers
-
         public Money Elected401kContribution { get; private set; }
 
         public string FirstName { get; private set; }
@@ -41,10 +39,6 @@ namespace JDS.OrgManager.Domain.Accounting.Employees
         public Money Salary { get; private set; }
 
         public SocialSecurityNumber SocialSecurityNumber { get; private set; }
-
-        #endregion
-
-        #region Public Constructors
 
         public Employee(
             string firstName,
@@ -71,7 +65,5 @@ namespace JDS.OrgManager.Domain.Accounting.Employees
             MiddleName = middleName;
             Paychecks = (paychecks ?? Enumerable.Empty<Paycheck>()).ToList();
         }
-
-        #endregion
     }
 }

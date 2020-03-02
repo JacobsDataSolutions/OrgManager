@@ -15,8 +15,6 @@ namespace JDS.OrgManager.Domain.Models
     // From: https://docs.microsoft.com/en-us/dotnet/architecture/microservices/microservice-ddd-cqrs-patterns/implement-value-objects
     public abstract class ValueObject
     {
-        #region Public Methods
-
         public static bool operator !=(ValueObject obj1, ValueObject obj2) => !(obj1 == obj2);
 
         public static bool operator ==(ValueObject obj1, ValueObject obj2)
@@ -64,10 +62,6 @@ namespace JDS.OrgManager.Domain.Models
                 .Select(x => x != null ? x.GetHashCode() : 0)
                 .Aggregate((x, y) => x ^ y);
 
-        #endregion
-
-        #region Protected Methods
-
         protected static bool EqualOperator(ValueObject left, ValueObject right)
         {
             if (left is null ^ right is null)
@@ -81,7 +75,5 @@ namespace JDS.OrgManager.Domain.Models
         protected static bool NotEqualOperator(ValueObject left, ValueObject right) => !EqualOperator(left, right);
 
         protected abstract IEnumerable<object> GetAtomicValues();
-
-        #endregion
     }
 }

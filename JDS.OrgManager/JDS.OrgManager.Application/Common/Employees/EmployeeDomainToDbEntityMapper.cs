@@ -17,19 +17,9 @@ namespace JDS.OrgManager.Application.Common.Employees
 {
     public class EmployeeDomainToDbEntityMapper : IDomainEntityToDbEntityMapper<Employee, EmployeeEntity>
     {
-        #region Private Fields
-
         private readonly TypeAdapterConfig config = new TypeAdapterConfig();
 
-        #endregion
-
-        #region Public Constructors
-
         public EmployeeDomainToDbEntityMapper() => ApplyMappingConfiguration();
-
-        #endregion
-
-        #region Public Methods
 
         public void ApplyMappingConfiguration()
         {
@@ -65,7 +55,5 @@ namespace JDS.OrgManager.Application.Common.Employees
         public EmployeeEntity MapToDbEntity(Employee domainEntity) => domainEntity.Adapt<EmployeeEntity>(config);
 
         public Employee MapToDomainEntity(EmployeeEntity dbEntity) => dbEntity.Adapt<Employee>(config);
-
-        #endregion
     }
 }

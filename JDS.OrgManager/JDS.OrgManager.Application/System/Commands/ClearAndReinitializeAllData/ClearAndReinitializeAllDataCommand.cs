@@ -17,26 +17,14 @@ namespace JDS.OrgManager.Application.System.Commands.ClearAndReinitializeAllData
 {
     public class ClearAndReinitializeAllDataCommand : IRequest
     {
-        #region Public Classes
-
         public class ClearAndReinitializeAllDataCommandHandler : IRequestHandler<ClearAndReinitializeAllDataCommand>
         {
-            #region Private Fields
-
             private readonly IOrgManagerDbQueryFacade queryFacade;
-
-            #endregion
-
-            #region Public Constructors
 
             public ClearAndReinitializeAllDataCommandHandler(IOrgManagerDbQueryFacade queryFacade)
             {
                 this.queryFacade = queryFacade ?? throw new ArgumentNullException(nameof(queryFacade));
             }
-
-            #endregion
-
-            #region Public Methods
 
             public async Task<Unit> Handle(ClearAndReinitializeAllDataCommand request, CancellationToken cancellationToken)
             {
@@ -46,10 +34,6 @@ namespace JDS.OrgManager.Application.System.Commands.ClearAndReinitializeAllData
                     IF EXISTS (SELECT * FROM sys.identity_columns WHERE OBJECT_NAME(OBJECT_ID) = 'Employees' AND last_value IS NOT NULL) DBCC CHECKIDENT (Employees, RESEED, 0);");
                 return Unit.Value;
             }
-
-            #endregion
         }
-
-        #endregion
     }
 }

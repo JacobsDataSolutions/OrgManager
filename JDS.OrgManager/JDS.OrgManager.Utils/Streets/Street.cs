@@ -11,8 +11,6 @@ namespace JDS.OrgManager.Utils.Streets
 {
     public class Street
     {
-        #region Public Properties + Indexers
-
         public string Direction { get; set; }
 
         public string FullName { get; set; }
@@ -27,12 +25,6 @@ namespace JDS.OrgManager.Utils.Streets
 
         public string SuffixDirection { get; set; }
 
-        #endregion
-
-        #region Public Methods
-
         public override string ToString() => $"{Direction} {Name} {Suffix} ({MinAddress}-{MaxAddress})";
-
-        #endregion
     }
 }

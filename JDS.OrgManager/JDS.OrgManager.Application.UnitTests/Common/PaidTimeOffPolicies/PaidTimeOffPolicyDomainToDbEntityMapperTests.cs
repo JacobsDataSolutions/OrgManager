@@ -16,15 +16,9 @@ namespace JDS.OrgManager.Application.UnitTests.Common.PaidTimeOffPolicies
 {
     public class PaidTimeOffPolicyDomainToDbEntityMapperTests
     {
-        #region Private Fields
-
         private Fixture fixture;
 
         private PaidTimeOffPolicyDomainToDbEntityMapper mapper;
-
-        #endregion
-
-        #region Public Constructors
 
         public PaidTimeOffPolicyDomainToDbEntityMapperTests()
         {
@@ -36,10 +30,6 @@ namespace JDS.OrgManager.Application.UnitTests.Common.PaidTimeOffPolicies
             fixture.Behaviors.Remove(new ThrowingRecursionBehavior());
             fixture.Behaviors.Add(new OmitOnRecursionBehavior());
         }
-
-        #endregion
-
-        #region Public Methods
 
         [Fact]
         public void MapToDbEntity_WorksAsExpected()
@@ -68,7 +58,5 @@ namespace JDS.OrgManager.Application.UnitTests.Common.PaidTimeOffPolicies
             Assert.Equal(d.Name, e.Name);
             Assert.Equal(d.PtoAccrualRate, e.PtoAccrualRate);
         }
-
-        #endregion
     }
 }

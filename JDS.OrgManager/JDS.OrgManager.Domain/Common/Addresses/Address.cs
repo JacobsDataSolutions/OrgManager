@@ -15,8 +15,6 @@ namespace JDS.OrgManager.Domain.Common.Addresses
 {
     public class Address : ValueObject
     {
-        #region Public Properties + Indexers
-
         public string City { get; }
 
         public State State { get; }
@@ -27,10 +25,6 @@ namespace JDS.OrgManager.Domain.Common.Addresses
 
         public ZipCode Zip { get; }
 
-        #endregion
-
-        #region Public Constructors
-
         public Address(string street1, string city, State state, ZipCode zip, string street2 = null)
         {
             Street1 = street1 ?? throw new ArgumentNullException(nameof(street1));
@@ -40,19 +34,11 @@ namespace JDS.OrgManager.Domain.Common.Addresses
             Street2 = string.IsNullOrWhiteSpace(street2) ? "" : street2;
         }
 
-        #endregion
-
-        #region Public Methods
-
         public override string ToString()
         {
             var apt = !string.IsNullOrWhiteSpace(Street2) ? " " + Street2 : "";
             return $"{Street1}{apt}, {City}, {State} {Zip}";
         }
-
-        #endregion
-
-        #region Protected Methods
 
         protected override IEnumerable<object> GetAtomicValues()
         {
@@ -62,7 +48,5 @@ namespace JDS.OrgManager.Domain.Common.Addresses
             yield return State;
             yield return Zip;
         }
-
-        #endregion
     }
 }

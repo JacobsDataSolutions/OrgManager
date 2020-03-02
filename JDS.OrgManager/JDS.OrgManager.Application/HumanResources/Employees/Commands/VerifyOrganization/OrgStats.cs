@@ -11,12 +11,8 @@ namespace JDS.OrgManager.Application.HumanResources.Employees.Commands.VerifyOrg
 {
     public class OrgStats
     {
-        #region Public Properties + Indexers
-
         public int NumEmployees { get; set; }
 
         public int OrgComplexity { get; set; }
-
-        #endregion
     }
 }

@@ -17,19 +17,9 @@ namespace JDS.OrgManager.Domain.Common.Addresses
 {
     public class ZipCode : ValueObject
     {
-        #region Private Fields
-
         private static readonly Regex regex = new Regex(@"^\d{5}(\-|\s*)?(\d{4})?$", RegexOptions.Compiled | RegexOptions.Singleline);
 
-        #endregion
-
-        #region Public Properties + Indexers
-
         public string Value { get; }
-
-        #endregion
-
-        #region Public Constructors
 
         public ZipCode(string value)
         {
@@ -42,31 +32,17 @@ namespace JDS.OrgManager.Domain.Common.Addresses
             Value = value.StripNonDigits();
         }
 
-        #endregion
-
-        #region Public Methods
-
         public static explicit operator ZipCode(string value) => new ZipCode(value);
 
         public static implicit operator string(ZipCode zipCode) => zipCode.Value;
 
         public override string ToString() => Value.Length == 5 ? Value : Value.Insert(5, "-");
 
-        #endregion
-
-        #region Protected Methods
-
         protected override IEnumerable<object> GetAtomicValues()
         {
             yield return Value;
         }
 
-        #endregion
-
-        #region Private Methods
-
         private bool IsValid(string value) => regex.IsMatch(value);
-
-        #endregion
     }
 }

@@ -13,10 +13,6 @@ namespace JDS.OrgManager.Domain.Abstractions.Events
 {
     public interface IDomainEventDispatcher
     {
-        #region Public Methods
-
         Task PublishAsync<TEvent>(TEvent domainEvent) where TEvent : IDomainEvent;
-
-        #endregion
     }
 }

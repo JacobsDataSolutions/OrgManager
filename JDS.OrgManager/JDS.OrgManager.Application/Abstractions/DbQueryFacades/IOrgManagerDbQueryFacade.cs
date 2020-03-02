@@ -15,8 +15,6 @@ namespace JDS.OrgManager.Application.Abstractions.DbQueryFacades
 {
     public interface IOrgManagerDbQueryFacade
     {
-        #region Public Methods
-
         Task<int> ExecuteAsync(string sql, object param = null, CancellationToken cancellationToken = default);
 
         Task<IReadOnlyList<T>> QueryAsync<T>(string sql, object param = null, CancellationToken cancellationToken = default);
@@ -24,7 +22,5 @@ namespace JDS.OrgManager.Application.Abstractions.DbQueryFacades
         Task<T> QueryFirstOrDefaultAsync<T>(string sql, object param = null, CancellationToken cancellationToken = default);
 
         Task<T> QuerySingleAsync<T>(string sql, object param = null, CancellationToken cancellationToken = default);
-
-        #endregion
     }
 }

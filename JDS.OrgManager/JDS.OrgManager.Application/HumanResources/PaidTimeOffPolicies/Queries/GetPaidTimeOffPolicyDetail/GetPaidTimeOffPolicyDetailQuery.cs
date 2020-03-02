@@ -18,8 +18,6 @@ namespace JDS.OrgManager.Application.HumanResources.PaidTimeOffPolicies.Queries.
 {
     public class GetPaidTimeOffPolicyDetailQuery : IRequest<GetPaidTimeOffPolicyDetailViewModel>, ICacheableQuery
     {
-        #region Public Properties + Indexers
-
         public bool BypassCache { get; set; }
 
         public string CacheKey => nameof(GetPaidTimeOffPolicyDetailQuery);
@@ -30,35 +28,17 @@ namespace JDS.OrgManager.Application.HumanResources.PaidTimeOffPolicies.Queries.
 
         public bool ReplaceCachedEntry { get; set; }
 
-        #endregion
-
-        #region Public Classes
-
         public class GetPaidTimeOffPolicyDetailQueryHandler : IRequestHandler<GetPaidTimeOffPolicyDetailQuery, GetPaidTimeOffPolicyDetailViewModel>
         {
-            #region Private Fields
-
             private readonly IOrgManagerDbQueryFacade queryFacade;
-
-            #endregion
-
-            #region Public Constructors
 
             public GetPaidTimeOffPolicyDetailQueryHandler(IOrgManagerDbQueryFacade queryFacade)
             {
                 this.queryFacade = queryFacade ?? throw new ArgumentNullException(nameof(queryFacade));
             }
 
-            #endregion
-
-            #region Public Methods
-
             public Task<GetPaidTimeOffPolicyDetailViewModel> Handle(GetPaidTimeOffPolicyDetailQuery request, CancellationToken cancellationToken) =>
                 queryFacade.QuerySingleAsync<GetPaidTimeOffPolicyDetailViewModel>("SELECT TOP 1 AllowsUnlimitedPto, EmployeeLevel, Id, IsDefaultForEmployeeLevel, MaxPtoHours, Name, PtoAccrualRate FROM PaidTimeOffPolicies WITH(NOLOCK) WHERE Id = @Id", request);
-
-            #endregion
         }
-
-        #endregion
     }
 }

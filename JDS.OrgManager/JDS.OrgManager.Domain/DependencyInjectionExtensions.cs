@@ -17,8 +17,6 @@ namespace JDS.OrgManager.Domain
 {
     public static class DependencyInjectionExtensions
     {
-        #region Public Methods
-
         public static IServiceCollection AddDomainLayer(this IServiceCollection services)
         {
             services.AddSingleton<IDomainEventDispatcher, DomainEventDispatcher>();
@@ -30,7 +28,5 @@ namespace JDS.OrgManager.Domain
             DomainEntity.WireUpDispatcher(serviceProvider.GetRequiredService<IDomainEventDispatcher>());
             return serviceProvider;
         }
-
-        #endregion
     }
 }

@@ -14,19 +14,9 @@ namespace JDS.OrgManager.Common
 {
     public class Result<T> : Result
     {
-        #region Public Properties + Indexers
-
         public T Payload { get; }
 
-        #endregion
-
-        #region Internal Constructors
-
         internal Result(bool succeeded, T payload = default, IEnumerable<string> errors = null) : base(succeeded, errors) => Payload = payload;
-
-        #endregion
-
-        #region Public Methods
 
         public static new Result<T> Failure(IEnumerable<string> errors)
         {
@@ -38,7 +28,5 @@ namespace JDS.OrgManager.Common
         }
 
         public static Result<T> Success(T payload) => new Result<T>(true, payload);
-
-        #endregion
     }
 }

@@ -18,29 +18,17 @@ namespace JDS.OrgManager.Application.System.Commands.SeedInitialData
 {
     public class SeedInitialDataCommand : IRequest
     {
-        #region Public Classes
-
         public class SeedSampleDataCommandHandler : IRequestHandler<SeedInitialDataCommand>
         {
-            #region Private Fields
-
             private readonly IOrgManagerDbContext context;
 
             private readonly ILogger logger;
-
-            #endregion
-
-            #region Public Constructors
 
             public SeedSampleDataCommandHandler(IOrgManagerDbContext context, ILogger<SeedSampleDataCommandHandler> logger)
             {
                 this.context = context ?? throw new ArgumentNullException(nameof(context));
                 this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
             }
-
-            #endregion
-
-            #region Public Methods
 
             public async Task<Unit> Handle(SeedInitialDataCommand request, CancellationToken cancellationToken)
             {
@@ -50,10 +38,6 @@ namespace JDS.OrgManager.Application.System.Commands.SeedInitialData
 
                 return Unit.Value;
             }
-
-            #endregion
         }
-
-        #endregion
     }
 }

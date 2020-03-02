@@ -13,12 +13,8 @@ namespace JDS.OrgManager.Infrastructure.Identity
 {
     public class CurrentUserService : ICurrentUserService
     {
-        #region Public Properties + Indexers
-
         public bool IsAuthenticated => true;
 
         public string UserId => "SYSTEM";
-
-        #endregion
     }
 }

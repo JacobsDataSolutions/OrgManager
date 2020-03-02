@@ -11,8 +11,6 @@ namespace JDS.OrgManager.Application.Abstractions.Queries
 {
     public interface ICacheableQuery
     {
-        #region Public Properties + Indexers
-
         public bool BypassCache { get; }
 
         public string CacheKey { get; }
@@ -20,7 +18,5 @@ namespace JDS.OrgManager.Application.Abstractions.Queries
         public bool RefreshCachedEntry { get; }
 
         public bool ReplaceCachedEntry { get; }
-
-        #endregion
     }
 }

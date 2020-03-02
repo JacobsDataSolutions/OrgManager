@@ -16,8 +16,6 @@ namespace JDS.OrgManager.Persistence.Common.PaidTimeOffPolicies
 {
     public class PaidTimeOffPolicyEntityConfiguration : ConfigurationBase<PaidTimeOffPolicyEntity>
     {
-        #region Public Methods
-
         public override void Configure(EntityTypeBuilder<PaidTimeOffPolicyEntity> builder)
         {
             base.Configure(builder);
@@ -27,7 +25,5 @@ namespace JDS.OrgManager.Persistence.Common.PaidTimeOffPolicies
             builder.Property(e => e.Name).HasMaxLength(25);
             builder.Property(e => e.PtoAccrualRate).HasColumnType("decimal(18,4)");
         }
-
-        #endregion
     }
 }

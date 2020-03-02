@@ -14,10 +14,6 @@ namespace JDS.OrgManager.Application.Models
 {
     public abstract class ViewModel : IViewModel
     {
-        #region Public Methods
-
         public override string ToString() => JsonConvert.SerializeObject(this);
-
-        #endregion
     }
 }

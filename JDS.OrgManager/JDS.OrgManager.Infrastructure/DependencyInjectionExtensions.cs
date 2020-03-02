@@ -19,14 +19,10 @@ namespace JDS.OrgManager.Infrastructure
 {
     public static class DependencyInjectionExtensions
     {
-        #region Public Methods
-
         public static IServiceCollection AddInfrastructureLayer(this IServiceCollection services) =>
             services
             .AddSingleton<IDateTimeService, MachineDateTimeService>()
             .AddSingleton<ICurrentUserService, CurrentUserService>()
             .AddSingleton<IByteSerializer, ByteSerializer>();
-
-        #endregion
     }
 }

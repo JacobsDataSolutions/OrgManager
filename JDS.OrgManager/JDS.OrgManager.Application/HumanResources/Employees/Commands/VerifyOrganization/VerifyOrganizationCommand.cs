@@ -26,12 +26,8 @@ namespace JDS.OrgManager.Application.HumanResources.Employees.Commands.VerifyOrg
 {
     public class VerifyOrganizationCommand : ViewModel, IRequest<VerifyOrganizationViewModel>
     {
-        #region Public Classes
-
         public class VerifyOrganizationCommandHandler : IRequestHandler<VerifyOrganizationCommand, VerifyOrganizationViewModel>
         {
-            #region Private Fields
-
             private readonly IOrgManagerDbContext context;
 
             private readonly IDomainEntityToDbEntityMapper<Employee, EmployeeEntity> employeeDomainToDbEntityMapper;
@@ -39,10 +35,6 @@ namespace JDS.OrgManager.Application.HumanResources.Employees.Commands.VerifyOrg
             private readonly IOrganizationVerifier organizationVerifier;
 
             private readonly IDomainEntityToDbEntityMapper<PaidTimeOffPolicy, PaidTimeOffPolicyEntity> ptoPolicyDomainToDbEntityMapper;
-
-            #endregion
-
-            #region Public Constructors
 
             public VerifyOrganizationCommandHandler(
                 IOrgManagerDbContext context,
@@ -55,10 +47,6 @@ namespace JDS.OrgManager.Application.HumanResources.Employees.Commands.VerifyOrg
                 this.organizationVerifier = organizationVerifier ?? throw new ArgumentNullException(nameof(organizationVerifier));
                 this.ptoPolicyDomainToDbEntityMapper = ptoPolicyDomainToDbEntityMapper ?? throw new ArgumentNullException(nameof(ptoPolicyDomainToDbEntityMapper));
             }
-
-            #endregion
-
-            #region Public Methods
 
             public async Task<VerifyOrganizationViewModel> Handle(VerifyOrganizationCommand request, CancellationToken cancellationToken)
             {
@@ -81,10 +69,6 @@ namespace JDS.OrgManager.Application.HumanResources.Employees.Commands.VerifyOrg
                 var stats = organizationVerifier.VerifyOrg(trees);
                 return new VerifyOrganizationViewModel { Stats = (from s in stats select new OrgStats { NumEmployees = s.Item1, OrgComplexity = s.Item2 }).ToList() };
             }
-
-            #endregion
         }
-
-        #endregion
     }
 }

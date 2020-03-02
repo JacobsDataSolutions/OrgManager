@@ -15,22 +15,12 @@ namespace JDS.OrgManager.Domain.HumanResources.Advanced.UnitTests
 {
     public class OrganizationVerifierTests
     {
-        #region Private Fields
-
         private IOrganizationVerifier organizationVerifier;
-
-        #endregion
-
-        #region Public Constructors
 
         public OrganizationVerifierTests()
         {
             organizationVerifier = new OrganizationVerifier();
         }
-
-        #endregion
-
-        #region Public Methods
 
         [Fact]
         public void VerifyOrg_MultipleTrees_ReturnsExpectedStats()
@@ -46,7 +36,5 @@ namespace JDS.OrgManager.Domain.HumanResources.Advanced.UnitTests
             Assert.Equal(41, results[3].Item1);
             Assert.Equal(64, results[3].Item2);
         }
-
-        #endregion
     }
 }

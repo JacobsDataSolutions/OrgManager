@@ -14,8 +14,6 @@ namespace JDS.OrgManager.Domain.HumanResources.PaidTimeOffPolicies
 {
     public class PaidTimeOffException : DomainLayerException
     {
-        #region Public Constructors
-
         public PaidTimeOffException()
         {
         }
@@ -31,7 +29,5 @@ namespace JDS.OrgManager.Domain.HumanResources.PaidTimeOffPolicies
         public PaidTimeOffException(string message, Exception innerException) : base(message, innerException)
         {
         }
-
-        #endregion
     }
 }

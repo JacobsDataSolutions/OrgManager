@@ -18,8 +18,6 @@ namespace JDS.OrgManager.Application.Abstractions.DbContexts
 {
     public interface IOrgManagerDbContext
     {
-        #region Public Properties + Indexers
-
         public DbSet<CurrencyEntity> Currencies { get; }
 
         public DbSet<EmployeeManagerEntity> EmployeeManagers { get; }
@@ -30,12 +28,6 @@ namespace JDS.OrgManager.Application.Abstractions.DbContexts
 
         public DbSet<PaidTimeOffPolicyEntity> PaidTimeOffPolicies { get; }
 
-        #endregion
-
-        #region Public Methods
-
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
-
-        #endregion
     }
 }

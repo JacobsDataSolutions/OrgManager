@@ -18,8 +18,6 @@ namespace JDS.OrgManager.Utils
 {
     public static class DummyData
     {
-        #region Private Fields
-
         private static readonly string[] ignoreSuffixDirections = new[] { "IB", "OB", "SB", "NB", "EXPY", "LN" };
 
         private static readonly string[] ignoreSuffixes = new[] { "ER", "XR", "IB", "OB", "SB", "NB", "EXPY", "LN", " " };
@@ -34,10 +32,6 @@ namespace JDS.OrgManager.Utils
 
         private static readonly string[] womensNames = new[] { "Mary", "Patricia", "Jennifer", "Linda", "Elizabeth", "Barbara", "Susan", "Jessica", "Sarah", "Karen", "Nancy", "Margaret", "Lisa", "Betty", "Dorothy", "Sandra", "Ashley", "Kimberly", "Donna", "Emily", "Michelle", "Carol", "Amanda", "Melissa", "Deborah", "Stephanie", "Rebecca", "Laura", "Sharon", "Cynthia", "Kathleen", "Helen", "Amy", "Shirley", "Angela", "Anna", "Brenda", "Pamela", "Nicole", "Ruth", "Katherine", "Samantha", "Christine", "Emma", "Catherine", "Debra", "Virginia", "Rachel", "Carolyn", "Janet", "Maria", "Heather", "Diane", "Julie", "Joyce", "Victoria", "Kelly", "Christina", "Joan", "Evelyn", "Lauren", "Judith", "Olivia", "Frances", "Martha", "Cheryl", "Megan", "Andrea", "Hannah", "Jacqueline", "Ann", "Jean", "Alice", "Kathryn", "Gloria", "Teresa", "Doris", "Sara", "Janice", "Julia", "Marie", "Madison", "Grace", "Judy", "Theresa", "Beverly", "Denise", "Marilyn", "Amber", "Danielle", "Abigail", "Brittany", "Rose", "Diana", "Natalie", "Sophia", "Alexis", "Lori", "Kayla", "Jane" };
 
-        #endregion
-
-        #region Public Constructors
-
         static DummyData()
         {
             using (var reader = new StreamReader(@"Streets\chicago-street-names.csv"))
@@ -48,10 +42,6 @@ namespace JDS.OrgManager.Utils
                 streets = (from s in records where !ignoreSuffixes.Contains(s.Suffix) && !ignoreSuffixDirections.Contains(s.SuffixDirection) && !s.Name.Contains("RAMP") select s).ToArray();
             }
         }
-
-        #endregion
-
-        #region Public Methods
 
         public static bool CoinToss() => random.Next() % 2 == 0;
 
@@ -94,7 +84,5 @@ namespace JDS.OrgManager.Utils
         {
             return startDate.AddDays(random.Next(90) + 90);
         }
-
-        #endregion
     }
 }

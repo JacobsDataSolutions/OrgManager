@@ -23,15 +23,9 @@ namespace JDS.OrgManager.Persistence.DbContexts
 {
     public class OrgManagerDbContext : DbContext, IOrgManagerDbContext
     {
-        #region Private Fields
-
         private readonly ICurrentUserService currentUserService;
 
         private readonly IDateTimeService dateTimeService;
-
-        #endregion
-
-        #region Public Properties + Indexers
 
         public DbSet<CurrencyEntity> Currencies { get; set; }
 
@@ -42,10 +36,6 @@ namespace JDS.OrgManager.Persistence.DbContexts
         public bool HasChanges => ChangeTracker.HasChanges();
 
         public DbSet<PaidTimeOffPolicyEntity> PaidTimeOffPolicies { get; set; }
-
-        #endregion
-
-        #region Public Constructors
 
         public OrgManagerDbContext(DbContextOptions<OrgManagerDbContext> options)
                                                     : base(options)
@@ -60,10 +50,6 @@ namespace JDS.OrgManager.Persistence.DbContexts
             this.currentUserService = currentUserService ?? throw new ArgumentNullException(nameof(currentUserService));
             this.dateTimeService = dateTimeService ?? throw new ArgumentNullException(nameof(dateTimeService));
         }
-
-        #endregion
-
-        #region Public Methods
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
@@ -86,12 +72,6 @@ namespace JDS.OrgManager.Persistence.DbContexts
             return base.SaveChangesAsync(cancellationToken);
         }
 
-        #endregion
-
-        #region Protected Methods
-
         protected override void OnModelCreating(ModelBuilder modelBuilder) => modelBuilder.ApplyConfigurationsFromAssembly(typeof(OrgManagerDbContext).Assembly);
-
-        #endregion
     }
 }

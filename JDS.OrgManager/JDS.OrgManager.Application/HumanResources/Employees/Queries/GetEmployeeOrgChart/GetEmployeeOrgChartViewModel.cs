@@ -13,8 +13,6 @@ namespace JDS.OrgManager.Application.HumanResources.Employees.Queries.GetEmploye
 {
     public class GetEmployeeOrgChartViewModel
     {
-        #region Public Properties + Indexers
-
         public string FirstName { get; set; }
 
         public int Id { get; set; }
@@ -26,7 +24,5 @@ namespace JDS.OrgManager.Application.HumanResources.Employees.Queries.GetEmploye
         public string MiddleName { get; set; }
 
         public List<GetEmployeeOrgChartViewModel> Subordinates { get; set; } = new List<GetEmployeeOrgChartViewModel>();
-
-        #endregion
     }
 }

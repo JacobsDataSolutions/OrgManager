@@ -18,23 +18,11 @@ namespace JDS.OrgManager.Application.HumanResources.Employees.Commands.RegisterO
 {
     public class EmployeeRegisteredEventHandler : IDomainEventHandler<EmployeeRegisteredEvent>
     {
-        #region Private Fields
-
         private ILogger logger;
-
-        #endregion
-
-        #region Public Constructors
 
         public EmployeeRegisteredEventHandler(ILogger<EmployeeRegisteredEventHandler> logger) => this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
-        #endregion
-
-        #region Public Methods
-
         public async Task Handle(EmployeeRegisteredEvent domainEvent, CancellationToken cancellationToken) =>
             logger.LogInformation($"New employee [{domainEvent.Employee.LastName}, {domainEvent.Employee.FirstName}] registered.");
-
-        #endregion
     }
 }

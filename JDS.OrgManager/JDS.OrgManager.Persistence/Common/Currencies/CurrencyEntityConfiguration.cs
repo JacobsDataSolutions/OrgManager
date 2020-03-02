@@ -15,14 +15,10 @@ namespace JDS.OrgManager.Persistence.Common.Currencies
 {
     public class CurrencyEntityConfiguration : IEntityTypeConfiguration<CurrencyEntity>
     {
-        #region Public Methods
-
         public void Configure(EntityTypeBuilder<CurrencyEntity> builder)
         {
             builder.HasKey(e => e.Code);
             builder.Property(e => e.Code).HasMaxLength(3);
         }
-
-        #endregion
     }
 }

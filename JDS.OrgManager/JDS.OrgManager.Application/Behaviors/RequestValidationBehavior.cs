@@ -19,19 +19,9 @@ namespace JDS.OrgManager.Application.Behaviors
     public class RequestValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
         where TRequest : IRequest<TResponse>
     {
-        #region Private Fields
-
         private readonly IEnumerable<IValidator<TRequest>> validators;
 
-        #endregion
-
-        #region Public Constructors
-
         public RequestValidationBehavior(IEnumerable<IValidator<TRequest>> validators) => this.validators = validators;
-
-        #endregion
-
-        #region Public Methods
 
         public Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
         {
@@ -50,7 +40,5 @@ namespace JDS.OrgManager.Application.Behaviors
 
             return next();
         }
-
-        #endregion
     }
 }

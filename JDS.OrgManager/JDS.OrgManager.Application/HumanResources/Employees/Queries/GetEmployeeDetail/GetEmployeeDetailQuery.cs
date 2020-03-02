@@ -17,39 +17,19 @@ namespace JDS.OrgManager.Application.HumanResources.Employees.Queries.GetEmploye
 {
     public class GetEmployeeDetailQuery : IRequest<GetEmployeeDetailViewModel>
     {
-        #region Public Properties + Indexers
-
         public int Id { get; set; }
-
-        #endregion
-
-        #region Public Classes
 
         public class GetEmployeeDetailQueryHandler : IRequestHandler<GetEmployeeDetailQuery, GetEmployeeDetailViewModel>
         {
-            #region Private Fields
-
             private readonly IOrgManagerDbQueryFacade queryFacade;
-
-            #endregion
-
-            #region Public Constructors
 
             public GetEmployeeDetailQueryHandler(IOrgManagerDbQueryFacade queryFacade)
             {
                 this.queryFacade = queryFacade ?? throw new ArgumentNullException(nameof(queryFacade));
             }
 
-            #endregion
-
-            #region Public Methods
-
             public Task<GetEmployeeDetailViewModel> Handle(GetEmployeeDetailQuery request, CancellationToken cancellationToken) =>
                 queryFacade.QuerySingleAsync<GetEmployeeDetailViewModel>(@"SELECT TOP 1 Address1, Address2, City, CurrencyCode, DateExited, DateHired, DateOfBirth, EmployeeLevel, FirstName, Gender, Id, LastName, MiddleName, PaidTimeOffPolicyId, PtoHoursRemaining, Salary, State, Zip FROM Employees WHERE Id = @Id", request);
-
-            #endregion
         }
-
-        #endregion
     }
 }

@@ -14,8 +14,6 @@ namespace JDS.OrgManager.Domain.Common.Finance
 {
     public class CurrencyException : DomainLayerException
     {
-        #region Public Constructors
-
         public CurrencyException()
         {
         }
@@ -31,7 +29,5 @@ namespace JDS.OrgManager.Domain.Common.Finance
         public CurrencyException(string message, Exception innerException) : base(message, innerException)
         {
         }
-
-        #endregion
     }
 }

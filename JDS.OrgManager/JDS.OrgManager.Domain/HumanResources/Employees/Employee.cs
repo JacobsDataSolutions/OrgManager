@@ -21,8 +21,6 @@ namespace JDS.OrgManager.Domain.HumanResources.Employees
 {
     public class Employee : DomainEntity<Employee>
     {
-        #region Public Properties + Indexers
-
         public DateTime? DateExited { get; private set; }
 
         public DateTime DateHired { get; private set; }
@@ -52,10 +50,6 @@ namespace JDS.OrgManager.Domain.HumanResources.Employees
         public SocialSecurityNumber SocialSecurityNumber { get; private set; }
 
         public IReadOnlyList<Employee> Subordinates { get; private set; } = new List<Employee>();
-
-        #endregion
-
-        #region Public Constructors
 
         public Employee()
         {
@@ -102,10 +96,6 @@ namespace JDS.OrgManager.Domain.HumanResources.Employees
             Subordinates = (subordinates ?? Enumerable.Empty<Employee>()).ToList();
             CrossLinkSubordinates();
         }
-
-        #endregion
-
-        #region Public Methods
 
         public override void AssertAggregates()
         {
@@ -202,10 +192,6 @@ namespace JDS.OrgManager.Domain.HumanResources.Employees
             return e;
         }
 
-        #endregion
-
-        #region Private Methods
-
         private void CrossLinkSubordinates()
         {
             foreach (var subordinate in Subordinates)
@@ -221,7 +207,5 @@ namespace JDS.OrgManager.Domain.HumanResources.Employees
                 throw new EmployeeException("Paid time off policy has not been set for this employee.");
             }
         }
-
-        #endregion
     }
 }

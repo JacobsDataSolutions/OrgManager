@@ -19,8 +19,6 @@ namespace JDS.OrgManager.Persistence
 {
     public static class DependencyInjectionExtensions
     {
-        #region Public Methods
-
         public static IServiceCollection AddPersistenceLayer(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<OrgManagerDbContext>(options =>
@@ -31,7 +29,5 @@ namespace JDS.OrgManager.Persistence
 
             return services;
         }
-
-        #endregion
     }
 }

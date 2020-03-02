@@ -13,10 +13,6 @@ namespace JDS.OrgManager.Application.HumanResources.Employees.Commands.VerifyOrg
 {
     public class VerifyOrganizationViewModel
     {
-        #region Public Properties + Indexers
-
         public IReadOnlyList<OrgStats> Stats { get; set; } = new List<OrgStats>();
-
-        #endregion
     }
 }

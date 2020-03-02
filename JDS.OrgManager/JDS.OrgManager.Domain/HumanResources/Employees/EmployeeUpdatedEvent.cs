@@ -15,16 +15,8 @@ namespace JDS.OrgManager.Domain.HumanResources.Employees
 {
     public class EmployeeUpdatedEvent : DomainEvent
     {
-        #region Public Properties + Indexers
-
         public Employee Employee { get; }
 
-        #endregion
-
-        #region Public Constructors
-
         public EmployeeUpdatedEvent(IDateTimeService dateTime, Employee employee) : base(dateTime) => Employee = employee ?? throw new ArgumentNullException(nameof(employee));
-
-        #endregion
     }
 }

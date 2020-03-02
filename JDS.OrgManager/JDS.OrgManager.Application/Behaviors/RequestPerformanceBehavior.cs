@@ -18,17 +18,11 @@ namespace JDS.OrgManager.Application.Behaviors
 {
     public class RequestPerformanceBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     {
-        #region Private Fields
-
         private readonly ICurrentUserService currentUserService;
 
         private readonly ILogger<TRequest> logger;
 
         private readonly Stopwatch timer;
-
-        #endregion
-
-        #region Public Constructors
 
         public RequestPerformanceBehavior(ILogger<TRequest> logger, ICurrentUserService currentUserService)
         {
@@ -37,10 +31,6 @@ namespace JDS.OrgManager.Application.Behaviors
             this.logger = logger;
             this.currentUserService = currentUserService;
         }
-
-        #endregion
-
-        #region Public Methods
 
         public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
         {
@@ -65,7 +55,5 @@ namespace JDS.OrgManager.Application.Behaviors
 
             return response;
         }
-
-        #endregion
     }
 }

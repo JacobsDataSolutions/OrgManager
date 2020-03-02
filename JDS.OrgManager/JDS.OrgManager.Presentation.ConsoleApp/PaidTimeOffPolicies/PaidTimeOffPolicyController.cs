@@ -19,15 +19,9 @@ namespace JDS.OrgManager.Presentation.ConsoleApp.PaidTimeOffPolicies
 {
     public class PaidTimeOffPolicyController : BaseController
     {
-        #region Public Constructors
-
         public PaidTimeOffPolicyController(IMediator mediator) : base(mediator)
         {
         }
-
-        #endregion
-
-        #region Public Methods
 
         public async Task<Result<IReadOnlyList<GetPaidTimeOffPolicyListViewModel>>> GetAllPtoPoliciesAsync()
         {
@@ -54,7 +48,5 @@ namespace JDS.OrgManager.Presentation.ConsoleApp.PaidTimeOffPolicies
                 return Result<GetPaidTimeOffPolicyDetailViewModel>.Failure(new[] { ex.Message }); ;
             }
         }
-
-        #endregion
     }
 }

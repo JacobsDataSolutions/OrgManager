@@ -14,8 +14,6 @@ namespace JDS.OrgManager.Application.Models
 {
     public abstract class AuditableDbEntity : IDbEntity
     {
-        #region Public Properties + Indexers
-
         public string CreatedBy { get; set; }
 
         public DateTime CreatedUtc { get; set; }
@@ -23,7 +21,5 @@ namespace JDS.OrgManager.Application.Models
         public string LastModifiedBy { get; set; }
 
         public DateTime? LastModifiedUtc { get; set; }
-
-        #endregion
     }
 }

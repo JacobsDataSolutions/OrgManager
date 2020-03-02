@@ -21,13 +21,7 @@ namespace JDS.OrgManager.Presentation.ConsoleApp
 {
     public static class NewEmployeeGenerator
     {
-        #region Private Fields
-
         private static readonly Random random = new Random();
-
-        #endregion
-
-        #region Public Methods
 
         public static Employee GenerateEmployee(int employeeLevel, bool? isMale = null)
         {
@@ -53,7 +47,5 @@ namespace JDS.OrgManager.Presentation.ConsoleApp
                 );
             return employee;
         }
-
-        #endregion
     }
 }

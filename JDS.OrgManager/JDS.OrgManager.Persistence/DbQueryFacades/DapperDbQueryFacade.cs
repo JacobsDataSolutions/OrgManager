@@ -20,19 +20,9 @@ namespace JDS.OrgManager.Persistence.DbQueryFacades
 {
     public class DapperDbQueryFacade : IOrgManagerDbQueryFacade
     {
-        #region Private Fields
-
         private readonly OrgManagerDbContext context;
 
-        #endregion
-
-        #region Public Constructors
-
         public DapperDbQueryFacade(OrgManagerDbContext context) => this.context = context ?? throw new ArgumentNullException(nameof(context));
-
-        #endregion
-
-        #region Public Methods
 
         public Task<int> ExecuteAsync(string sql, object param = null, CancellationToken cancellationToken = default) => context.Database.GetDbConnection().ExecuteAsync(sql, param);
 
@@ -41,7 +31,5 @@ namespace JDS.OrgManager.Persistence.DbQueryFacades
         public Task<T> QueryFirstOrDefaultAsync<T>(string sql, object param = null, CancellationToken cancellationToken = default) => context.Database.GetDbConnection().QueryFirstOrDefaultAsync<T>(sql, param);
 
         public Task<T> QuerySingleAsync<T>(string sql, object param = null, CancellationToken cancellationToken = default) => context.Database.GetDbConnection().QuerySingleAsync<T>(sql, param);
-
-        #endregion
     }
 }

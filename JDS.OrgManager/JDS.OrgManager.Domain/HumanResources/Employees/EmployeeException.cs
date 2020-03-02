@@ -14,8 +14,6 @@ namespace JDS.OrgManager.Domain.HumanResources.Employees
 {
     public class EmployeeException : DomainLayerException
     {
-        #region Public Constructors
-
         public EmployeeException()
         {
         }
@@ -31,7 +29,5 @@ namespace JDS.OrgManager.Domain.HumanResources.Employees
         public EmployeeException(string message, Exception innerException) : base(message, innerException)
         {
         }
-
-        #endregion
     }
 }

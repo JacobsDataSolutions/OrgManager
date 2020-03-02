@@ -18,26 +18,14 @@ namespace JDS.OrgManager.Application.HumanResources.Employees.Queries.GetEmploye
 {
     public class GetEmployeeListQuery : IRequest<IReadOnlyList<GetEmployeeListViewModel>>
     {
-        #region Public Classes
-
         public class GetEmployeeListQueryHandler : IRequestHandler<GetEmployeeListQuery, IReadOnlyList<GetEmployeeListViewModel>>
         {
-            #region Private Fields
-
             private readonly IOrgManagerDbQueryFacade queryFacade;
-
-            #endregion
-
-            #region Public Constructors
 
             public GetEmployeeListQueryHandler(IOrgManagerDbQueryFacade queryFacade)
             {
                 this.queryFacade = queryFacade ?? throw new ArgumentNullException(nameof(queryFacade));
             }
-
-            #endregion
-
-            #region Public Methods
 
             public Task<IReadOnlyList<GetEmployeeListViewModel>> Handle(GetEmployeeListQuery request, CancellationToken cancellationToken) =>
                 queryFacade.QueryAsync<GetEmployeeListViewModel>(
@@ -58,10 +46,6 @@ namespace JDS.OrgManager.Application.HumanResources.Employees.Queries.GetEmploye
                         FROM Employees e WITH(NOLOCK)
                         LEFT JOIN EmployeeManagers em WITH(NOLOCK) ON em.EmployeeId = e.Id
                         LEFT JOIN Employees m WITH(NOLOCK) ON em.ManagerId = m.Id");
-
-            #endregion
         }
-
-        #endregion
     }
 }

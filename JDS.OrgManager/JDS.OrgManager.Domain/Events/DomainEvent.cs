@@ -15,19 +15,11 @@ namespace JDS.OrgManager.Domain.Events
 {
     public abstract class DomainEvent : IDomainEvent
     {
-        #region Public Properties + Indexers
-
         public DateTime DateTimeOccurredUtc { get; }
-
-        #endregion
-
-        #region Protected Constructors
 
         protected DomainEvent(IDateTimeService dateTimeService)
         {
             DateTimeOccurredUtc = dateTimeService.UtcNow;
         }
-
-        #endregion
     }
 }

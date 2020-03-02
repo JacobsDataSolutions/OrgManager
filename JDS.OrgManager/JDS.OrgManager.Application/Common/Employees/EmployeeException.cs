@@ -14,8 +14,6 @@ namespace JDS.OrgManager.Application.Common.Employees
 {
     public class EmployeeException : ApplicationLayerException
     {
-        #region Public Constructors
-
         public EmployeeException()
         {
         }
@@ -31,7 +29,5 @@ namespace JDS.OrgManager.Application.Common.Employees
         public EmployeeException(SerializationInfo info, StreamingContext context) : base(info, context)
         {
         }
-
-        #endregion
     }
 }

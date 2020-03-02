@@ -19,23 +19,11 @@ namespace JDS.OrgManager.Application.HumanResources.Employees.Queries.GetEmploye
 {
     public class GetEmployeeOrgChartQuery : IRequest<IReadOnlyList<GetEmployeeOrgChartViewModel>>
     {
-        #region Public Classes
-
         public class GetEmployeeOrgChartQueryHandler : IRequestHandler<GetEmployeeOrgChartQuery, IReadOnlyList<GetEmployeeOrgChartViewModel>>
         {
-            #region Private Fields
-
             private readonly IOrgManagerDbQueryFacade queryFacade;
 
-            #endregion
-
-            #region Public Constructors
-
             public GetEmployeeOrgChartQueryHandler(IOrgManagerDbQueryFacade queryFacade) => this.queryFacade = queryFacade ?? throw new ArgumentNullException(nameof(queryFacade));
-
-            #endregion
-
-            #region Public Methods
 
             public async Task<IReadOnlyList<GetEmployeeOrgChartViewModel>> Handle(GetEmployeeOrgChartQuery request, CancellationToken cancellationToken)
             {
@@ -68,10 +56,6 @@ namespace JDS.OrgManager.Application.HumanResources.Employees.Queries.GetEmploye
                 }
                 return list;
             }
-
-            #endregion
         }
-
-        #endregion
     }
 }

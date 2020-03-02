@@ -15,15 +15,11 @@ namespace JDS.OrgManager.Persistence.Common.Employees
 {
     public class EmployeeManagerEntityConfiguration : IEntityTypeConfiguration<EmployeeManagerEntity>
     {
-        #region Public Methods
-
         public void Configure(EntityTypeBuilder<EmployeeManagerEntity> builder)
         {
             builder.HasKey(e => new { e.TenantId, e.ManagerId, e.EmployeeId });
             builder.HasOne(e => e.Manager).WithMany(e => e.Subordinates).OnDelete(DeleteBehavior.NoAction).HasForeignKey(e => new { e.TenantId, e.ManagerId });
             builder.HasOne(e => e.Employee).WithMany(e => e.Managers).OnDelete(DeleteBehavior.NoAction).HasForeignKey(e => new { e.TenantId, e.EmployeeId });
         }
-
-        #endregion
     }
 }

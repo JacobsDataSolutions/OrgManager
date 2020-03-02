@@ -13,8 +13,6 @@ namespace JDS.OrgManager.Application.HumanResources.PaidTimeOffPolicies.Queries.
 {
     public class GetPaidTimeOffPolicyListViewModel : ViewModel
     {
-        #region Public Properties + Indexers
-
         public bool AllowsUnlimitedPto { get; set; }
 
         public int EmployeeLevel { get; set; }
@@ -24,7 +22,5 @@ namespace JDS.OrgManager.Application.HumanResources.PaidTimeOffPolicies.Queries.
         public bool IsDefaultForEmployeeLevel { get; set; }
 
         public string Name { get; set; }
-
-        #endregion
     }
 }

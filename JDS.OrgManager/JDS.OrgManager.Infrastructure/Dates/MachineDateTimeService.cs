@@ -14,10 +14,6 @@ namespace JDS.OrgManager.Infrastructure.Dates
 {
     public class MachineDateTimeService : IDateTimeService
     {
-        #region Public Properties + Indexers
-
         public DateTime UtcNow => DateTime.UtcNow;
-
-        #endregion
     }
 }

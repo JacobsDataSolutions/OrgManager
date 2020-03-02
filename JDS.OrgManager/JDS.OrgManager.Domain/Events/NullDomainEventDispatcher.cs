@@ -14,10 +14,6 @@ namespace JDS.OrgManager.Domain.Events
 {
     public sealed class NullDomainEventDispatcher : IDomainEventDispatcher
     {
-        #region Public Methods
-
         public Task PublishAsync<TEvent>(TEvent domainEvent) where TEvent : IDomainEvent => Task.CompletedTask;
-
-        #endregion
     }
 }

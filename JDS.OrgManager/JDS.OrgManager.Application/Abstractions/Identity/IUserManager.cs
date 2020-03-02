@@ -14,12 +14,8 @@ namespace JDS.OrgManager.Application.Abstractions.Identity
 {
     public interface IUserManager
     {
-        #region Public Methods
-
         Task<(Result Result, string UserId)> CreateUserAsync(string userName, string password);
 
         Task<Result> DeleteUserAsync(string userId);
-
-        #endregion
     }
 }

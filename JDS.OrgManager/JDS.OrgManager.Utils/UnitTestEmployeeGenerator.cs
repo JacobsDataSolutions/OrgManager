@@ -20,13 +20,7 @@ namespace JDS.OrgManager.Utils
 {
     public static class UnitTestEmployeeGenerator
     {
-        #region Private Fields
-
         private static readonly Random random = new Random();
-
-        #endregion
-
-        #region Public Methods
 
         public static Employee GenerateEmployee(int employeeLevel, bool? isMale = null)
         {
@@ -54,7 +48,5 @@ namespace JDS.OrgManager.Utils
             employee.Id = random.Next();
             return employee;
         }
-
-        #endregion
     }
 }

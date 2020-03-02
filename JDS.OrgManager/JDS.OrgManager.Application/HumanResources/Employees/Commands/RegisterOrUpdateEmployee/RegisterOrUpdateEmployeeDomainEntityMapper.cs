@@ -18,19 +18,9 @@ namespace JDS.OrgManager.Application.HumanResources.Employees.Commands.RegisterO
 {
     public class RegisterOrUpdateEmployeeDomainEntityMapper : IViewModelToDomainEntityMapper<RegisterOrUpdateEmployeeCommand, Employee>
     {
-        #region Private Fields
-
         private readonly TypeAdapterConfig config = new TypeAdapterConfig();
 
-        #endregion
-
-        #region Public Constructors
-
         public RegisterOrUpdateEmployeeDomainEntityMapper() => ApplyMappingConfiguration();
-
-        #endregion
-
-        #region Public Methods
 
         public void ApplyMappingConfiguration()
         {
@@ -73,7 +63,5 @@ namespace JDS.OrgManager.Application.HumanResources.Employees.Commands.RegisterO
             vm.SubordinateIds = (from e in domainEntity.Subordinates select (int)e.Id).ToList();
             return vm;
         }
-
-        #endregion
     }
 }

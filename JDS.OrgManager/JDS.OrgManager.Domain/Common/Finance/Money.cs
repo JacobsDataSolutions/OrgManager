@@ -15,25 +15,15 @@ namespace JDS.OrgManager.Domain.Common.Finance
 {
     public class Money : ValueObject
     {
-        #region Public Properties + Indexers
-
         public decimal Amount { get; }
 
         public Currency Currency { get; }
-
-        #endregion
-
-        #region Public Constructors
 
         public Money(decimal amount, Currency currency)
         {
             Amount = amount;
             Currency = currency ?? throw new ArgumentNullException(nameof(currency));
         }
-
-        #endregion
-
-        #region Public Methods
 
         public static implicit operator decimal(Money money) => money.Amount;
 
@@ -57,16 +47,10 @@ namespace JDS.OrgManager.Domain.Common.Finance
 
         public override string ToString() => GetShortString();
 
-        #endregion
-
-        #region Protected Methods
-
         protected override IEnumerable<object> GetAtomicValues()
         {
             yield return Amount;
             yield return Currency;
         }
-
-        #endregion
     }
 }
