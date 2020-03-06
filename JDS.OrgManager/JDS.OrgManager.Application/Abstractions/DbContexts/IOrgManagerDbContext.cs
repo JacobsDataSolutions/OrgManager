@@ -18,15 +18,15 @@ namespace JDS.OrgManager.Application.Abstractions.DbContexts
 {
     public interface IOrgManagerDbContext
     {
-        public DbSet<CurrencyEntity> Currencies { get; }
+        DbSet<CurrencyEntity> Currencies { get; }
 
-        public DbSet<EmployeeManagerEntity> EmployeeManagers { get; }
+        DbSet<EmployeeManagerEntity> EmployeeManagers { get; }
 
-        public DbSet<EmployeeEntity> Employees { get; }
+        DbSet<EmployeeEntity> Employees { get; }
 
-        public bool HasChanges { get; }
+        bool HasChanges { get; }
 
-        public DbSet<PaidTimeOffPolicyEntity> PaidTimeOffPolicies { get; }
+        DbSet<PaidTimeOffPolicyEntity> PaidTimeOffPolicies { get; }
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }

@@ -10,6 +10,7 @@
 using CsvHelper;
 using JDS.OrgManager.Utils.Streets;
 using System;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -35,11 +36,13 @@ namespace JDS.OrgManager.Utils
         static DummyData()
         {
             using (var reader = new StreamReader(@"Streets\chicago-street-names.csv"))
-            using (var csv = new CsvReader(reader))
             {
-                csv.Configuration.RegisterClassMap<StreetClassMap>();
-                var records = csv.GetRecords<Street>();
-                streets = (from s in records where !ignoreSuffixes.Contains(s.Suffix) && !ignoreSuffixDirections.Contains(s.SuffixDirection) && !s.Name.Contains("RAMP") select s).ToArray();
+                using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+                {
+                    csv.Configuration.RegisterClassMap<StreetClassMap>();
+                    var records = csv.GetRecords<Street>();
+                    streets = (from s in records where !ignoreSuffixes.Contains(s.Suffix) && !ignoreSuffixDirections.Contains(s.SuffixDirection) && !s.Name.Contains("RAMP") select s).ToArray();
+                }
             }
         }
 

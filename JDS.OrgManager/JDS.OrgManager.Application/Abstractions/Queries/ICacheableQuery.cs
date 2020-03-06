@@ -11,12 +11,12 @@ namespace JDS.OrgManager.Application.Abstractions.Queries
 {
     public interface ICacheableQuery
     {
-        public bool BypassCache { get; }
+        bool BypassCache { get; }
 
-        public string CacheKey { get; }
+        string CacheKey { get; }
 
-        public bool RefreshCachedEntry { get; }
+        bool RefreshCachedEntry { get; }
 
-        public bool ReplaceCachedEntry { get; }
+        bool ReplaceCachedEntry { get; }
     }
 }

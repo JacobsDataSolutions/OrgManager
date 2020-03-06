@@ -43,6 +43,7 @@ namespace JDS.OrgManager.Presentation.ConsoleApp
 
         private const int basicOrgDepth = 3;
 
+        // Change this to 'true' to see the F# code in action.
         private const bool runAdvancedScenario = false;
 
         public static async Task Main(string[] args)
@@ -238,7 +239,7 @@ namespace JDS.OrgManager.Presentation.ConsoleApp
                 .WriteTo.File(@"Logs\orgManager.log", rollingInterval: RollingInterval.Day)
                 .CreateLogger();
 
-            services.AddSingleton<ILoggerFactory>(services => new SerilogLoggerFactory(logger, false));
+            services.AddSingleton<ILoggerFactory>(serv => new SerilogLoggerFactory(logger, false));
             return services;
         }
 

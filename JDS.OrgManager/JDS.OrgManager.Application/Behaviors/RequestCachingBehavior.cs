@@ -39,14 +39,14 @@ namespace JDS.OrgManager.Application.Behaviors
         {
             if (request is ICacheableQuery cacheableQuery)
             {
+                TResponse response;
                 async Task<TResponse> GetResponseAndAddToCache()
                 {
-                    var response = await next();
+                    response = await next();
                     await cache.SetAsync(cacheableQuery.CacheKey, byteSerializer.Serialize(response), options, cancellationToken);
                     return response;
                 }
 
-                TResponse response;
                 if (cacheableQuery.ReplaceCachedEntry)
                 {
                     logger.LogInformation($"Replacing cache entry for key '{cacheableQuery.CacheKey}'.");
