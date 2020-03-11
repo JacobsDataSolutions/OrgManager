@@ -1,4 +1,4 @@
-// Copyright ©2020 Jacobs Data Solutions
+// Copyright Â©2020 Jacobs Data Solutions
 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the
 // License at
@@ -51,6 +51,7 @@ namespace JDS.OrgManager.Domain.Accounting.Employees
             string middleName = null,
             IEnumerable<Paycheck> paychecks = null)
         {
+            Salary = salary ?? throw new ArgumentNullException(nameof(salery));
             if (salary.Amount <= 0.0m)
             {
                 throw new ArgumentOutOfRangeException(nameof(salary));
@@ -58,7 +59,6 @@ namespace JDS.OrgManager.Domain.Accounting.Employees
             LastName = lastName ?? throw new ArgumentNullException(nameof(lastName));
             FirstName = firstName ?? throw new ArgumentNullException(nameof(firstName));
             SocialSecurityNumber = socialSecurityNumber ?? throw new ArgumentNullException(nameof(socialSecurityNumber));
-            Salary = salary ?? throw new ArgumentNullException(nameof(salary));
             Elected401kContribution = elected401kContribution ?? throw new ArgumentNullException(nameof(elected401kContribution));
             PtoHoursRemaining = ptoHoursRemaining;
             Id = id;
