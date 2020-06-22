@@ -51,7 +51,7 @@ namespace JDS.OrgManager.Domain.Accounting.Employees
             string middleName = null,
             IEnumerable<Paycheck> paychecks = null)
         {
-            Salary = salary ?? throw new ArgumentNullException(nameof(salery));
+            Salary = salary ?? throw new ArgumentNullException(nameof(salary));
             if (salary.Amount <= 0.0m)
             {
                 throw new ArgumentOutOfRangeException(nameof(salary));
