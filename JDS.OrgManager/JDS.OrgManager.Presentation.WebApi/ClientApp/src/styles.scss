@@ -1,0 +1,42 @@
+@import 'styles-variables';
+
+@import '~bootstrap/scss/bootstrap-reboot';
+@import '~bootstrap/scss/bootstrap-grid';
+@import 'styles-reset';
+
+@import '~@angular/material/theming';
+
+@include mat-core();
+
+@import './themes/default-theme';
+@import './themes/light-theme';
+@import './themes/black-theme';
+@import './themes/nature-theme';
+
+@import 'styles-reset.scss-theme';
+@import './app/app/app.component.scss-theme';
+
+@mixin custom-components-theme($theme) {
+  @include org-manager-styles-reset-theme($theme);
+  @include org-manager-app-component-theme($theme);
+}
+
+.default-theme {
+  @include angular-material-theme($org-manager-theme);
+  @include custom-components-theme($org-manager-theme);
+}
+
+.light-theme {
+  @include angular-material-theme($org-manager-light-theme);
+  @include custom-components-theme($org-manager-light-theme);
+}
+
+.black-theme {
+  @include angular-material-theme($org-manager-black-theme);
+  @include custom-components-theme($org-manager-black-theme);
+}
+
+.nature-theme {
+  @include angular-material-theme($org-manager-nature-theme);
+  @include custom-components-theme($org-manager-nature-theme);
+}

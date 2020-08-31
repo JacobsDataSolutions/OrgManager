@@ -1,0 +1,104 @@
+$md-omprimary: (
+    50 : #e0fbfe,
+    100 : #b3f5fe,
+    200 : #80eefd,
+    300 : #4de7fc,
+    400 : #26e2fb,
+    500 : #00ddfa,
+    600 : #00d9f9,
+    700 : #00d4f9,
+    800 : #00cff8,
+    900 : #00c7f6,
+    A100 : #ffffff,
+    A200 : #eafaff,
+    A400 : #b7efff,
+    A700 : #9de9ff,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #000000,
+        600 : #000000,
+        700 : #000000,
+        800 : #000000,
+        900 : #000000,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+$md-omaccent: (
+    50 : #e0edef,
+    100 : #b3d3d7,
+    200 : #80b6bd,
+    300 : #4d98a2,
+    400 : #26828e,
+    500 : #006c7a,
+    600 : #006472,
+    700 : #005967,
+    800 : #004f5d,
+    900 : #003d4a,
+    A100 : #7ee2ff,
+    A200 : #4bd7ff,
+    A400 : #18cbff,
+    A700 : #00c4fd,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #ffffff,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+$md-omwarn: (
+    50 : #feede0,
+    100 : #fed3b3,
+    200 : #fdb680,
+    300 : #fc984d,
+    400 : #fb8226,
+    500 : #fa6c00,
+    600 : #f96400,
+    700 : #f95900,
+    800 : #f84f00,
+    900 : #f63d00,
+    A100 : #ffffff,
+    A200 : #ffeeea,
+    A400 : #ffc4b7,
+    A700 : #ffaf9d,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #000000,
+        600 : #000000,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+$org-manager-primary: mat-palette($md-omprimary, 800, 300, 900);
+$org-manager-accent: mat-palette($md-omaccent);
+$org-manager-warn: mat-palette($md-omwarn, 600);
+
+$org-manager-theme: mat-light-theme($org-manager-primary, $org-manager-accent, $org-manager-warn);
