@@ -1,18 +1,27 @@
-import { AppPage } from './app.po';
+// Copyright (c)2020 Jacobs Data Solutions
 
-import { getCurrentRouteUrl } from '../utils/utils';
+// Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the
+// License at
 
-describe('App', () => {
+// http://www.apache.org/licenses/LICENSE-2.0
+
+// Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+// CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+import { AppPage } from "./app.po";
+
+import { getCurrentRouteUrl } from "../utils/utils";
+
+describe("App", () => {
   let page: AppPage;
 
   beforeEach(() => (page = new AppPage()));
 
   it('should redirect to "about" route', () => {
     page.navigateTo();
-    expect(getCurrentRouteUrl()).toEqual('about');
+    expect(getCurrentRouteUrl()).toEqual("about");
   });
 
-  it('should display current year in the footer', () => {
+  it("should display current year in the footer", () => {
     page.navigateTo();
     expect(page.getCurrentYear()).toEqual(new Date().getFullYear().toString());
   });
@@ -22,7 +31,7 @@ describe('App', () => {
     page
       .getAllMenus()
       .then((menus) =>
-        expect(menus).toEqual(['About', 'Features', 'Examples'])
+        expect(menus).toEqual(["About", "Features", "Examples"])
       );
   });
 });
