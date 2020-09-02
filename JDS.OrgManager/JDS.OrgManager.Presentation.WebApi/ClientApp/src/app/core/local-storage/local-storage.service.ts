@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 
-const APP_PREFIX = 'ANMS-';
+const APP_PREFIX = "OrgManager-";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class LocalStorageService {
   constructor() {}
@@ -12,18 +12,18 @@ export class LocalStorageService {
     return Object.keys(localStorage).reduce((state: any, storageKey) => {
       if (storageKey.includes(APP_PREFIX)) {
         const stateKeys = storageKey
-          .replace(APP_PREFIX, '')
+          .replace(APP_PREFIX, "")
           .toLowerCase()
-          .split('.')
+          .split(".")
           .map((key) =>
             key
-              .split('-')
+              .split("-")
               .map((token, index) =>
                 index === 0
                   ? token
                   : token.charAt(0).toUpperCase() + token.slice(1)
               )
-              .join('')
+              .join("")
           );
         let currentStateRef = state;
         stateKeys.forEach((key, index) => {
@@ -53,10 +53,10 @@ export class LocalStorageService {
 
   /** Tests that localStorage exists, can be written to, and read from. */
   testLocalStorage() {
-    const testValue = 'testValue';
-    const testKey = 'testKey';
+    const testValue = "testValue";
+    const testKey = "testKey";
     let retrievedValue: string;
-    const errorMessage = 'localStorage did not return expected value';
+    const errorMessage = "localStorage did not return expected value";
 
     this.setItem(testKey, testValue);
     retrievedValue = this.getItem(testKey);
