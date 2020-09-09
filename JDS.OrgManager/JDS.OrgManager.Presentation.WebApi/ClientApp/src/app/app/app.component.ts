@@ -13,6 +13,12 @@ import { Component, OnInit } from "@angular/core";
 import { environment as env } from "../../environments/environment";
 import { OverlayContainer } from "@angular/cdk/overlay";
 
+// JDS
+import {
+  AuthorizeService,
+  AuthenticationResultStatus
+} from "../../api-authorization/authorize.service";
+
 import { routeAnimations, LocalStorageService } from "../core/core.module";
 
 @Component({
@@ -33,6 +39,7 @@ export class AppComponent implements OnInit {
   theme = "default-theme";
 
   constructor(
+    private authorizeService: AuthorizeService,
     private storageService: LocalStorageService,
     private overlayContainer: OverlayContainer
   ) {}
@@ -46,6 +53,11 @@ export class AppComponent implements OnInit {
     if (AppComponent.isIEorEdgeOrSafari()) {
       //TODO: disable animations.
     }
+
+    this.authorizeService.isAuthenticated().subscribe((r) => {
+      this.isAuthenticated = r;
+    });
+
     // Set theme.
     const classList = this.overlayContainer.getContainerElement().classList;
     const toRemove = Array.from(classList).filter((item: string) =>

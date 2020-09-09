@@ -9,18 +9,13 @@
 // CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule, PreloadAllModules } from "@angular/router";
+import { AuthorizeGuard } from "../api-authorization/authorize.guard";
 
 const routes: Routes = [];
 
 @NgModule({
   // useHash supports github.io demo page, remove in your app
-  imports: [
-    RouterModule.forRoot(routes, {
-      useHash: true,
-      scrollPositionRestoration: "enabled",
-      preloadingStrategy: PreloadAllModules
-    })
-  ],
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
 export class AppRoutingModule {}

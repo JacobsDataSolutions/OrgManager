@@ -35,6 +35,10 @@ import { MatSnackBarModule } from "@angular/material/snack-bar";
 
 import { environment } from "../../environments/environment";
 
+// JDS
+import { ApiAuthorizationModule } from "../../api-authorization/api-authorization.module";
+import { AuthorizeInterceptor } from "../../api-authorization/authorize.interceptor";
+
 import {
   ROUTE_ANIMATIONS_ELEMENTS,
   routeAnimations
@@ -72,6 +76,9 @@ export {
 
 @NgModule({
   imports: [
+    // JDS
+    ApiAuthorizationModule,
+
     // angular
     CommonModule,
     HttpClientModule,
@@ -102,8 +109,8 @@ export {
   declarations: [],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
-    { provide: ErrorHandler, useClass: AppErrorHandler },
-    { provide: RouterStateSerializer, useClass: CustomSerializer }
+    // JDS
+    { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true }
   ],
   exports: [
     // angular

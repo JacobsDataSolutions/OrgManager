@@ -57,7 +57,7 @@ namespace JDS.OrgManager.Presentation.WebApi
             app.UseIdentityServer();
             app.UseAuthorization();
 
-            // TODO: add in custom middleware
+            // JDS TODO: add in custom middleware
 
             app.UseEndpoints(endpoints =>
             {
@@ -83,7 +83,7 @@ namespace JDS.OrgManager.Presentation.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // TODO: add in serilog, MediatR, DI extensions from the Application/Infrastrastructure/Domain layers.
+            // JDS TODO: add in serilog, MediatR, DI extensions from the Application/Infrastrastructure/Domain layers.
 
             services.AddDbContext<AppIdentityDbContext>(options =>
                 options.UseSqlServer(
@@ -98,7 +98,7 @@ namespace JDS.OrgManager.Presentation.WebApi
             services.AddAuthentication()
                 .AddIdentityServerJwt();
 
-            // TODO: add in custom profile service.
+            // JDS TODO: add in custom profile service.
 
             services.AddControllersWithViews();
             services.AddRazorPages();
