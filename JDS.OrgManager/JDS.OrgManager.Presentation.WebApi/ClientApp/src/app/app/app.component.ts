@@ -68,8 +68,4 @@ export class AppComponent implements OnInit {
     }
     classList.add("default-theme");
   }
-
-  onLoginClick() {}
-
-  onLogoutClick() {}
 }

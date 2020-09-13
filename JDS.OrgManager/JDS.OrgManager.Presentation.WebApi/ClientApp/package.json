@@ -4,7 +4,7 @@
   "license": "Apache 2.0",
   "scripts": {
     "ng": "ng",
-    "start": "echo hello & ng serve --open",
+    "start": "echo hello & ng serve",
     "start:prod": "npm run build:prod && npm run server",
     "build": "ng build",
     "build:prod": "ng build --prod",
