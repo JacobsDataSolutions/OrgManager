@@ -26,7 +26,7 @@ Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "JDS.OrgManager.Domain.Human
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JDS.OrgManager.Domain.HumanResources.Advanced.UnitTests", "JDS.OrgManager.Domain.HumanResources.Advanced.Tests\JDS.OrgManager.Domain.HumanResources.Advanced.UnitTests.csproj", "{1E5563FD-F347-461A-9C0F-78EFDD4E1478}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JDS.OrgManager.Presentation.WebApi", "JDS.OrgManager.Presentation.WebApi\JDS.OrgManager.Presentation.WebApi.csproj", "{7233F81C-9D8F-4992-B2C5-506C9ACB005A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JDS.OrgManager.Presentation.WebApi", "JDS.OrgManager.Presentation.WebApi\JDS.OrgManager.Presentation.WebApi.csproj", "{7233F81C-9D8F-4992-B2C5-506C9ACB005A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

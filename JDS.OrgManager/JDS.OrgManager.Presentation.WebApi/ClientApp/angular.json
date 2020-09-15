@@ -18,12 +18,13 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "progress": false,
+            "extractCss": true,
             "outputPath": "dist/org-manager",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
-            "aot": true,
             "assets": [
               "src/favicon.ico",
               "src/assets"
@@ -83,6 +84,7 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
+            "progress": true,
             "browserTarget": "org-manager:build"
           },
           "configurations": {
@@ -151,8 +153,5 @@
       }
     }
   },
-  "defaultProject": "org-manager",
-  "cli": {
-    "analytics": false
-  }
+  "defaultProject": "org-manager"
 }

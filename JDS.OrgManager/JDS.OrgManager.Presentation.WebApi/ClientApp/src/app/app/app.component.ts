@@ -11,6 +11,13 @@ import browser from "browser-detect";
 import { Component, OnInit } from "@angular/core";
 
 import { environment as env } from "../../environments/environment";
+import { OverlayContainer } from "@angular/cdk/overlay";
+
+// JDS
+import {
+  AuthorizeService,
+  AuthenticationResultStatus
+} from "../../api-authorization/authorize.service";
 
 import { routeAnimations, LocalStorageService } from "../core/core.module";
 
@@ -31,7 +38,11 @@ export class AppComponent implements OnInit {
   stickyHeader = true;
   theme = "default-theme";
 
-  constructor(private storageService: LocalStorageService) {}
+  constructor(
+    private authorizeService: AuthorizeService,
+    private storageService: LocalStorageService,
+    private overlayContainer: OverlayContainer
+  ) {}
 
   private static isIEorEdgeOrSafari() {
     return ["ie", "edge", "safari"].includes(browser().name);
@@ -42,9 +53,19 @@ export class AppComponent implements OnInit {
     if (AppComponent.isIEorEdgeOrSafari()) {
       //TODO: disable animations.
     }
+
+    this.authorizeService.isAuthenticated().subscribe((r) => {
+      this.isAuthenticated = r;
+    });
+
+    // Set theme.
+    const classList = this.overlayContainer.getContainerElement().classList;
+    const toRemove = Array.from(classList).filter((item: string) =>
+      item.includes("-theme")
+    );
+    if (toRemove.length) {
+      classList.remove(...toRemove);
+    }
+    classList.add("default-theme");
   }
-
-  onLoginClick() {}
-
-  onLogoutClick() {}
 }

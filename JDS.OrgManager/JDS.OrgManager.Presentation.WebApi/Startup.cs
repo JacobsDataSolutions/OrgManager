@@ -7,8 +7,8 @@
 
 // Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
 // CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
-using JDS.OrgManager.Presentation.WebApi.Data;
-using JDS.OrgManager.Presentation.WebApi.Models;
+using JDS.OrgManager.Infrastructure;
+using JDS.OrgManager.Infrastructure.Identity;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -56,6 +56,9 @@ namespace JDS.OrgManager.Presentation.WebApi
             app.UseAuthentication();
             app.UseIdentityServer();
             app.UseAuthorization();
+
+            // JDS TODO: add in custom middleware
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
@@ -80,18 +83,23 @@ namespace JDS.OrgManager.Presentation.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
+            // JDS TODO: add in serilog, MediatR, DI extensions from the Application/Infrastrastructure/Domain layers.
+
+            services.AddDbContext<AppIdentityDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                    Configuration.GetConnectionString(InfrastructureLayerConstants.TenantMasterDatabaseConnectionStringName)));
 
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                .AddEntityFrameworkStores<AppIdentityDbContext>();
 
             services.AddIdentityServer()
-                .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
+                .AddApiAuthorization<ApplicationUser, AppIdentityDbContext>();
 
             services.AddAuthentication()
                 .AddIdentityServerJwt();
+
+            // JDS TODO: add in custom profile service.
+
             services.AddControllersWithViews();
             services.AddRazorPages();
             // In production, the Angular files will be served from this directory

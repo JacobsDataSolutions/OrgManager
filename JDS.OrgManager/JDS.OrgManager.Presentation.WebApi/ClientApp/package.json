@@ -4,7 +4,7 @@
   "license": "Apache 2.0",
   "scripts": {
     "ng": "ng",
-    "start": "echo hello & ng serve --open",
+    "start": "echo hello & ng serve",
     "start:prod": "npm run build:prod && npm run server",
     "build": "ng build",
     "build:prod": "ng build --prod",
@@ -56,6 +56,7 @@
     "@ngrx/store-devtools": "~10.0.0",
     "bootstrap": "^4.5.2",
     "browser-detect": "^0.2.28",
+    "oidc-client": "1.10.1",
     "rxjs": "~6.6.2",
     "tslib": "^2.0.0",
     "uuid": "^8.3.0",

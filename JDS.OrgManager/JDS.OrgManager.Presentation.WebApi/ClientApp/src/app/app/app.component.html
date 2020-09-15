@@ -27,31 +27,32 @@
           </button>
 
           <span routerLink="" class="branding spacer center d-inline d-sm-none">
-            <img [src]="logo" [alt]="logo"/></span>
+            <img [src]="logo" [alt]="logo" />
+          </span>
           <span routerLink="" class="branding spacer center d-none d-sm-inline d-md-none"><img [src]="logo" [alt]="logo" />&nbsp;&nbsp;Org Manager</span>
           <span routerLink="" class="branding spacer d-none d-md-inline"><img [src]="logo" [alt]="logo" />&nbsp;&nbsp;Organization Manager</span>
 
           <span class="d-none d-md-inline">
             <!--<button mat-button class="nav-button" *ngFor="let item of navigation" [routerLink]="[item.link]"
-              routerLinkActive="active">
-              {{item.label}}
-            </button>-->
+      routerLinkActive="active">
+      {{item.label}}
+    </button>-->
           </span>
 
-          <button mat-button mat-stroked-button color="accent" *ngIf="!isAuthenticated" (click)="onLoginClick()">Login
-          </button>
-
-          <button *ngIf="isAuthenticated"
-                  mat-icon-button
-                  [matMenuTriggerFor]="toolbarUserMenu">
-            <fa-icon icon="user-circle"></fa-icon>
-          </button>
-          <mat-menu #toolbarUserMenu="matMenu">
-            <button mat-menu-item (click)="onLogoutClick()">
-              <mat-icon><fa-icon icon="power-off"></fa-icon></mat-icon>
-              <span>Logout</span>
+          <span class="d-none d-md-inline" *ngIf="!isAuthenticated">
+            <button mat-button mat-stroked-button color="accent" [routerLink]='["/authentication/login"]'>
+              Sign in
             </button>
-          </mat-menu>
+          </span>
+
+          <span class="d-none d-md-inline" *ngIf="isAuthenticated">
+            <button mat-button mat-stroked-button color="accent" [routerLink]='["/authentication/profile"]'>
+              Profile
+            </button>
+            <button mat-button mat-stroked-button color="accent" [routerLink]='["/authentication/logout"]' [state]='{ local: true }'>
+              Logout
+            </button>
+          </span>
 
           <a [matTooltip]="'GitHub'"
              matTooltipPosition="before"
