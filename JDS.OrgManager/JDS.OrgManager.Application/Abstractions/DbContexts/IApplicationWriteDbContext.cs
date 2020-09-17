@@ -11,18 +11,29 @@ using JDS.OrgManager.Application.Common.Currencies;
 using JDS.OrgManager.Application.Common.Employees;
 using JDS.OrgManager.Application.Common.PaidTimeOffPolicies;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using System.Data;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace JDS.OrgManager.Application.Abstractions.DbContexts
 {
-    public interface IOrgManagerDbContext
+    public interface IApplicationWriteDbContext
     {
+        IDbConnection Connection { get; }
+
         DbSet<CurrencyEntity> Currencies { get; }
+
+        DatabaseFacade Database { get; }
 
         DbSet<EmployeeManagerEntity> EmployeeManagers { get; }
 
         DbSet<EmployeeEntity> Employees { get; }
+
+        EntityEntry Entry(object entity);
+
+        EntityEntry<TEntity> Entry<TEntity>(TEntity entity) where TEntity : class;
 
         bool HasChanges { get; }
 

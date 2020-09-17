@@ -15,12 +15,10 @@ using System.IO;
 
 namespace JDS.OrgManager.Persistence.DbContexts
 {
-    public abstract class DesignTimeDbContextFactoryBase<TContext> :
+    public abstract class DesignTimeWriteDbContextFactoryBase<TContext> :
         IDesignTimeDbContextFactory<TContext> where TContext : DbContext
     {
         private const string AspNetCoreEnvironment = "ASPNETCORE_ENVIRONMENT";
-
-        private const string ConnectionStringName = "ApplicationDatabase";
 
         public TContext CreateDbContext(string[] args)
         {
@@ -40,7 +38,7 @@ namespace JDS.OrgManager.Persistence.DbContexts
                 .AddEnvironmentVariables()
                 .Build();
 
-            var connectionString = configuration.GetConnectionString(ConnectionStringName);
+            var connectionString = configuration.GetConnectionString(PersistenceLayerConstants.WriteDatabaseConnectionStringName);
 
             return Create(connectionString);
         }
@@ -49,7 +47,7 @@ namespace JDS.OrgManager.Persistence.DbContexts
         {
             if (string.IsNullOrEmpty(connectionString))
             {
-                throw new ArgumentException($"Connection string '{ConnectionStringName}' is null or empty.", nameof(connectionString));
+                throw new ArgumentException($"Connection string '{connectionString}' is null or empty.", nameof(connectionString));
             }
 
             Console.WriteLine($"DesignTimeDbContextFactoryBase.Create(string): Connection string: '{connectionString}'.");

@@ -30,7 +30,7 @@ namespace JDS.OrgManager.Presentation.ConsoleApp
 
         public async Task UpdateDatabaseAsync()
         {
-            var context = services.GetRequiredService<OrgManagerDbContext>();
+            var context = services.GetRequiredService<ApplicationWriteDbContext>();
             context.Database.Migrate();
 
             var mediator = services.GetRequiredService<IMediator>();

@@ -20,11 +20,11 @@ namespace JDS.OrgManager.Application.System.Commands.SeedInitialData
     {
         public class SeedSampleDataCommandHandler : IRequestHandler<SeedInitialDataCommand>
         {
-            private readonly IOrgManagerDbContext context;
+            private readonly IApplicationWriteDbContext context;
 
             private readonly ILogger logger;
 
-            public SeedSampleDataCommandHandler(IOrgManagerDbContext context, ILogger<SeedSampleDataCommandHandler> logger)
+            public SeedSampleDataCommandHandler(IApplicationWriteDbContext context, ILogger<SeedSampleDataCommandHandler> logger)
             {
                 this.context = context ?? throw new ArgumentNullException(nameof(context));
                 this.logger = logger ?? throw new ArgumentNullException(nameof(logger));

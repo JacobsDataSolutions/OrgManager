@@ -76,7 +76,7 @@ namespace JDS.OrgManager.Application.HumanResources.Employees.Commands.RegisterO
 
         public class RegisterOrUpdateEmployeeCommandHandler : IRequestHandler<RegisterOrUpdateEmployeeCommand, RegisterOrUpdateEmployeeCommand>
         {
-            private readonly IOrgManagerDbContext context;
+            private readonly IApplicationWriteDbContext context;
 
             private readonly IDateTimeService dateTimeService;
 
@@ -87,7 +87,7 @@ namespace JDS.OrgManager.Application.HumanResources.Employees.Commands.RegisterO
             private readonly IDomainEntityToDbEntityMapper<PaidTimeOffPolicy, PaidTimeOffPolicyEntity> ptoPolicyDomainToDbEntityMapper;
 
             public RegisterOrUpdateEmployeeCommandHandler(
-                IOrgManagerDbContext context,
+                IApplicationWriteDbContext context,
                 IViewModelToDomainEntityMapper<RegisterOrUpdateEmployeeCommand, Employee> employeeVmToDomainEntityMapper,
                 IDomainEntityToDbEntityMapper<Employee, EmployeeEntity> employeeDomainToDbEntityMapper,
                 IDomainEntityToDbEntityMapper<PaidTimeOffPolicy, PaidTimeOffPolicyEntity> ptoPolicyDomainToDbEntityMapper,

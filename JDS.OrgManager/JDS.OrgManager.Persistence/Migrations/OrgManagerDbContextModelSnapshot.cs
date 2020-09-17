@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace JDS.OrgManager.Persistence.Migrations
 {
-    [DbContext(typeof(OrgManagerDbContext))]
+    [DbContext(typeof(ApplicationWriteDbContext))]
     partial class OrgManagerDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

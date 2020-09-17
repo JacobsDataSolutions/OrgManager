@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace JDS.OrgManager.Persistence.Migrations
 {
-    [DbContext(typeof(OrgManagerDbContext))]
+    [DbContext(typeof(ApplicationWriteDbContext))]
     [Migration("20200113175034_Initial")]
     partial class Initial
     {

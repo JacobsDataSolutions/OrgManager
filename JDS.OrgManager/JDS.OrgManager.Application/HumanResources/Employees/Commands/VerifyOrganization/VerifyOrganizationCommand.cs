@@ -28,7 +28,7 @@ namespace JDS.OrgManager.Application.HumanResources.Employees.Commands.VerifyOrg
     {
         public class VerifyOrganizationCommandHandler : IRequestHandler<VerifyOrganizationCommand, VerifyOrganizationViewModel>
         {
-            private readonly IOrgManagerDbContext context;
+            private readonly IApplicationWriteDbContext context;
 
             private readonly IDomainEntityToDbEntityMapper<Employee, EmployeeEntity> employeeDomainToDbEntityMapper;
 
@@ -37,7 +37,7 @@ namespace JDS.OrgManager.Application.HumanResources.Employees.Commands.VerifyOrg
             private readonly IDomainEntityToDbEntityMapper<PaidTimeOffPolicy, PaidTimeOffPolicyEntity> ptoPolicyDomainToDbEntityMapper;
 
             public VerifyOrganizationCommandHandler(
-                IOrgManagerDbContext context,
+                IApplicationWriteDbContext context,
                 IDomainEntityToDbEntityMapper<Employee, EmployeeEntity> employeeDomainToDbEntityMapper,
                 IDomainEntityToDbEntityMapper<PaidTimeOffPolicy, PaidTimeOffPolicyEntity> ptoPolicyDomainToDbEntityMapper,
                 IOrganizationVerifier organizationVerifier)

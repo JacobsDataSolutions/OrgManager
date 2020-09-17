@@ -8,19 +8,18 @@
 // Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
 // CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 using System.Collections.Generic;
+using System.Data;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace JDS.OrgManager.Application.Abstractions.DbQueryFacades
+namespace JDS.OrgManager.Application.Abstractions.DbFacades
 {
-    public interface IOrgManagerDbQueryFacade
+    public interface IApplicationReadDbFacade
     {
-        Task<int> ExecuteAsync(string sql, object param = null, CancellationToken cancellationToken = default);
+        Task<IReadOnlyList<T>> QueryAsync<T>(string sql, object param = null, IDbTransaction transaction = null, CancellationToken cancellationToken = default);
 
-        Task<IReadOnlyList<T>> QueryAsync<T>(string sql, object param = null, CancellationToken cancellationToken = default);
+        Task<T> QueryFirstOrDefaultAsync<T>(string sql, object param = null, IDbTransaction transaction = null, CancellationToken cancellationToken = default);
 
-        Task<T> QueryFirstOrDefaultAsync<T>(string sql, object param = null, CancellationToken cancellationToken = default);
-
-        Task<T> QuerySingleAsync<T>(string sql, object param = null, CancellationToken cancellationToken = default);
+        Task<T> QuerySingleAsync<T>(string sql, object param = null, IDbTransaction transaction = null, CancellationToken cancellationToken = default);
     }
 }

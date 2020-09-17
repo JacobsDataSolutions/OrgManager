@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace JDS.OrgManager.Persistence.DbContexts
 {
-    public class OrgManagerDbContextFactory : DesignTimeDbContextFactoryBase<OrgManagerDbContext>
+    public class ApplicationWriteDbContextFactory : DesignTimeWriteDbContextFactoryBase<ApplicationWriteDbContext>
     {
-        protected override OrgManagerDbContext CreateNewInstance(DbContextOptions<OrgManagerDbContext> options) => new OrgManagerDbContext(options);
+        protected override ApplicationWriteDbContext CreateNewInstance(DbContextOptions<ApplicationWriteDbContext> options) => new ApplicationWriteDbContext(options);
     }
 }

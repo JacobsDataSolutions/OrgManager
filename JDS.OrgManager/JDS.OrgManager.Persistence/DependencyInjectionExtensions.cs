@@ -8,7 +8,7 @@
 // Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
 // CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 using JDS.OrgManager.Application.Abstractions.DbContexts;
-using JDS.OrgManager.Application.Abstractions.DbQueryFacades;
+using JDS.OrgManager.Application.Abstractions.DbFacades;
 using JDS.OrgManager.Persistence.DbContexts;
 using JDS.OrgManager.Persistence.DbQueryFacades;
 using Microsoft.EntityFrameworkCore;
@@ -21,11 +21,11 @@ namespace JDS.OrgManager.Persistence
     {
         public static IServiceCollection AddPersistenceLayer(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<OrgManagerDbContext>(options =>
+            services.AddDbContext<ApplicationWriteDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("ApplicationDatabase")));
 
-            services.AddScoped<IOrgManagerDbContext>(provider => provider.GetService<OrgManagerDbContext>());
-            services.AddScoped<IOrgManagerDbQueryFacade, DapperDbQueryFacade>();
+            services.AddScoped<IApplicationWriteDbContext>(provider => provider.GetService<ApplicationWriteDbContext>());
+            services.AddScoped<IApplicationReadDbFacade, ApplicationReadDbFacade>();
 
             return services;
         }
