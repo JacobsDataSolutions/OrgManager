@@ -31,13 +31,13 @@ namespace JDS.OrgManager.Application.Abstractions.DbContexts
 
         DbSet<EmployeeEntity> Employees { get; }
 
-        EntityEntry Entry(object entity);
-
-        EntityEntry<TEntity> Entry<TEntity>(TEntity entity) where TEntity : class;
-
         bool HasChanges { get; }
 
         DbSet<PaidTimeOffPolicyEntity> PaidTimeOffPolicies { get; }
+
+        EntityEntry Entry(object entity);
+
+        EntityEntry<TEntity> Entry<TEntity>(TEntity entity) where TEntity : class;
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }
