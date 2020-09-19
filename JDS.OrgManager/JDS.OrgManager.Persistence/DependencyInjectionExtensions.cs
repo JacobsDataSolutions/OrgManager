@@ -10,7 +10,7 @@
 using JDS.OrgManager.Application.Abstractions.DbContexts;
 using JDS.OrgManager.Application.Abstractions.DbFacades;
 using JDS.OrgManager.Persistence.DbContexts;
-using JDS.OrgManager.Persistence.DbQueryFacades;
+using JDS.OrgManager.Persistence.DbFacades;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

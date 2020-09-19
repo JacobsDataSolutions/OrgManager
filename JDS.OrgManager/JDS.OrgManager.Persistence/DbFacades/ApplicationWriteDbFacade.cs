@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace JDS.OrgManager.Persistence.DbQueryFacades
+namespace JDS.OrgManager.Persistence.DbFacades
 {
     public class ApplicationWriteDbFacade : IApplicationWriteDbFacade
     {

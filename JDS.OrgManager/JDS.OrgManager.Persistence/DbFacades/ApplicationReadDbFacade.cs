@@ -19,7 +19,7 @@ using System.Data;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace JDS.OrgManager.Persistence.DbQueryFacades
+namespace JDS.OrgManager.Persistence.DbFacades
 {
     public class ApplicationReadDbFacade : IApplicationReadDbFacade, IDisposable
     {

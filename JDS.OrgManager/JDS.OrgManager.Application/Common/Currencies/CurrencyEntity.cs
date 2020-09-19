@@ -14,5 +14,8 @@ namespace JDS.OrgManager.Application.Common.Currencies
     public class CurrencyEntity : IDbEntity
     {
         public string Code { get; set; }
+
+        public string Name { get; set; }
+
     }
 }

@@ -28,6 +28,8 @@ namespace JDS.OrgManager.Application.HumanResources.PaidTimeOffPolicies.Queries.
 
         public bool ReplaceCachedEntry { get; set; }
 
+        public TimeSpan? SlidingExpiration { get; set; }
+
         public class GetPaidTimeOffPolicyDetailQueryHandler : IRequestHandler<GetPaidTimeOffPolicyDetailQuery, GetPaidTimeOffPolicyDetailViewModel>
         {
             private readonly IApplicationReadDbFacade queryFacade;
