@@ -22,7 +22,7 @@ namespace JDS.OrgManager.Persistence.DbContexts
 
         public TContext CreateDbContext(string[] args)
         {
-            var basePath = Directory.GetCurrentDirectory() + string.Format("{0}..{0}JDS.OrgManager.Presentation.ConsoleApp", Path.DirectorySeparatorChar);
+            var basePath = Directory.GetCurrentDirectory() + string.Format("{0}..{0}JDS.OrgManager.Presentation.WebApi", Path.DirectorySeparatorChar);
             return Create(basePath, Environment.GetEnvironmentVariable(AspNetCoreEnvironment));
         }
 

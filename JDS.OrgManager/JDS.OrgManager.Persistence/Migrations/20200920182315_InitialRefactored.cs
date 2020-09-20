@@ -1,0 +1,246 @@
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
+
+namespace JDS.OrgManager.Persistence.Migrations
+{
+    public partial class InitialRefactored : Migration
+    {
+        protected override void Up(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.CreateTable(
+                name: "Currencies",
+                columns: table => new
+                {
+                    Code = table.Column<string>(maxLength: 3, nullable: false),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Currencies", x => x.Code);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PaidTimeOffPolicies",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TenantId = table.Column<int>(nullable: false),
+                    CreatedBy = table.Column<string>(maxLength: 10, nullable: false),
+                    CreatedUtc = table.Column<DateTime>(nullable: false),
+                    LastModifiedBy = table.Column<string>(maxLength: 10, nullable: true),
+                    LastModifiedUtc = table.Column<DateTime>(nullable: true),
+                    AllowsUnlimitedPto = table.Column<bool>(nullable: false),
+                    EmployeeLevel = table.Column<int>(nullable: false),
+                    IsDefaultForEmployeeLevel = table.Column<bool>(nullable: false),
+                    MaxPtoHours = table.Column<decimal>(type: "decimal(18,4)", nullable: true),
+                    Name = table.Column<string>(maxLength: 50, nullable: false),
+                    PtoAccrualRate = table.Column<decimal>(type: "decimal(18,4)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PaidTimeOffPolicies", x => new { x.TenantId, x.Id });
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Customers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CreatedBy = table.Column<string>(maxLength: 10, nullable: false),
+                    CreatedUtc = table.Column<DateTime>(nullable: false),
+                    LastModifiedBy = table.Column<string>(maxLength: 10, nullable: true),
+                    LastModifiedUtc = table.Column<DateTime>(nullable: true),
+                    Address1 = table.Column<string>(maxLength: 50, nullable: false),
+                    Address2 = table.Column<string>(maxLength: 15, nullable: true),
+                    AspNetUsersId = table.Column<int>(nullable: false),
+                    City = table.Column<string>(maxLength: 30, nullable: false),
+                    CompanyId = table.Column<int>(nullable: true),
+                    CurrencyCode = table.Column<string>(maxLength: 3, nullable: false),
+                    FirstName = table.Column<string>(maxLength: 25, nullable: false),
+                    LastName = table.Column<string>(maxLength: 35, nullable: false),
+                    MiddleName = table.Column<string>(maxLength: 25, nullable: true),
+                    State = table.Column<string>(maxLength: 2, nullable: false),
+                    Title = table.Column<int>(nullable: true),
+                    Zip = table.Column<string>(maxLength: 10, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Customers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Customers_Currencies_CurrencyCode",
+                        column: x => x.CurrencyCode,
+                        principalTable: "Currencies",
+                        principalColumn: "Code");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Tenants",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CreatedBy = table.Column<string>(maxLength: 10, nullable: false),
+                    CreatedUtc = table.Column<DateTime>(nullable: false),
+                    LastModifiedBy = table.Column<string>(maxLength: 10, nullable: true),
+                    LastModifiedUtc = table.Column<DateTime>(nullable: true),
+                    AssignmentKey = table.Column<Guid>(nullable: false),
+                    CustomerId = table.Column<int>(nullable: false),
+                    Name = table.Column<string>(maxLength: 50, nullable: false),
+                    Slug = table.Column<string>(maxLength: 25, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Tenants", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Tenants_Customers_CustomerId",
+                        column: x => x.CustomerId,
+                        principalTable: "Customers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Employees",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TenantId = table.Column<int>(nullable: false),
+                    CreatedBy = table.Column<string>(maxLength: 10, nullable: false),
+                    CreatedUtc = table.Column<DateTime>(nullable: false),
+                    LastModifiedBy = table.Column<string>(maxLength: 10, nullable: true),
+                    LastModifiedUtc = table.Column<DateTime>(nullable: true),
+                    Address1 = table.Column<string>(maxLength: 50, nullable: false),
+                    Address2 = table.Column<string>(maxLength: 15, nullable: true),
+                    City = table.Column<string>(maxLength: 30, nullable: false),
+                    CurrencyCode = table.Column<string>(maxLength: 3, nullable: false),
+                    DateTerminated = table.Column<DateTime>(type: "date", nullable: true),
+                    DateHired = table.Column<DateTime>(type: "date", nullable: false),
+                    DateOfBirth = table.Column<DateTime>(type: "date", nullable: false),
+                    EmployeeLevel = table.Column<int>(nullable: false),
+                    FirstName = table.Column<string>(maxLength: 25, nullable: false),
+                    Gender = table.Column<int>(nullable: false),
+                    LastName = table.Column<string>(maxLength: 35, nullable: false),
+                    MiddleName = table.Column<string>(maxLength: 25, nullable: true),
+                    PaidTimeOffPolicyId = table.Column<int>(nullable: false),
+                    PtoHoursRemaining = table.Column<decimal>(type: "decimal(18,4)", nullable: true),
+                    Salary = table.Column<decimal>(type: "decimal(18,4)", nullable: false),
+                    SocialSecurityNumber = table.Column<string>(maxLength: 11, nullable: true),
+                    State = table.Column<string>(maxLength: 2, nullable: false),
+                    Zip = table.Column<string>(maxLength: 10, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Employees", x => new { x.TenantId, x.Id });
+                    table.ForeignKey(
+                        name: "FK_Employees_Currencies_CurrencyCode",
+                        column: x => x.CurrencyCode,
+                        principalTable: "Currencies",
+                        principalColumn: "Code");
+                    table.ForeignKey(
+                        name: "FK_Employees_Tenants_TenantId",
+                        column: x => x.TenantId,
+                        principalTable: "Tenants",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Employees_PaidTimeOffPolicies_TenantId_PaidTimeOffPolicyId",
+                        columns: x => new { x.TenantId, x.PaidTimeOffPolicyId },
+                        principalTable: "PaidTimeOffPolicies",
+                        principalColumns: new[] { "TenantId", "Id" });
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TenantAspNetUsers",
+                columns: table => new
+                {
+                    AspNetUsersId = table.Column<int>(nullable: false),
+                    TenantId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TenantAspNetUsers", x => new { x.TenantId, x.AspNetUsersId });
+                    table.ForeignKey(
+                        name: "FK_TenantAspNetUsers_Tenants_TenantId",
+                        column: x => x.TenantId,
+                        principalTable: "Tenants",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "EmployeeManagers",
+                columns: table => new
+                {
+                    EmployeeId = table.Column<int>(nullable: false),
+                    ManagerId = table.Column<int>(nullable: false),
+                    TenantId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EmployeeManagers", x => new { x.TenantId, x.ManagerId, x.EmployeeId });
+                    table.ForeignKey(
+                        name: "FK_EmployeeManagers_Employees_TenantId_EmployeeId",
+                        columns: x => new { x.TenantId, x.EmployeeId },
+                        principalTable: "Employees",
+                        principalColumns: new[] { "TenantId", "Id" });
+                    table.ForeignKey(
+                        name: "FK_EmployeeManagers_Employees_TenantId_ManagerId",
+                        columns: x => new { x.TenantId, x.ManagerId },
+                        principalTable: "Employees",
+                        principalColumns: new[] { "TenantId", "Id" });
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Customers_CurrencyCode",
+                table: "Customers",
+                column: "CurrencyCode");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EmployeeManagers_TenantId_EmployeeId",
+                table: "EmployeeManagers",
+                columns: new[] { "TenantId", "EmployeeId" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Employees_CurrencyCode",
+                table: "Employees",
+                column: "CurrencyCode");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Employees_TenantId_PaidTimeOffPolicyId",
+                table: "Employees",
+                columns: new[] { "TenantId", "PaidTimeOffPolicyId" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Tenants_CustomerId",
+                table: "Tenants",
+                column: "CustomerId");
+        }
+
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DropTable(
+                name: "EmployeeManagers");
+
+            migrationBuilder.DropTable(
+                name: "TenantAspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Employees");
+
+            migrationBuilder.DropTable(
+                name: "Tenants");
+
+            migrationBuilder.DropTable(
+                name: "PaidTimeOffPolicies");
+
+            migrationBuilder.DropTable(
+                name: "Customers");
+
+            migrationBuilder.DropTable(
+                name: "Currencies");
+        }
+    }
+}

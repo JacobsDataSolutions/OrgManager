@@ -10,6 +10,8 @@
 using JDS.OrgManager.Application.Common.Currencies;
 using JDS.OrgManager.Application.Common.Employees;
 using JDS.OrgManager.Application.Common.PaidTimeOffPolicies;
+using JDS.OrgManager.Application.Customers;
+using JDS.OrgManager.Application.Tenants;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Infrastructure;
@@ -25,6 +27,8 @@ namespace JDS.OrgManager.Application.Abstractions.DbContexts
 
         DbSet<CurrencyEntity> Currencies { get; }
 
+        DbSet<CustomerEntity> Customers { get; }
+
         DatabaseFacade Database { get; }
 
         DbSet<EmployeeManagerEntity> EmployeeManagers { get; }
@@ -34,6 +38,10 @@ namespace JDS.OrgManager.Application.Abstractions.DbContexts
         bool HasChanges { get; }
 
         DbSet<PaidTimeOffPolicyEntity> PaidTimeOffPolicies { get; }
+
+        DbSet<TenantAspNetUserEntity> TenantAspNetUsers { get; }
+
+        DbSet<TenantEntity> Tenants { get; }
 
         EntityEntry Entry(object entity);
 

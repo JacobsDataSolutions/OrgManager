@@ -13,6 +13,8 @@ using JDS.OrgManager.Application.Abstractions.Models;
 using JDS.OrgManager.Application.Common.Currencies;
 using JDS.OrgManager.Application.Common.Employees;
 using JDS.OrgManager.Application.Common.PaidTimeOffPolicies;
+using JDS.OrgManager.Application.Customers;
+using JDS.OrgManager.Application.Tenants;
 using JDS.OrgManager.Common.Abstractions.DateTimes;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -32,6 +34,8 @@ namespace JDS.OrgManager.Persistence.DbContexts
 
         public DbSet<CurrencyEntity> Currencies { get; set; }
 
+        public DbSet<CustomerEntity> Customers { get; set; }
+
         public DbSet<EmployeeManagerEntity> EmployeeManagers { get; set; }
 
         public DbSet<EmployeeEntity> Employees { get; set; }
@@ -39,6 +43,10 @@ namespace JDS.OrgManager.Persistence.DbContexts
         public bool HasChanges => ChangeTracker.HasChanges();
 
         public DbSet<PaidTimeOffPolicyEntity> PaidTimeOffPolicies { get; set; }
+
+        public DbSet<TenantAspNetUserEntity> TenantAspNetUsers { get; set; }
+
+        public DbSet<TenantEntity> Tenants { get; set; }
 
         public ApplicationWriteDbContext(DbContextOptions<ApplicationWriteDbContext> options)
                                                     : base(options)
