@@ -7,7 +7,7 @@
 
 // Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
 // CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
-using JDS.OrgManager.Common.Abstractions.Dates;
+using JDS.OrgManager.Common.Abstractions.DateTimes;
 using JDS.OrgManager.Domain.Common.Addresses;
 using JDS.OrgManager.Domain.Common.Finance;
 using JDS.OrgManager.Domain.Common.People;
@@ -21,7 +21,7 @@ namespace JDS.OrgManager.Domain.HumanResources.Employees
 {
     public class Employee : DomainEntity<Employee>
     {
-        public DateTime? DateExited { get; private set; }
+        public DateTime? DateTerminated { get; private set; }
 
         public DateTime DateHired { get; private set; }
 
@@ -66,7 +66,7 @@ namespace JDS.OrgManager.Domain.HumanResources.Employees
             PaidTimeOffPolicy paidTimeOffPolicy,
             Money salary,
             SocialSecurityNumber socialSecurityNumber,
-            DateTime? dateExited = default,
+            DateTime? dateTerminated = default,
             string middleName = default,
             decimal? ptoHoursRemaining = default,
             IReadOnlyList<Employee> subordinates = default
@@ -76,7 +76,7 @@ namespace JDS.OrgManager.Domain.HumanResources.Employees
             {
                 throw new ArgumentOutOfRangeException(nameof(employeeLevel));
             }
-            DateExited = dateExited;
+            DateTerminated = dateTerminated;
             DateHired = dateHired;
             DateOfBirth = dateOfBirth;
             EmployeeLevel = employeeLevel;

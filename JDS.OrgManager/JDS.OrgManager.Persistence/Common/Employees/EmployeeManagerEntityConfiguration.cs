@@ -18,6 +18,9 @@ namespace JDS.OrgManager.Persistence.Common.Employees
         public void Configure(EntityTypeBuilder<EmployeeManagerEntity> builder)
         {
             builder.HasKey(e => new { e.TenantId, e.ManagerId, e.EmployeeId });
+            builder.Property(e => e.TenantId).ValueGeneratedNever();
+            builder.Property(e => e.EmployeeId).ValueGeneratedNever();
+            builder.Property(e => e.ManagerId).ValueGeneratedNever();
             builder.HasOne(e => e.Manager).WithMany(e => e.Subordinates).OnDelete(DeleteBehavior.NoAction).HasForeignKey(e => new { e.TenantId, e.ManagerId });
             builder.HasOne(e => e.Employee).WithMany(e => e.Managers).OnDelete(DeleteBehavior.NoAction).HasForeignKey(e => new { e.TenantId, e.EmployeeId });
         }

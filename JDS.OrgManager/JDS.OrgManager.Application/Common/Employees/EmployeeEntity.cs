@@ -11,6 +11,7 @@ using JDS.OrgManager.Application.Abstractions.Models;
 using JDS.OrgManager.Application.Common.Addresses;
 using JDS.OrgManager.Application.Common.Currencies;
 using JDS.OrgManager.Application.Common.PaidTimeOffPolicies;
+using JDS.OrgManager.Application.Tenants;
 using JDS.OrgManager.Domain.Common.People;
 using System;
 using System.Collections.Generic;
@@ -31,7 +32,7 @@ namespace JDS.OrgManager.Application.Common.Employees
 
         public string CurrencyCode { get; set; }
 
-        public DateTime? DateExited { get; set; }
+        public DateTime? DateTerminated { get; set; }
 
         public DateTime DateHired { get; set; }
 
@@ -65,6 +66,8 @@ namespace JDS.OrgManager.Application.Common.Employees
         public string State { get; set; }
 
         public ICollection<EmployeeManagerEntity> Subordinates { get; set; }
+
+        public TenantEntity Tenant { get; set; }
 
         public int TenantId { get; set; }
 

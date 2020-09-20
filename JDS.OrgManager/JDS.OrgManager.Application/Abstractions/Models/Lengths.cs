@@ -38,6 +38,8 @@ namespace JDS.OrgManager.Application.Abstractions.Models
 
         public const int Slug = 25;
 
+        public const int SocialSecurityNumber = 11;
+
         public const int State = 2;
 
         public const int SubmittedBy = 80;

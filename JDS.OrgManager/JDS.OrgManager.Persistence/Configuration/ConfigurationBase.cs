@@ -17,8 +17,8 @@ namespace JDS.OrgManager.Persistence.Configuration
     {
         public virtual void Configure(EntityTypeBuilder<TEntity> builder)
         {
-            builder.Property(e => e.CreatedBy).HasMaxLength(10);
-            builder.Property(e => e.LastModifiedBy).HasMaxLength(10);
+            builder.Property(e => e.CreatedBy).HasMaxLength(Lengths.CreatedUpdatedBy).IsRequired();
+            builder.Property(e => e.LastModifiedBy).HasMaxLength(Lengths.CreatedUpdatedBy);
         }
     }
 }

@@ -10,7 +10,7 @@ namespace JDS.OrgManager.Persistence
 
         public const string SqlDateType = "date";
 
-        public const string SqlDecimalMoneyType = "decimal(18,4)";
+        public const string SqlDecimalType = "decimal(18,4)";
 
         public const string WriteDatabaseConnectionStringName = "ApplicationWriteDatabase";
     }

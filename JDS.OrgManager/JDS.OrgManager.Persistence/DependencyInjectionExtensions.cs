@@ -22,9 +22,13 @@ namespace JDS.OrgManager.Persistence
         public static IServiceCollection AddPersistenceLayer(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<ApplicationWriteDbContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("ApplicationDatabase")));
+                options
+                .UseSqlServer(configuration.GetConnectionString(PersistenceLayerConstants.WriteDatabaseConnectionStringName))
+                .EnableSensitiveDataLogging(true)
+                );
 
             services.AddScoped<IApplicationWriteDbContext>(provider => provider.GetService<ApplicationWriteDbContext>());
+            services.AddScoped<IApplicationWriteDbFacade, ApplicationWriteDbFacade>();
             services.AddScoped<IApplicationReadDbFacade, ApplicationReadDbFacade>();
 
             return services;

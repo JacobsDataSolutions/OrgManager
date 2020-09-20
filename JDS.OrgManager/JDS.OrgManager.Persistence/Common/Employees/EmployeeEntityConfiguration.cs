@@ -7,6 +7,7 @@
 
 // Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
 // CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+using JDS.OrgManager.Application.Abstractions.Models;
 using JDS.OrgManager.Application.Common.Employees;
 using JDS.OrgManager.Persistence.Configuration;
 using Microsoft.EntityFrameworkCore;
@@ -20,22 +21,28 @@ namespace JDS.OrgManager.Persistence.Common.Employees
         {
             base.Configure(builder);
             builder.HasKey(e => new { e.TenantId, e.Id });
-            builder.Property(e => e.Id).UseIdentityColumn();
-            builder.Property(e => e.Address1).HasMaxLength(50);
-            builder.Property(e => e.Address2).HasMaxLength(15).IsRequired(false);
-            builder.Property(e => e.City).HasMaxLength(30);
-            builder.Property(e => e.CurrencyCode).HasMaxLength(3);
-            builder.Property(e => e.FirstName).HasMaxLength(25);
-            builder.Property(e => e.LastName).HasMaxLength(25);
-            builder.Property(e => e.MiddleName).HasMaxLength(25).IsRequired(false);
-            builder.Property(e => e.PtoHoursRemaining).HasColumnType("decimal(18,4)");
-            builder.Property(e => e.Salary).HasColumnType("decimal(18,4)");
-            builder.Property(e => e.SocialSecurityNumber).HasMaxLength(11);
-            builder.Property(e => e.State).HasMaxLength(2);
-            builder.Property(e => e.Zip).HasMaxLength(10);
+            builder.Property(e => e.TenantId).ValueGeneratedNever();
+            builder.Property(e => e.Id).UseIdentityColumn().ValueGeneratedOnAdd();
+            builder.Property(e => e.Address1).HasMaxLength(Lengths.Address1).IsRequired();
+            builder.Property(e => e.Address2).HasMaxLength(Lengths.Address2);
+            builder.Property(e => e.City).HasMaxLength(Lengths.City).IsRequired();
+            builder.Property(e => e.CurrencyCode).HasMaxLength(Lengths.CurrencyCode).IsRequired();
+            builder.Property(e => e.FirstName).HasMaxLength(Lengths.FirstName).IsRequired();
+            builder.Property(e => e.LastName).HasMaxLength(Lengths.LastName).IsRequired();
+            builder.Property(e => e.MiddleName).HasMaxLength(Lengths.MiddleName);
+            builder.Property(e => e.PtoHoursRemaining).HasColumnType(PersistenceLayerConstants.SqlDecimalType);
+            builder.Property(e => e.Salary).HasColumnType(PersistenceLayerConstants.SqlDecimalType);
+            builder.Property(e => e.SocialSecurityNumber).HasMaxLength(Lengths.SocialSecurityNumber);
+            builder.Property(e => e.State).HasMaxLength(Lengths.State).IsRequired();
+            builder.Property(e => e.Zip).HasMaxLength(Lengths.Zip).IsRequired();
 
-            builder.HasOne(e => e.Currency).WithMany();
-            builder.HasOne(e => e.PaidTimeOffPolicy).WithMany().HasForeignKey(e => new { e.TenantId, e.PaidTimeOffPolicyId });
+            builder.Property(e => e.DateOfBirth).HasColumnType(PersistenceLayerConstants.SqlDateType);
+            builder.Property(e => e.DateHired).HasColumnType(PersistenceLayerConstants.SqlDateType);
+            builder.Property(e => e.DateTerminated).HasColumnType(PersistenceLayerConstants.SqlDateType);
+
+            builder.HasOne(e => e.Currency).WithMany().OnDelete(DeleteBehavior.NoAction).HasForeignKey(e => e.CurrencyCode);
+            builder.HasOne(e => e.Tenant).WithMany(e => e.Employees).HasForeignKey(e => e.TenantId);
+            builder.HasOne(e => e.PaidTimeOffPolicy).WithMany().OnDelete(DeleteBehavior.NoAction).HasForeignKey(e => new { e.TenantId, e.PaidTimeOffPolicyId });
         }
     }
 }
