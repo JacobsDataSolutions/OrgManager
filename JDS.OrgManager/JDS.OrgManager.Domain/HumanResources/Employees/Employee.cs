@@ -21,11 +21,11 @@ namespace JDS.OrgManager.Domain.HumanResources.Employees
 {
     public class Employee : DomainEntity<Employee>
     {
-        public DateTime? DateTerminated { get; private set; }
-
         public DateTime DateHired { get; private set; }
 
         public DateTime DateOfBirth { get; private set; }
+
+        public DateTime? DateTerminated { get; private set; }
 
         public int EmployeeLevel { get; private set; }
 

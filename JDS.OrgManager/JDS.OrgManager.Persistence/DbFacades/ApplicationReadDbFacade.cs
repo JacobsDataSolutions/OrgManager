@@ -9,9 +9,7 @@
 // CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 using Dapper;
 using JDS.OrgManager.Application.Abstractions.DbFacades;
-using JDS.OrgManager.Persistence.DbContexts;
 using Microsoft.Data.SqlClient;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;

@@ -34,11 +34,11 @@ namespace JDS.OrgManager.Application.Common.Employees
 
         public string CurrencyCode { get; set; }
 
-        public DateTime? DateTerminated { get; set; }
-
         public DateTime DateHired { get; set; }
 
         public DateTime DateOfBirth { get; set; }
+
+        public DateTime? DateTerminated { get; set; }
 
         public int EmployeeLevel { get; set; }
 
