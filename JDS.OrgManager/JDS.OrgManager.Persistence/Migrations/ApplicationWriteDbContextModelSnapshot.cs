@@ -54,6 +54,9 @@ namespace JDS.OrgManager.Persistence.Migrations
                         .HasColumnType("nvarchar(15)")
                         .HasMaxLength(15);
 
+                    b.Property<int>("AspNetUsersId")
+                        .HasColumnType("int");
+
                     b.Property<string>("City")
                         .IsRequired()
                         .HasColumnType("nvarchar(30)")

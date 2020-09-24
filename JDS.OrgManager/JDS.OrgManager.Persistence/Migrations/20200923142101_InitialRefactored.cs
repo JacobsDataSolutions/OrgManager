@@ -23,19 +23,19 @@ namespace JDS.OrgManager.Persistence.Migrations
                 name: "PaidTimeOffPolicies",
                 columns: table => new
                 {
+                    TenantId = table.Column<int>(nullable: false),
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    TenantId = table.Column<int>(nullable: false),
-                    CreatedBy = table.Column<string>(maxLength: 10, nullable: false),
-                    CreatedUtc = table.Column<DateTime>(nullable: false),
-                    LastModifiedBy = table.Column<string>(maxLength: 10, nullable: true),
-                    LastModifiedUtc = table.Column<DateTime>(nullable: true),
                     AllowsUnlimitedPto = table.Column<bool>(nullable: false),
                     EmployeeLevel = table.Column<int>(nullable: false),
                     IsDefaultForEmployeeLevel = table.Column<bool>(nullable: false),
                     MaxPtoHours = table.Column<decimal>(type: "decimal(18,4)", nullable: true),
                     Name = table.Column<string>(maxLength: 50, nullable: false),
-                    PtoAccrualRate = table.Column<decimal>(type: "decimal(18,4)", nullable: true)
+                    PtoAccrualRate = table.Column<decimal>(type: "decimal(18,4)", nullable: true),
+                    CreatedBy = table.Column<string>(maxLength: 10, nullable: false),
+                    CreatedUtc = table.Column<DateTime>(nullable: false),
+                    LastModifiedBy = table.Column<string>(maxLength: 10, nullable: true),
+                    LastModifiedUtc = table.Column<DateTime>(nullable: true),
                 },
                 constraints: table =>
                 {
@@ -48,10 +48,6 @@ namespace JDS.OrgManager.Persistence.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedBy = table.Column<string>(maxLength: 10, nullable: false),
-                    CreatedUtc = table.Column<DateTime>(nullable: false),
-                    LastModifiedBy = table.Column<string>(maxLength: 10, nullable: true),
-                    LastModifiedUtc = table.Column<DateTime>(nullable: true),
                     Address1 = table.Column<string>(maxLength: 50, nullable: false),
                     Address2 = table.Column<string>(maxLength: 15, nullable: true),
                     AspNetUsersId = table.Column<int>(nullable: false),
@@ -63,7 +59,11 @@ namespace JDS.OrgManager.Persistence.Migrations
                     MiddleName = table.Column<string>(maxLength: 25, nullable: true),
                     State = table.Column<string>(maxLength: 2, nullable: false),
                     Title = table.Column<int>(nullable: true),
-                    Zip = table.Column<string>(maxLength: 10, nullable: false)
+                    Zip = table.Column<string>(maxLength: 10, nullable: false),
+                    CreatedBy = table.Column<string>(maxLength: 10, nullable: false),
+                    CreatedUtc = table.Column<DateTime>(nullable: false),
+                    LastModifiedBy = table.Column<string>(maxLength: 10, nullable: true),
+                    LastModifiedUtc = table.Column<DateTime>(nullable: true),
                 },
                 constraints: table =>
                 {
@@ -73,6 +73,12 @@ namespace JDS.OrgManager.Persistence.Migrations
                         column: x => x.CurrencyCode,
                         principalTable: "Currencies",
                         principalColumn: "Code");
+                    // JDS
+                    table.ForeignKey(
+                        name: "FK_Customers_AspNetUsers_AspNetUsersId",
+                        column: x => x.AspNetUsersId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -81,14 +87,14 @@ namespace JDS.OrgManager.Persistence.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    AssignmentKey = table.Column<Guid>(nullable: false),
+                    CustomerId = table.Column<int>(nullable: false),
+                    Name = table.Column<string>(maxLength: 50, nullable: false),
+                    Slug = table.Column<string>(maxLength: 25, nullable: false),
                     CreatedBy = table.Column<string>(maxLength: 10, nullable: false),
                     CreatedUtc = table.Column<DateTime>(nullable: false),
                     LastModifiedBy = table.Column<string>(maxLength: 10, nullable: true),
                     LastModifiedUtc = table.Column<DateTime>(nullable: true),
-                    AssignmentKey = table.Column<Guid>(nullable: false),
-                    CustomerId = table.Column<int>(nullable: false),
-                    Name = table.Column<string>(maxLength: 50, nullable: false),
-                    Slug = table.Column<string>(maxLength: 25, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -105,15 +111,12 @@ namespace JDS.OrgManager.Persistence.Migrations
                 name: "Employees",
                 columns: table => new
                 {
+                    TenantId = table.Column<int>(nullable: false),
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    TenantId = table.Column<int>(nullable: false),
-                    CreatedBy = table.Column<string>(maxLength: 10, nullable: false),
-                    CreatedUtc = table.Column<DateTime>(nullable: false),
-                    LastModifiedBy = table.Column<string>(maxLength: 10, nullable: true),
-                    LastModifiedUtc = table.Column<DateTime>(nullable: true),
                     Address1 = table.Column<string>(maxLength: 50, nullable: false),
                     Address2 = table.Column<string>(maxLength: 15, nullable: true),
+                    AspNetUsersId = table.Column<int>(nullable: false),
                     City = table.Column<string>(maxLength: 30, nullable: false),
                     CurrencyCode = table.Column<string>(maxLength: 3, nullable: false),
                     DateTerminated = table.Column<DateTime>(type: "date", nullable: true),
@@ -129,7 +132,11 @@ namespace JDS.OrgManager.Persistence.Migrations
                     Salary = table.Column<decimal>(type: "decimal(18,4)", nullable: false),
                     SocialSecurityNumber = table.Column<string>(maxLength: 11, nullable: true),
                     State = table.Column<string>(maxLength: 2, nullable: false),
-                    Zip = table.Column<string>(maxLength: 10, nullable: false)
+                    Zip = table.Column<string>(maxLength: 10, nullable: false),
+                    CreatedBy = table.Column<string>(maxLength: 10, nullable: false),
+                    CreatedUtc = table.Column<DateTime>(nullable: false),
+                    LastModifiedBy = table.Column<string>(maxLength: 10, nullable: true),
+                    LastModifiedUtc = table.Column<DateTime>(nullable: true),
                 },
                 constraints: table =>
                 {
@@ -150,14 +157,20 @@ namespace JDS.OrgManager.Persistence.Migrations
                         columns: x => new { x.TenantId, x.PaidTimeOffPolicyId },
                         principalTable: "PaidTimeOffPolicies",
                         principalColumns: new[] { "TenantId", "Id" });
+                    // JDS
+                    table.ForeignKey(
+                        name: "FK_Employees_AspNetUsers_AspNetUsersId",
+                        column: x => x.AspNetUsersId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
                 name: "TenantAspNetUsers",
                 columns: table => new
                 {
+                    TenantId = table.Column<int>(nullable: false),
                     AspNetUsersId = table.Column<int>(nullable: false),
-                    TenantId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -168,15 +181,21 @@ namespace JDS.OrgManager.Persistence.Migrations
                         principalTable: "Tenants",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    // Jake
+                    table.ForeignKey(
+                        name: "FK_TenantAspNetUsers_AspNetUsers_AspNetUsersId",
+                        column: x => x.AspNetUsersId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
                 name: "EmployeeManagers",
                 columns: table => new
                 {
+                    TenantId = table.Column<int>(nullable: false),
                     EmployeeId = table.Column<int>(nullable: false),
                     ManagerId = table.Column<int>(nullable: false),
-                    TenantId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -217,6 +236,24 @@ namespace JDS.OrgManager.Persistence.Migrations
                 name: "IX_Tenants_CustomerId",
                 table: "Tenants",
                 column: "CustomerId");
+
+            // Jake
+            migrationBuilder.CreateIndex(
+                name: "IX_TenantAspNetUsers_AspNetUsersId",
+                table: "TenantAspNetUsers",
+                column: "AspNetUsersId");
+
+            // Jake
+            migrationBuilder.CreateIndex(
+                name: "IX_Customers_AspNetUsersId",
+                table: "Customers",
+                column: "AspNetUsersId");
+
+            // Jake
+            migrationBuilder.CreateIndex(
+                name: "IX_Employees_AspNetUsersId",
+                table: "Employees",
+                column: "AspNetUsersId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

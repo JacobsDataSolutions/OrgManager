@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JDS.OrgManager.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationWriteDbContext))]
-    [Migration("20200920182315_InitialRefactored")]
+    [Migration("20200923142101_InitialRefactored")]
     partial class InitialRefactored
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -55,6 +55,9 @@ namespace JDS.OrgManager.Persistence.Migrations
                     b.Property<string>("Address2")
                         .HasColumnType("nvarchar(15)")
                         .HasMaxLength(15);
+
+                    b.Property<int>("AspNetUsersId")
+                        .HasColumnType("int");
 
                     b.Property<string>("City")
                         .IsRequired()

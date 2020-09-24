@@ -26,6 +26,8 @@ namespace JDS.OrgManager.Application.Common.Employees
 
         public string Address2 { get; set; }
 
+        public int AspNetUsersId { get; set; }
+
         public string City { get; set; }
 
         public CurrencyEntity Currency { get; set; }
