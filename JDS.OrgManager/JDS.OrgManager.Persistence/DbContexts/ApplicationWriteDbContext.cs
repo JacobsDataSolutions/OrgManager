@@ -9,25 +9,32 @@
 // CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 using JDS.OrgManager.Application.Abstractions.DbContexts;
 using JDS.OrgManager.Application.Abstractions.Identity;
+using JDS.OrgManager.Application.Abstractions.Models;
 using JDS.OrgManager.Application.Common.Currencies;
 using JDS.OrgManager.Application.Common.Employees;
 using JDS.OrgManager.Application.Common.PaidTimeOffPolicies;
-using JDS.OrgManager.Application.Models;
-using JDS.OrgManager.Common.Abstractions.Dates;
+using JDS.OrgManager.Application.Customers;
+using JDS.OrgManager.Application.Tenants;
+using JDS.OrgManager.Common.Abstractions.DateTimes;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Data;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace JDS.OrgManager.Persistence.DbContexts
 {
-    public class OrgManagerDbContext : DbContext, IOrgManagerDbContext
+    public class ApplicationWriteDbContext : DbContext, IApplicationWriteDbContext
     {
         private readonly ICurrentUserService currentUserService;
 
         private readonly IDateTimeService dateTimeService;
 
+        public IDbConnection Connection => Database.GetDbConnection();
+
         public DbSet<CurrencyEntity> Currencies { get; set; }
+
+        public DbSet<CustomerEntity> Customers { get; set; }
 
         public DbSet<EmployeeManagerEntity> EmployeeManagers { get; set; }
 
@@ -37,12 +44,16 @@ namespace JDS.OrgManager.Persistence.DbContexts
 
         public DbSet<PaidTimeOffPolicyEntity> PaidTimeOffPolicies { get; set; }
 
-        public OrgManagerDbContext(DbContextOptions<OrgManagerDbContext> options)
+        public DbSet<TenantAspNetUserEntity> TenantAspNetUsers { get; set; }
+
+        public DbSet<TenantEntity> Tenants { get; set; }
+
+        public ApplicationWriteDbContext(DbContextOptions<ApplicationWriteDbContext> options)
                                                     : base(options)
         { }
 
-        public OrgManagerDbContext(
-            DbContextOptions<OrgManagerDbContext> options,
+        public ApplicationWriteDbContext(
+            DbContextOptions<ApplicationWriteDbContext> options,
             ICurrentUserService currentUserService,
             IDateTimeService dateTimeService)
             : base(options)
@@ -72,6 +83,6 @@ namespace JDS.OrgManager.Persistence.DbContexts
             return base.SaveChangesAsync(cancellationToken);
         }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder) => modelBuilder.ApplyConfigurationsFromAssembly(typeof(OrgManagerDbContext).Assembly);
+        protected override void OnModelCreating(ModelBuilder modelBuilder) => modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationWriteDbContext).Assembly);
     }
 }

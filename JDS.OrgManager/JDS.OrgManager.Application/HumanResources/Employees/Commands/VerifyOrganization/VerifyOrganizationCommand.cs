@@ -9,9 +9,9 @@
 // CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 using JDS.OrgManager.Application.Abstractions.DbContexts;
 using JDS.OrgManager.Application.Abstractions.Mapping;
+using JDS.OrgManager.Application.Abstractions.Models;
 using JDS.OrgManager.Application.Common.Employees;
 using JDS.OrgManager.Application.Common.PaidTimeOffPolicies;
-using JDS.OrgManager.Application.Models;
 using JDS.OrgManager.Domain.HumanResources.Advanced;
 using JDS.OrgManager.Domain.HumanResources.Employees;
 using JDS.OrgManager.Domain.HumanResources.PaidTimeOffPolicies;
@@ -24,11 +24,11 @@ using System.Threading.Tasks;
 
 namespace JDS.OrgManager.Application.HumanResources.Employees.Commands.VerifyOrganization
 {
-    public class VerifyOrganizationCommand : ViewModel, IRequest<VerifyOrganizationViewModel>
+    public class VerifyOrganizationCommand : IViewModel, IRequest<VerifyOrganizationViewModel>
     {
         public class VerifyOrganizationCommandHandler : IRequestHandler<VerifyOrganizationCommand, VerifyOrganizationViewModel>
         {
-            private readonly IOrgManagerDbContext context;
+            private readonly IApplicationWriteDbContext context;
 
             private readonly IDomainEntityToDbEntityMapper<Employee, EmployeeEntity> employeeDomainToDbEntityMapper;
 
@@ -37,7 +37,7 @@ namespace JDS.OrgManager.Application.HumanResources.Employees.Commands.VerifyOrg
             private readonly IDomainEntityToDbEntityMapper<PaidTimeOffPolicy, PaidTimeOffPolicyEntity> ptoPolicyDomainToDbEntityMapper;
 
             public VerifyOrganizationCommandHandler(
-                IOrgManagerDbContext context,
+                IApplicationWriteDbContext context,
                 IDomainEntityToDbEntityMapper<Employee, EmployeeEntity> employeeDomainToDbEntityMapper,
                 IDomainEntityToDbEntityMapper<PaidTimeOffPolicy, PaidTimeOffPolicyEntity> ptoPolicyDomainToDbEntityMapper,
                 IOrganizationVerifier organizationVerifier)

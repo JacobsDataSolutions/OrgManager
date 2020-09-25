@@ -41,7 +41,7 @@ namespace JDS.OrgManager.Application.UnitTests.HumanResources.Employees.Commands
             v.SocialSecurityNumber = "999-99-9999";
 
             var e = mapper.MapToDomainEntity(v);
-            Assert.Equal(v.DateExited, e.DateExited);
+            Assert.Equal(v.DateExited, e.DateTerminated);
             Assert.Equal(v.DateHired, e.DateHired);
             Assert.Equal(v.DateOfBirth, e.DateOfBirth);
             Assert.Equal(v.EmployeeLevel, e.EmployeeLevel);
@@ -67,7 +67,7 @@ namespace JDS.OrgManager.Application.UnitTests.HumanResources.Employees.Commands
         {
             var e = UnitTestEmployeeGenerator.GenerateEmployee(3).Subordinates.First();
             var v = mapper.MapToViewModel(e);
-            Assert.Equal(e.DateExited, v.DateExited);
+            Assert.Equal(e.DateTerminated, v.DateExited);
             Assert.Equal(e.DateHired, v.DateHired);
             Assert.Equal(e.DateOfBirth, v.DateOfBirth);
             Assert.Equal(e.EmployeeLevel, v.EmployeeLevel);

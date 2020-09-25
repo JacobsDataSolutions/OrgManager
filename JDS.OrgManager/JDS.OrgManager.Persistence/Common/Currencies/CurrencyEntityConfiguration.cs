@@ -7,6 +7,7 @@
 
 // Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
 // CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+using JDS.OrgManager.Application.Abstractions.Models;
 using JDS.OrgManager.Application.Common.Currencies;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -18,7 +19,7 @@ namespace JDS.OrgManager.Persistence.Common.Currencies
         public void Configure(EntityTypeBuilder<CurrencyEntity> builder)
         {
             builder.HasKey(e => e.Code);
-            builder.Property(e => e.Code).HasMaxLength(3);
+            builder.Property(e => e.Code).HasMaxLength(Lengths.CurrencyCode).IsRequired();
         }
     }
 }

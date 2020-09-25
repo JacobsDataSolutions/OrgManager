@@ -20,7 +20,7 @@ namespace JDS.OrgManager.Application.Behaviors
 {
     public class RequestCachingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     {
-        private static readonly DistributedCacheEntryOptions options = new DistributedCacheEntryOptions() { SlidingExpiration = TimeSpan.FromHours(1.0) };
+        private static readonly DistributedCacheEntryOptions defaultCacheOptions = new DistributedCacheEntryOptions() { SlidingExpiration = TimeSpan.FromHours(1.0) };
 
         private readonly IByteSerializer byteSerializer;
 
@@ -43,6 +43,7 @@ namespace JDS.OrgManager.Application.Behaviors
                 async Task<TResponse> GetResponseAndAddToCache()
                 {
                     response = await next();
+                    var options = cacheableQuery.SlidingExpiration != null ? new DistributedCacheEntryOptions { SlidingExpiration = cacheableQuery.SlidingExpiration } : defaultCacheOptions;
                     await cache.SetAsync(cacheableQuery.CacheKey, byteSerializer.Serialize(response), options, cancellationToken);
                     return response;
                 }

@@ -1,4 +1,4 @@
-// Copyright �2020 Jacobs Data Solutions
+﻿// Copyright ©2020 Jacobs Data Solutions
 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the
 // License at
@@ -8,18 +8,19 @@
 // Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
 // CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 using JDS.OrgManager.Application.Abstractions.Models;
-using System;
 
-namespace JDS.OrgManager.Application.Models
+namespace JDS.OrgManager.Application.Common.Addresses
 {
-    public abstract class AuditableDbEntity : IDbEntity
+    public interface IAddressViewModel : IViewModel
     {
-        public string CreatedBy { get; set; }
+        public string Address1 { get; set; }
 
-        public DateTime CreatedUtc { get; set; }
+        public string Address2 { get; set; }
 
-        public string LastModifiedBy { get; set; }
+        public string City { get; set; }
 
-        public DateTime? LastModifiedUtc { get; set; }
+        public string State { get; set; }
+
+        public string Zip { get; set; }
     }
 }

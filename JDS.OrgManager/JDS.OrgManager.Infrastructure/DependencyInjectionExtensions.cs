@@ -9,7 +9,7 @@
 // CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 using JDS.OrgManager.Application.Abstractions.Identity;
 using JDS.OrgManager.Application.Abstractions.Serialization;
-using JDS.OrgManager.Common.Abstractions.Dates;
+using JDS.OrgManager.Common.Abstractions.DateTimes;
 using JDS.OrgManager.Infrastructure.Dates;
 using JDS.OrgManager.Infrastructure.Identity;
 using JDS.OrgManager.Infrastructure.Serialization;

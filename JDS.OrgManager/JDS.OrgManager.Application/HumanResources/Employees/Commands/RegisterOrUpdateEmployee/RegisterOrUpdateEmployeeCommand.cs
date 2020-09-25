@@ -9,10 +9,10 @@
 // CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 using JDS.OrgManager.Application.Abstractions.DbContexts;
 using JDS.OrgManager.Application.Abstractions.Mapping;
+using JDS.OrgManager.Application.Abstractions.Models;
 using JDS.OrgManager.Application.Common.Employees;
 using JDS.OrgManager.Application.Common.PaidTimeOffPolicies;
-using JDS.OrgManager.Application.Models;
-using JDS.OrgManager.Common.Abstractions.Dates;
+using JDS.OrgManager.Common.Abstractions.DateTimes;
 using JDS.OrgManager.Domain.Common.People;
 using JDS.OrgManager.Domain.HumanResources.Employees;
 using JDS.OrgManager.Domain.HumanResources.PaidTimeOffPolicies;
@@ -27,7 +27,7 @@ using EmployeeException = JDS.OrgManager.Application.Common.Employees.EmployeeEx
 
 namespace JDS.OrgManager.Application.HumanResources.Employees.Commands.RegisterOrUpdateEmployee
 {
-    public class RegisterOrUpdateEmployeeCommand : ViewModel, IRequest<RegisterOrUpdateEmployeeCommand>
+    public class RegisterOrUpdateEmployeeCommand : IViewModel, IRequest<RegisterOrUpdateEmployeeCommand>
     {
         // Hard-coded for the time being.
         private const int TenantId = 1;
@@ -76,7 +76,7 @@ namespace JDS.OrgManager.Application.HumanResources.Employees.Commands.RegisterO
 
         public class RegisterOrUpdateEmployeeCommandHandler : IRequestHandler<RegisterOrUpdateEmployeeCommand, RegisterOrUpdateEmployeeCommand>
         {
-            private readonly IOrgManagerDbContext context;
+            private readonly IApplicationWriteDbContext context;
 
             private readonly IDateTimeService dateTimeService;
 
@@ -87,7 +87,7 @@ namespace JDS.OrgManager.Application.HumanResources.Employees.Commands.RegisterO
             private readonly IDomainEntityToDbEntityMapper<PaidTimeOffPolicy, PaidTimeOffPolicyEntity> ptoPolicyDomainToDbEntityMapper;
 
             public RegisterOrUpdateEmployeeCommandHandler(
-                IOrgManagerDbContext context,
+                IApplicationWriteDbContext context,
                 IViewModelToDomainEntityMapper<RegisterOrUpdateEmployeeCommand, Employee> employeeVmToDomainEntityMapper,
                 IDomainEntityToDbEntityMapper<Employee, EmployeeEntity> employeeDomainToDbEntityMapper,
                 IDomainEntityToDbEntityMapper<PaidTimeOffPolicy, PaidTimeOffPolicyEntity> ptoPolicyDomainToDbEntityMapper,

@@ -7,7 +7,7 @@
 
 // Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
 // CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
-using JDS.OrgManager.Application.Abstractions.DbQueryFacades;
+using JDS.OrgManager.Application.Abstractions.DbFacades;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -21,9 +21,9 @@ namespace JDS.OrgManager.Application.HumanResources.Employees.Queries.GetEmploye
     {
         public class GetEmployeeOrgChartQueryHandler : IRequestHandler<GetEmployeeOrgChartQuery, IReadOnlyList<GetEmployeeOrgChartViewModel>>
         {
-            private readonly IOrgManagerDbQueryFacade queryFacade;
+            private readonly IApplicationReadDbFacade queryFacade;
 
-            public GetEmployeeOrgChartQueryHandler(IOrgManagerDbQueryFacade queryFacade) => this.queryFacade = queryFacade ?? throw new ArgumentNullException(nameof(queryFacade));
+            public GetEmployeeOrgChartQueryHandler(IApplicationReadDbFacade queryFacade) => this.queryFacade = queryFacade ?? throw new ArgumentNullException(nameof(queryFacade));
 
             public async Task<IReadOnlyList<GetEmployeeOrgChartViewModel>> Handle(GetEmployeeOrgChartQuery request, CancellationToken cancellationToken)
             {

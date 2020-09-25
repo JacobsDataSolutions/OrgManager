@@ -21,11 +21,16 @@ namespace JDS.OrgManager.Application
 {
     public static class DependencyInjectionExtensions
     {
-        public static IServiceCollection AddApplicationLayer(this IServiceCollection services, bool addRequestLogging = false, bool useReadThroughCachingForQueries = false)
+        public static IServiceCollection AddApplicationLayer(this IServiceCollection services, bool addValidation = false, bool addRequestLogging = false, bool useReadThroughCachingForQueries = false)
         {
             services.AddSingleton<IDomainEntityToDbEntityMapper<Employee, EmployeeEntity>, EmployeeDomainToDbEntityMapper>()
             .AddSingleton<IDomainEntityToDbEntityMapper<PaidTimeOffPolicy, PaidTimeOffPolicyEntity>, PaidTimeOffPolicyDomainToDbEntityMapper>()
             .AddSingleton<IViewModelToDomainEntityMapper<RegisterOrUpdateEmployeeCommand, Employee>, RegisterOrUpdateEmployeeDomainEntityMapper>();
+
+            if (addValidation)
+            {
+                services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
+            }
 
             if (addRequestLogging)
             {

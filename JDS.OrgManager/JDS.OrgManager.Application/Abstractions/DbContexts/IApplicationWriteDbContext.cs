@@ -10,15 +10,26 @@
 using JDS.OrgManager.Application.Common.Currencies;
 using JDS.OrgManager.Application.Common.Employees;
 using JDS.OrgManager.Application.Common.PaidTimeOffPolicies;
+using JDS.OrgManager.Application.Customers;
+using JDS.OrgManager.Application.Tenants;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using System.Data;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace JDS.OrgManager.Application.Abstractions.DbContexts
 {
-    public interface IOrgManagerDbContext
+    public interface IApplicationWriteDbContext
     {
+        IDbConnection Connection { get; }
+
         DbSet<CurrencyEntity> Currencies { get; }
+
+        DbSet<CustomerEntity> Customers { get; }
+
+        DatabaseFacade Database { get; }
 
         DbSet<EmployeeManagerEntity> EmployeeManagers { get; }
 
@@ -27,6 +38,14 @@ namespace JDS.OrgManager.Application.Abstractions.DbContexts
         bool HasChanges { get; }
 
         DbSet<PaidTimeOffPolicyEntity> PaidTimeOffPolicies { get; }
+
+        DbSet<TenantAspNetUserEntity> TenantAspNetUsers { get; }
+
+        DbSet<TenantEntity> Tenants { get; }
+
+        EntityEntry Entry(object entity);
+
+        EntityEntry<TEntity> Entry<TEntity>(TEntity entity) where TEntity : class;
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }

@@ -7,6 +7,7 @@
 
 // Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
 // CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+using JDS.OrgManager.Application.Abstractions.Models;
 using JDS.OrgManager.Application.Common.PaidTimeOffPolicies;
 using JDS.OrgManager.Persistence.Configuration;
 using Microsoft.EntityFrameworkCore;
@@ -20,10 +21,11 @@ namespace JDS.OrgManager.Persistence.Common.PaidTimeOffPolicies
         {
             base.Configure(builder);
             builder.HasKey(e => new { e.TenantId, e.Id });
-            builder.Property(e => e.Id).UseIdentityColumn();
-            builder.Property(e => e.MaxPtoHours).HasColumnType("decimal(18,4)");
-            builder.Property(e => e.Name).HasMaxLength(25);
-            builder.Property(e => e.PtoAccrualRate).HasColumnType("decimal(18,4)");
+            builder.Property(e => e.TenantId).ValueGeneratedNever();
+            builder.Property(e => e.Id).UseIdentityColumn().ValueGeneratedOnAdd();
+            builder.Property(e => e.MaxPtoHours).HasColumnType(PersistenceLayerConstants.SqlDecimalType);
+            builder.Property(e => e.Name).HasMaxLength(Lengths.Name).IsRequired();
+            builder.Property(e => e.PtoAccrualRate).HasColumnType(PersistenceLayerConstants.SqlDecimalType);
         }
     }
 }

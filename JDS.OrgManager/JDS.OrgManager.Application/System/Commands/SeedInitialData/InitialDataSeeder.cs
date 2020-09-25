@@ -24,11 +24,11 @@ namespace JDS.OrgManager.Application.System.Commands.SeedInitialData
         // Hard-coded for the time being.
         private const int TenantId = 1;
 
-        private readonly IOrgManagerDbContext context;
+        private readonly IApplicationWriteDbContext context;
 
         private readonly ILogger logger;
 
-        public InitialDataSeeder(IOrgManagerDbContext context, ILogger logger)
+        public InitialDataSeeder(IApplicationWriteDbContext context, ILogger logger)
         {
             this.context = context ?? throw new ArgumentNullException(nameof(context));
             this.logger = logger ?? throw new ArgumentNullException(nameof(logger));

@@ -40,7 +40,7 @@ namespace JDS.OrgManager.Utils
                 paidTimeOffPolicy: new PaidTimeOffPolicy(false, employeeLevel, true, 320.0m, "DEMO POLICY", 10.0m) { Id = random.Next() },
                 salary: new Money((random.Next(25) + 25) * 1000.0M, Currency.USD),
                 socialSecurityNumber: new SocialSecurityNumber(DummyData.GenerateFakeSSN()),
-                dateExited: DummyData.GetRandomTerminationDate(dateHired),
+                dateTerminated: DummyData.GetRandomTerminationDate(dateHired),
                 middleName: DummyData.GenerateFakeFirstOrMiddleName(male),
                 ptoHoursRemaining: 10.0m,
                 subordinates: employeeLevel > 1 ? (from n in Enumerable.Range(1, employeeLevel) select GenerateEmployee(employeeLevel - 1)).ToList() : new List<Employee>()

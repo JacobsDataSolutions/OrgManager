@@ -15,16 +15,14 @@ using System.IO;
 
 namespace JDS.OrgManager.Persistence.DbContexts
 {
-    public abstract class DesignTimeDbContextFactoryBase<TContext> :
+    public abstract class DesignTimeWriteDbContextFactoryBase<TContext> :
         IDesignTimeDbContextFactory<TContext> where TContext : DbContext
     {
         private const string AspNetCoreEnvironment = "ASPNETCORE_ENVIRONMENT";
 
-        private const string ConnectionStringName = "ApplicationDatabase";
-
         public TContext CreateDbContext(string[] args)
         {
-            var basePath = Directory.GetCurrentDirectory() + string.Format("{0}..{0}JDS.OrgManager.Presentation.ConsoleApp", Path.DirectorySeparatorChar);
+            var basePath = Directory.GetCurrentDirectory() + string.Format("{0}..{0}JDS.OrgManager.Presentation.WebApi", Path.DirectorySeparatorChar);
             return Create(basePath, Environment.GetEnvironmentVariable(AspNetCoreEnvironment));
         }
 
@@ -40,7 +38,7 @@ namespace JDS.OrgManager.Persistence.DbContexts
                 .AddEnvironmentVariables()
                 .Build();
 
-            var connectionString = configuration.GetConnectionString(ConnectionStringName);
+            var connectionString = configuration.GetConnectionString(PersistenceLayerConstants.WriteDatabaseConnectionStringName);
 
             return Create(connectionString);
         }
@@ -49,7 +47,7 @@ namespace JDS.OrgManager.Persistence.DbContexts
         {
             if (string.IsNullOrEmpty(connectionString))
             {
-                throw new ArgumentException($"Connection string '{ConnectionStringName}' is null or empty.", nameof(connectionString));
+                throw new ArgumentException($"Connection string '{connectionString}' is null or empty.", nameof(connectionString));
             }
 
             Console.WriteLine($"DesignTimeDbContextFactoryBase.Create(string): Connection string: '{connectionString}'.");
