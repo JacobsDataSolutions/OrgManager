@@ -1,4 +1,4 @@
-// Copyright ©2020 Jacobs Data Solutions
+// Copyright Â©2020 Jacobs Data Solutions
 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the
 // License at
@@ -49,7 +49,7 @@ namespace JDS.OrgManager.Application.Behaviors
             }
             else
             {
-                logger.LogWarning("Request: {Name} ({ElapsedMilliseconds} milliseconds) {@UserId} {@Request}",
+                logger.LogInformation("Request: {Name} ({ElapsedMilliseconds} milliseconds) {@UserId} {@Request}",
                     name, timer.ElapsedMilliseconds, currentUserService.UserId, request);
             }
 
