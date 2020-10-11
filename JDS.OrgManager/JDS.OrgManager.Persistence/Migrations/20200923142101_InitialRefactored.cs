@@ -270,19 +270,19 @@ namespace JDS.OrgManager.Persistence.Migrations
                 table: "Tenants",
                 column: "CustomerId");
 
-            // Jake
+            // JDS
             migrationBuilder.CreateIndex(
                 name: "IX_TenantAspNetUsers_AspNetUsersId",
                 table: "TenantAspNetUsers",
                 column: "AspNetUsersId");
 
-            // Jake
+            // JDS
             migrationBuilder.CreateIndex(
                 name: "IX_Customers_AspNetUsersId",
                 table: "Customers",
                 column: "AspNetUsersId");
 
-            // Jake
+            // JDS
             migrationBuilder.CreateIndex(
                 name: "IX_Employees_AspNetUsersId",
                 table: "Employees",

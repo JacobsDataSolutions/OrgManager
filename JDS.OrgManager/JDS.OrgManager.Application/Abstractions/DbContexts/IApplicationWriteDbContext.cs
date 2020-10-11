@@ -47,6 +47,6 @@ namespace JDS.OrgManager.Application.Abstractions.DbContexts
 
         EntityEntry<TEntity> Entry<TEntity>(TEntity entity) where TEntity : class;
 
-        Task<int> SaveChangesAsync(CancellationToken cancellationToken);
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }
 }

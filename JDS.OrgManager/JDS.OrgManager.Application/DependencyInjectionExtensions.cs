@@ -12,6 +12,7 @@ using JDS.OrgManager.Application.Behaviors;
 using JDS.OrgManager.Application.Common.Employees;
 using JDS.OrgManager.Application.Common.PaidTimeOffPolicies;
 using JDS.OrgManager.Application.HumanResources.Employees.Commands.RegisterOrUpdateEmployee;
+using JDS.OrgManager.Application.Tenants;
 using JDS.OrgManager.Domain.HumanResources.Employees;
 using JDS.OrgManager.Domain.HumanResources.PaidTimeOffPolicies;
 using MediatR;
@@ -23,9 +24,11 @@ namespace JDS.OrgManager.Application
     {
         public static IServiceCollection AddApplicationLayer(this IServiceCollection services, bool addValidation = false, bool addRequestLogging = false, bool useReadThroughCachingForQueries = false)
         {
-            services.AddSingleton<IDomainEntityToDbEntityMapper<Employee, EmployeeEntity>, EmployeeDomainToDbEntityMapper>()
-            .AddSingleton<IDomainEntityToDbEntityMapper<PaidTimeOffPolicy, PaidTimeOffPolicyEntity>, PaidTimeOffPolicyDomainToDbEntityMapper>()
-            .AddSingleton<IViewModelToDomainEntityMapper<RegisterOrUpdateEmployeeCommand, Employee>, RegisterOrUpdateEmployeeDomainEntityMapper>();
+            services
+                .AddSingleton<IDomainEntityToDbEntityMapper<Employee, EmployeeEntity>, EmployeeDomainToDbEntityMapper>()
+                .AddSingleton<IDomainEntityToDbEntityMapper<PaidTimeOffPolicy, PaidTimeOffPolicyEntity>, PaidTimeOffPolicyDomainToDbEntityMapper>()
+                .AddSingleton<IViewModelToDomainEntityMapper<RegisterOrUpdateEmployeeCommand, Employee>, RegisterOrUpdateEmployeeDomainEntityMapper>()
+                .AddSingleton < IViewModelToDbEntityMapper<TenantViewModel, TenantEntity>, TenantViewModelToDbEntityMapper>();
 
             if (addValidation)
             {

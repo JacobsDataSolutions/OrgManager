@@ -62,7 +62,7 @@ namespace JDS.OrgManager.Persistence.DbContexts
             this.dateTimeService = dateTimeService ?? throw new ArgumentNullException(nameof(dateTimeService));
         }
 
-        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             foreach (var entry in ChangeTracker.Entries<AuditableDbEntity>())
             {
