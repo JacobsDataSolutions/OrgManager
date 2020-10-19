@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace JDS.OrgManager.Application.Tenants.GetTenantIdFromSlug
+namespace JDS.OrgManager.Application.Tenants.Queries.GetTenantIdFromSlug
 {
     public class GetTenantIdFromSlugQuery : IRequest<int>, ICacheableQuery
     {

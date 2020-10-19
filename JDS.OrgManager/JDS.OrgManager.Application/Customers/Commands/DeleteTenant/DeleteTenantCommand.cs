@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace JDS.OrgManager.Application.Customers.DeleteTenant
+namespace JDS.OrgManager.Application.Customers.Commands.DeleteTenant
 {
     public class DeleteTenantCommand : IRequest<DeleteTenantViewModel>
     {

@@ -1,5 +1,5 @@
-﻿using JDS.OrgManager.Application.Tenants.GetTenantIdFromAssignmentKey;
-using JDS.OrgManager.Application.Tenants.GetTenantIdFromSlug;
+﻿using JDS.OrgManager.Application.Tenants.Queries.GetTenantIdFromAssignmentKey;
+using JDS.OrgManager.Application.Tenants.Queries.GetTenantIdFromSlug;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

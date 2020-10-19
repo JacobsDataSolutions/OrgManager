@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace JDS.OrgManager.Application.Customers.ProvisionTenant
+namespace JDS.OrgManager.Application.Customers.Commands.ProvisionTenant
 {
     public class ProvisionTenantCommand : IRequest<int>
     {

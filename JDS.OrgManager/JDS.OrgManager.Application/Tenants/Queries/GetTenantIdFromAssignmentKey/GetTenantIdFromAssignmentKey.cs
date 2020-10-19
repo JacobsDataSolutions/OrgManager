@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace JDS.OrgManager.Application.Tenants.GetTenantIdFromAssignmentKey
+namespace JDS.OrgManager.Application.Tenants.Queries.GetTenantIdFromAssignmentKey
 {
     public class GetTenantIdFromAssignmentKeyQuery : IRequest<int>, ICacheableQuery
     {

@@ -1,0 +1,21 @@
+<div class="container">
+    <div class="row mt-5 justify-content-center">
+        <div class="col-12 text-center">
+            <h2>Unauthorized</h2>
+        </div>
+    </div>
+    <div class="row mt-3 justify-content-center" [ngClass]="routeAnimationsElements" rtl>
+        <div class="col-auto text-center" [ngClass]="routeAnimationsElements">
+            <div class="main-image">
+                <img [src]="logo" [alt]="logo" />
+            </div>
+            <br />
+            <p>You have tried to access an unauthorized area of the site.</p>
+            <div class="my-5">
+                <button mat-button mat-stroked-button color="accent" (click)="goBack()">
+                    <span>Go Back</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

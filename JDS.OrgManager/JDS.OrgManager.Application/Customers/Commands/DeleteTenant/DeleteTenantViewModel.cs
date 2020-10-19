@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace JDS.OrgManager.Application.Customers.DeleteTenant
+namespace JDS.OrgManager.Application.Customers.Commands.DeleteTenant
 {
     public class DeleteTenantViewModel : IViewModel
     {

@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace JDS.OrgManager.Application.Tenants.GetAuthorizedTenantsForUser
+namespace JDS.OrgManager.Application.Tenants.Queries.GetAuthorizedTenantsForUser
 {
     public class GetAuthorizedTenantsForUserQuery : IRequest<int[]>
     {

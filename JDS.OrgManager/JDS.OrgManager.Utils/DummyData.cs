@@ -39,7 +39,7 @@ namespace JDS.OrgManager.Utils
 
         static DummyData()
         {
-            using (var reader = new StreamReader(@"..\JDS.PtoPlus.Utils\bin\Debug\netcoreapp3.1\chicago-street-names.csv"))
+            using (var reader = new StreamReader(@"..\JDS.OrgManager.Utils\bin\Debug\netcoreapp3.1\chicago-street-names.csv"))
             {
                 using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
                 {

@@ -31,103 +31,104 @@ import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MatNativeDateModule } from "@angular/material/core";
 
 import {
-  FontAwesomeModule,
-  FaIconLibrary
+    FontAwesomeModule,
+    FaIconLibrary
 } from "@fortawesome/angular-fontawesome";
 import {
-  faPlus,
-  faEdit,
-  faTrash,
-  faTimes,
-  faCaretUp,
-  faCaretDown,
-  faExclamationTriangle,
-  faFilter,
-  faTasks,
-  faCheck,
-  faSquare,
-  faLanguage,
-  faPaintBrush,
-  faLightbulb,
-  faWindowMaximize,
-  faStream,
-  faBook
+    faPlus,
+    faEdit,
+    faTrash,
+    faTimes,
+    faCaretUp,
+    faCaretDown,
+    faExclamationTriangle,
+    faFilter,
+    faTasks,
+    faCheck,
+    faSquare,
+    faLanguage,
+    faPaintBrush,
+    faLightbulb,
+    faWindowMaximize,
+    faStream,
+    faBook
 } from "@fortawesome/free-solid-svg-icons";
 import { faMediumM, faGithub } from "@fortawesome/free-brands-svg-icons";
+import { HasTenantAccessGuard } from "./tenants/has-tenant-access.guard";
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
+    imports: [
+        CommonModule,
+        FormsModule,
 
-    MatButtonModule,
-    MatSelectModule,
-    MatTabsModule,
-    MatInputModule,
-    MatProgressSpinnerModule,
-    MatChipsModule,
-    MatCardModule,
-    MatCheckboxModule,
-    MatListModule,
-    MatMenuModule,
-    MatIconModule,
-    MatTooltipModule,
-    MatSnackBarModule,
-    MatSlideToggleModule,
-    MatDividerModule,
+        MatButtonModule,
+        MatSelectModule,
+        MatTabsModule,
+        MatInputModule,
+        MatProgressSpinnerModule,
+        MatChipsModule,
+        MatCardModule,
+        MatCheckboxModule,
+        MatListModule,
+        MatMenuModule,
+        MatIconModule,
+        MatTooltipModule,
+        MatSnackBarModule,
+        MatSlideToggleModule,
+        MatDividerModule,
 
-    FontAwesomeModule
-  ],
-  declarations: [],
-  exports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
+        FontAwesomeModule
+    ],
+    declarations: [],
+    exports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
 
-    MatButtonModule,
-    MatMenuModule,
-    MatTabsModule,
-    MatChipsModule,
-    MatInputModule,
-    MatProgressSpinnerModule,
-    MatCheckboxModule,
-    MatCardModule,
-    MatListModule,
-    MatSelectModule,
-    MatIconModule,
-    MatTooltipModule,
-    MatSnackBarModule,
-    MatSlideToggleModule,
-    MatDividerModule,
-    MatSliderModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
+        MatButtonModule,
+        MatMenuModule,
+        MatTabsModule,
+        MatChipsModule,
+        MatInputModule,
+        MatProgressSpinnerModule,
+        MatCheckboxModule,
+        MatCardModule,
+        MatListModule,
+        MatSelectModule,
+        MatIconModule,
+        MatTooltipModule,
+        MatSnackBarModule,
+        MatSlideToggleModule,
+        MatDividerModule,
+        MatSliderModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
 
-    FontAwesomeModule
-  ]
+        FontAwesomeModule
+    ]
 })
 export class SharedModule {
-  constructor(faIconLibrary: FaIconLibrary) {
-    faIconLibrary.addIcons(
-      faGithub,
-      faMediumM,
-      faPlus,
-      faEdit,
-      faTrash,
-      faTimes,
-      faCaretUp,
-      faCaretDown,
-      faExclamationTriangle,
-      faFilter,
-      faTasks,
-      faCheck,
-      faSquare,
-      faLanguage,
-      faPaintBrush,
-      faLightbulb,
-      faWindowMaximize,
-      faStream,
-      faBook
-    );
-  }
+    constructor(faIconLibrary: FaIconLibrary) {
+        faIconLibrary.addIcons(
+            faGithub,
+            faMediumM,
+            faPlus,
+            faEdit,
+            faTrash,
+            faTimes,
+            faCaretUp,
+            faCaretDown,
+            faExclamationTriangle,
+            faFilter,
+            faTasks,
+            faCheck,
+            faSquare,
+            faLanguage,
+            faPaintBrush,
+            faLightbulb,
+            faWindowMaximize,
+            faStream,
+            faBook
+        );
+    }
 }

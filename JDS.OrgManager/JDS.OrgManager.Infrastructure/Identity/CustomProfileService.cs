@@ -1,8 +1,8 @@
 ﻿using IdentityServer4.Extensions;
 using IdentityServer4.Models;
 using IdentityServer4.Services;
-using JDS.OrgManager.Application.Tenants.GetAuthorizedTenantsForUser;
-using JDS.OrgManager.Application.Tenants.GetTenantEmployeesForUser;
+using JDS.OrgManager.Application.Tenants.Queries.GetAuthorizedTenantsForUser;
+using JDS.OrgManager.Application.Tenants.Queries.GetTenantEmployeesForUser;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;

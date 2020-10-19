@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace JDS.OrgManager.Application.Customers.AddOrUpdateTenant
+namespace JDS.OrgManager.Application.Customers.Commands.AddOrUpdateTenant
 {
     public class AddOrUpdateTenantCommandValidator : AbstractValidator<AddOrUpdateTenantCommand>
     {

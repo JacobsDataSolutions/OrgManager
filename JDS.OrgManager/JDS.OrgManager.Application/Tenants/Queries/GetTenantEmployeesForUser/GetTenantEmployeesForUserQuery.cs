@@ -8,7 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Linq;
 
-namespace JDS.OrgManager.Application.Tenants.GetTenantEmployeesForUser
+namespace JDS.OrgManager.Application.Tenants.Queries.GetTenantEmployeesForUser
 {
     public class GetTenantEmployeesForUserQuery : IRequest<TenantEmployeeIdentityModel[]>, ICacheableQuery
     {

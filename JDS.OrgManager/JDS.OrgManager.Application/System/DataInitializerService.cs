@@ -1,4 +1,4 @@
-﻿using JDS.OrgManager.Application.Customers.ProvisionTenant;
+﻿using JDS.OrgManager.Application.Customers.Commands.ProvisionTenant;
 using JDS.OrgManager.Application.System.Commands.ClearTables;
 using JDS.OrgManager.Application.System.Commands.SeedInitialData;
 using JDS.OrgManager.Application.Tenants;

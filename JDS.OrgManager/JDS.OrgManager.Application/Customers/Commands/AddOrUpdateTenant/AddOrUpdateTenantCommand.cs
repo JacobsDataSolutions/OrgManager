@@ -11,7 +11,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace JDS.OrgManager.Application.Customers.AddOrUpdateTenant
+namespace JDS.OrgManager.Application.Customers.Commands.AddOrUpdateTenant
 {
     public class AddOrUpdateTenantCommand : IRequest<TenantViewModel>
     {

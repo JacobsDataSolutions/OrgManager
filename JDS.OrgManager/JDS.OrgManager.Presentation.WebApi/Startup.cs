@@ -7,16 +7,24 @@
 
 // Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
 // CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+using IdentityServer4.Services;
+using JDS.OrgManager.Application;
+using JDS.OrgManager.Domain;
 using JDS.OrgManager.Infrastructure;
 using JDS.OrgManager.Infrastructure.Identity;
+using JDS.OrgManager.Persistence;
+using JDS.OrgManager.Utils;
+using MediatR;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Linq;
 
 namespace JDS.OrgManager.Presentation.WebApi
 {
@@ -83,7 +91,21 @@ namespace JDS.OrgManager.Presentation.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // JDS TODO: add in serilog, MediatR, DI extensions from the Application/Infrastrastructure/Domain layers.
+            // JDS TODO: add in logging/serilog.
+
+            services.AddScoped<DummyDataInserter>();
+
+            // Add caching.
+            services.AddSingleton<IDistributedCache, MemoryDistributedCache>();
+
+            // Add mediatR and associated types.
+            services.AddMediatR((from t in new[] { typeof(DomainLayer), typeof(ApplicationLayer) } select t.Assembly).ToArray());
+
+            services.AddDomainLayer();
+            services.AddApplicationLayer(addValidation: true, addRequestLogging: true, useReadThroughCachingForQueries: true);
+            services.AddInfrastructureLayer();
+            services.AddPersistenceLayer(Configuration);
+            services.AddScoped<DatabaseUpdater>();
 
             services.AddDbContext<AppIdentityDbContext>(options =>
                 options.UseSqlServer(
@@ -98,7 +120,8 @@ namespace JDS.OrgManager.Presentation.WebApi
             services.AddAuthentication()
                 .AddIdentityServerJwt();
 
-            // JDS TODO: add in custom profile service.
+            // JDS - add in custom profile service.
+            services.AddTransient<IProfileService, CustomProfileService>();
 
             services.AddControllersWithViews();
             services.AddRazorPages();

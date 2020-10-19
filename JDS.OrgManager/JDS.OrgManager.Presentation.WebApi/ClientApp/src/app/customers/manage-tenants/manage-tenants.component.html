@@ -1,0 +1,119 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Manage Tenants</h2>
+            <mat-card *ngFor="let tenant of tenants" [ngClass]="routeAnimationsElements"
+                      (click)=select(tenant)>
+                <b>{{tenant.name}}</b><br />
+                <b>{{tenant.slug}}</b>&nbsp;
+                <fa-icon icon="hotel">
+                </fa-icon>
+            </mat-card>
+            <p *ngIf="tenants?.length === 0">Add new tenant...</p>
+            <button type="button" mat-fab color="primary" class="add" [ngClass]="routeAnimationsElements"
+                    *ngIf="!(isEditing || isDeleting)" (click)="addNew(formDirective)">
+                <fa-icon icon="plus"></fa-icon>
+            </button>
+        </div>
+        <div class="col-md-6">
+            <span class="d-flex justify-content-between">
+                <h2>Edit tenant details</h2>
+                <span class="d-flex justify-content-end">
+                    <span *ngIf="selectedTenant">
+                        <button mat-icon-button color="accent" *ngIf="!(isEditing || isDeleting)">
+                            <fa-icon icon="edit" (click)="edit(selectedTenant)" matTooltip="Edit tenant"
+                                     matTooltipPosition="above">
+                            </fa-icon>
+                        </button>
+                        <button mat-icon-button color="warn" *ngIf="!(isEditing || isDeleting)">
+                            <fa-icon icon="trash" (click)="delete(deleteFormDirective)" matTooltip="Delete tenant"
+                                     matTooltipPosition="above">
+                            </fa-icon>
+                        </button>
+                        <button mat-icon-button (click)="deselect()" *ngIf="!(isEditing || isDeleting)">
+                            <fa-icon icon="times" matTooltip="Deselect tenant"
+                                     matTooltipPosition="above">
+                            </fa-icon>
+                        </button>
+                    </span>
+                </span>
+            </span>
+
+            <form [formGroup]="form" [style.display]="isEditing ? 'block' : 'none'"
+                  [ngClass]="routeAnimationsElements" #formDirective="ngForm">
+                <div class="row">
+                    <mat-form-field class="col">
+                        <input matInput placeholder="Tenant Name"
+                               formControlName="name" required autofocus matTooltip="This is the proper name of your tenant--e.g. 'My Company'">
+                        <mat-error *ngIf="form.get('name').hasError('required')">
+                            Tenant name is required.
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="row">
+                    <mat-form-field class="col">
+                        <input matInput placeholder="Tenant Slug"
+                               formControlName="slug" required matTooltip="This is the URL fragment to your tenant--e.g. 'my-company'.">
+                        <mat-error *ngIf="form.get('slug').hasError('required')">
+                            Tenant slug is required.
+                        </mat-error>
+                        <mat-error *ngIf="form.get('slug').hasError('maxLength')">
+                            Max length is {{ lengths.slug }}.
+                        </mat-error>
+                        <mat-error *ngIf="form.get('slug').hasError('minLength')">
+                            Min length is {{ lengths.min }}.
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="row">
+                    <div class="col-12 d-flex justify-content-between">
+                        <button (click)="save()" mat-raised-button color="primary" [disabled]="!form.valid" [ngClass]="routeAnimationsElements">
+                            Save
+                        </button>
+                        <button (click)="cancelEditing()" mat-raised-button>
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+            <form [formGroup]="deleteForm" [style.display]="isDeleting ? 'block' : 'none'"
+                  [ngClass]="routeAnimationsElements" #deleteFormDirective="ngForm">
+                <div class="row">
+                    <mat-form-field class="col">
+                        <input matInput placeholder="Please type tenant name to confirm deletion"
+                               formControlName="confirmationCode" required autofocus
+                               oninput="this.value = this.value.toUpperCase()"
+                               autocomplete="off">
+                    </mat-form-field>
+                </div>
+                <div class="row">
+                    <div class="col-12 d-flex justify-content-between">
+                        <button (click)="confirmDelete()" mat-raised-button color="primary" [disabled]="!deleteForm.valid" [ngClass]="routeAnimationsElements">
+                            Delete
+                        </button>
+                        <button (click)="cancelDelete()" mat-raised-button>
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+            <ng-container *ngIf="!(isEditing || isDeleting)">
+                <div [ngClass]="routeAnimationsElements" *ngIf="selectedTenant; else noSelectedTenantTmpl">
+                    <p><b>{{ selectedTenant.name }}</b></p>
+                    <mat-divider></mat-divider>
+                    <p>{{ selectedTenant.slug }}</p>
+                    <p>Assignment Key:&nbsp;<i>{{ selectedTenant.assignmentKey }}</i></p>
+                </div>
+
+                <ng-template #noSelectedTenantTmpl>
+                    <p [ngClass]="routeAnimationsElements">
+                        No tenant selected.
+                    </p>
+                </ng-template>
+            </ng-container>
+
+        </div>
+    </div>
+</div>
