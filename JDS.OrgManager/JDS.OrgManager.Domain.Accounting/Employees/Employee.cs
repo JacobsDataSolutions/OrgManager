@@ -47,7 +47,7 @@ namespace JDS.OrgManager.Domain.Accounting.Employees
             Money salary,
             Money elected401kContribution,
             decimal ptoHoursRemaining,
-            int? id = null,
+            int id = 0,
             string middleName = null,
             IEnumerable<Paycheck> paychecks = null)
         {

@@ -12,6 +12,7 @@ using JDS.OrgManager.Application.Behaviors;
 using JDS.OrgManager.Application.Common.Employees;
 using JDS.OrgManager.Application.Common.PaidTimeOffPolicies;
 using JDS.OrgManager.Application.HumanResources.Employees.Commands.RegisterOrUpdateEmployee;
+using JDS.OrgManager.Application.System;
 using JDS.OrgManager.Application.Tenants;
 using JDS.OrgManager.Domain.HumanResources.Employees;
 using JDS.OrgManager.Domain.HumanResources.PaidTimeOffPolicies;
@@ -37,14 +38,16 @@ namespace JDS.OrgManager.Application
 
             if (addRequestLogging)
             {
-                services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPerformanceBehavior<,>))
-                .AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
+                services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPerformanceBehavior<,>));
             }
 
             if (useReadThroughCachingForQueries)
             {
                 services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestCachingBehavior<,>));
             }
+
+            services.AddScoped<DataInitializerService>();
+
             return services;
         }
     }
