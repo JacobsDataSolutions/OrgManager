@@ -37,6 +37,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\employees\employee-routing.module.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="wwwroot\css\" />
     <Folder Include="wwwroot\images\" />
     <Folder Include="wwwroot\js\" />
@@ -58,6 +62,10 @@
     <ProjectReference Include="..\JDS.OrgManager.Infrastructure\JDS.OrgManager.Infrastructure.csproj" />
     <ProjectReference Include="..\JDS.OrgManager.Persistence\JDS.OrgManager.Persistence.csproj" />
     <ProjectReference Include="..\JDS.OrgManager.Utils\JDS.OrgManager.Utils.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\employees\employee-routing.module.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

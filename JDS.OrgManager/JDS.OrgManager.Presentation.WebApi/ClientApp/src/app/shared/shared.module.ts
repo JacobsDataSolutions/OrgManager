@@ -54,7 +54,6 @@ import {
     faBook
 } from "@fortawesome/free-solid-svg-icons";
 import { faMediumM, faGithub } from "@fortawesome/free-brands-svg-icons";
-import { HasTenantAccessGuard } from "./tenants/has-tenant-access.guard";
 
 @NgModule({
     imports: [

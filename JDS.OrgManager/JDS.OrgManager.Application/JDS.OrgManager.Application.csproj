@@ -21,4 +21,8 @@
     <ProjectReference Include="..\JDS.OrgManager.Domain\JDS.OrgManager.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Customers\Queries\GetCustomerStatus\" />
+  </ItemGroup>
+
 </Project>

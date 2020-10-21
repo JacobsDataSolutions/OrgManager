@@ -4,8 +4,10 @@
   "documentGenerator": {
     "webApiToOpenApi": {
       "controllerNames": [
+        "JDS.OrgManager.Presentation.WebApi.Controllers.CustomerController",
         "JDS.OrgManager.Presentation.WebApi.Controllers.TenantController",
-        "JDS.OrgManager.Presentation.WebApi.Controllers.CustomerController"
+        "JDS.OrgManager.Presentation.WebApi.Controllers.UserController",
+        "JDS.OrgManager.Presentation.WebApi.Controllers.EmployeeController"
       ],
       "isAspNetCore": true,
       "resolveJsonOptions": false,
@@ -75,7 +77,7 @@
       "nullValue": "Undefined",
       "generateClientClasses": true,
       "generateClientInterfaces": false,
-      "generateOptionalParameters": false,
+      "generateOptionalParameters": true,
       "exportTypes": true,
       "wrapDtoExceptions": false,
       "exceptionClass": "ApiException",

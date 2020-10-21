@@ -1,7 +1,6 @@
 ﻿using IdentityServer4.Extensions;
 using IdentityServer4.Models;
 using IdentityServer4.Services;
-using JDS.OrgManager.Application.Tenants.Queries.GetAuthorizedTenantsForUser;
 using JDS.OrgManager.Application.Tenants.Queries.GetTenantEmployeesForUser;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
@@ -195,13 +194,11 @@ namespace JDS.OrgManager.Infrastructure.Identity
 
         private async Task AddCustomClaimsAsync(ApplicationUser user, ProfileDataRequestContext context)
         {
-            var tenantIds = await mediator.Send(new GetAuthorizedTenantsForUserQuery { AspNetUsersId = user.Id });
             var tenantEmployees = await mediator.Send(new GetTenantEmployeesForUserQuery { AspNetUsersId = user.Id });
             context.IssuedClaims.AddRange(
                 new[]
                 {
                     new Claim(nameof(UserClaims.IsCustomer), user.IsCustomer.ToString()),
-                    new Claim(nameof(UserClaims.AuthorizedTenantIds), string.Join(",", tenantIds)),
                     new Claim(nameof(UserClaims.TenantEmployees), string.Join(",", from t in tenantEmployees select t.ToString())),
                     new Claim(nameof(UserClaims.UserName), user.UserName)
                 });

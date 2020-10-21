@@ -7,7 +7,7 @@ import {
 } from "@angular/router";
 import { Observable } from "rxjs";
 import { tap, switchMap, first } from "rxjs/operators";
-import { TenantClient } from "../nswag";
+import { TenantClient } from "../shared/nswag";
 
 @Injectable({
     providedIn: "root"

@@ -11,7 +11,6 @@ using JDS.OrgManager.Application.Abstractions.DbContexts;
 using JDS.OrgManager.Application.Abstractions.DbFacades;
 using JDS.OrgManager.Application.Abstractions.Mapping;
 using JDS.OrgManager.Application.Common.Currencies;
-using JDS.OrgManager.Application.Common.PaidTimeOffPolicies;
 using JDS.OrgManager.Application.Customers;
 using JDS.OrgManager.Application.Tenants;
 using JDS.OrgManager.Domain.Common.Finance;
@@ -63,6 +62,7 @@ namespace JDS.OrgManager.Application.System.Commands.SeedInitialData
 
                 await facade.SetIdentitySeedForAllTablesAsync(ApplicationLayerConstants.SystemSeedStartValue, sqlTransaction);
                 await SeedCurrenciesAsync();
+                await CreateTestCompanyUserAsync(sqlTransaction);
                 var customer = await SeedDefaultCustomerAsync(sqlTransaction);
                 if (customer != null)
                 {
@@ -71,6 +71,14 @@ namespace JDS.OrgManager.Application.System.Commands.SeedInitialData
                 await facade.SetIdentitySeedForAllTablesAsync(ApplicationLayerConstants.ProductionSeedStartValue, sqlTransaction);
                 await transaction.CommitAsync();
             }
+        }
+
+        private async Task CreateTestCompanyUserAsync(DbTransaction sqlTransaction)
+        {
+            var sql = @$"IF NOT EXISTS (SELECT 1 FROM AspNetUsers WHERE UserName = '{SystemUserName}')
+INSERT [dbo].[AspNetUsers] ([UserName], [NormalizedUserName], [Email], [NormalizedEmail], [EmailConfirmed], [PasswordHash], [SecurityStamp], [ConcurrencyStamp], [PhoneNumber], [PhoneNumberConfirmed], [TwoFactorEnabled], [LockoutEnd], [LockoutEnabled], [AccessFailedCount], [IsCustomer]) VALUES (N'{SystemUserName}', N'{SystemUserName}', N'{SystemUserName}', N'{SystemUserName}', 1, N'AQAAAAEAACcQAAAAEEEeWPvxgc0pa7boxO1GvxzQKedhDNkI0aVCwaws/52ehWp8Wple22rf+zcXp3hhQA==', N'2QEPCZBRJ6NF6JKJ446RBKVZXH7SXZ6X', N'f6d7885b-0ef3-4db3-a913-72871353dd65', NULL, 0, 0, NULL, 1, 0, 1)
+";
+            await facade.ExecuteAsync(sql, null, sqlTransaction);
         }
 
         private async Task CreateDefaultTenantsAsync(DbTransaction sqlTransaction, CustomerEntity customer, IEnumerable<TenantViewModel> tenants)

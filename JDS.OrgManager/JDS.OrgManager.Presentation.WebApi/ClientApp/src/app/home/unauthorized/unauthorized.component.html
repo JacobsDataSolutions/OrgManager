@@ -1,13 +1,9 @@
 <div class="container">
-    <div class="row mt-5 justify-content-center">
-        <div class="col-12 text-center">
+    <div class="row mt-3 justify-content-center" [ngClass]="routeAnimationsElements" style="text-align: center">
+        <div class="col-auto" [ngClass]="routeAnimationsElements">
             <h2>Unauthorized</h2>
-        </div>
-    </div>
-    <div class="row mt-3 justify-content-center" [ngClass]="routeAnimationsElements" rtl>
-        <div class="col-auto text-center" [ngClass]="routeAnimationsElements">
             <div class="main-image">
-                <img [src]="logo" [alt]="logo" />
+                <img [src]="image" [alt]="image" />
             </div>
             <br />
             <p>You have tried to access an unauthorized area of the site.</p>

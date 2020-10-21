@@ -39,7 +39,7 @@ namespace JDS.OrgManager.Utils
 
         static DummyData()
         {
-            using (var reader = new StreamReader(@"..\JDS.OrgManager.Utils\bin\Debug\netcoreapp3.1\chicago-street-names.csv"))
+            using (var reader = new StreamReader(@"..\JDS.OrgManager.Utils\bin\Debug\netcoreapp3.1\Streets\chicago-street-names.csv"))
             {
                 using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
                 {
@@ -95,7 +95,7 @@ namespace JDS.OrgManager.Utils
                 EmployeeLevel = level,
                 Salary = random.Next(50000) * level + 20000.0M,
                 SocialSecurityNumber = GenerateFakeSSN(),
-                PaidTimeOffPolicyId = paidTimeOffPolicies.First(p => p.EmployeeLevel == level).Id
+                PaidTimeOffPolicyId = paidTimeOffPolicies.First(p => p.EmployeeLevel == level && p.TenantId == tenantId).Id
             };
         }
 

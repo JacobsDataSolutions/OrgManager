@@ -16,6 +16,8 @@ namespace JDS.OrgManager.Application.System
         {
             nameof(IApplicationWriteDbContext.EmployeeManagers),
             nameof(IApplicationWriteDbContext.Employees),
+            nameof(IApplicationWriteDbContext.PaidTimeOffPolicies),
+            nameof(IApplicationWriteDbContext.TenantAspNetUsers),
             nameof(IApplicationWriteDbContext.Tenants),
             nameof(IApplicationWriteDbContext.Customers),
             nameof(IApplicationWriteDbContext.Currencies)

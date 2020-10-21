@@ -6,7 +6,7 @@ namespace JDS.OrgManager.Application.Tenants
 {
     public class TenantEmployeeIdentityModel
     {
-        public int EmployeeId { get; set; }
+        public int? EmployeeId { get; set; }
 
         public int TenantId { get; set; }
 

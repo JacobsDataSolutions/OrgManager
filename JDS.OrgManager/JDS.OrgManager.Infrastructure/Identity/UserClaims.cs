@@ -11,7 +11,7 @@ namespace JDS.OrgManager.Infrastructure.Identity
     {
         public int AspNetUsersId { get; set; }
 
-        public int[] AuthorizedTenantIds { get; set; } = new int[0];
+        public int[] AuthorizedTenantIds => (from t in TenantEmployees select t.TenantId).ToArray();
 
         public bool IsCustomer { get; set; }
 
@@ -19,7 +19,7 @@ namespace JDS.OrgManager.Infrastructure.Identity
 
         public string UserName { get; set; }
 
-        public int GetEmployeeId(int tenantId)
+        public int? GetEmployeeId(int tenantId)
         {
             var tenantEmployee = TenantEmployees.FirstOrDefault(t => t.TenantId == tenantId);
             if (tenantEmployee == null)

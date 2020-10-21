@@ -35,8 +35,13 @@ namespace JDS.OrgManager.Application.Tenants.Queries.GetTenantEmployeesForUser
 
             public async Task<TenantEmployeeIdentityModel[]> Handle(GetTenantEmployeesForUserQuery request, CancellationToken cancellationToken)
             {
+                var sql = @"
+                    SELECT t.TenantId, e.Id AS EmployeeId FROM TenantAspNetUsers t WITH(NOLOCK)
+                    LEFT JOIN Employees e WITH(NOLOCK) ON t.TenantId = e.TenantId AND t.AspNetUsersId = e.AspNetUsersId
+                    WHERE t.AspNetUsersId = @AspNetUsersId";
+
                 var employeesForUserByTenant =
-                    await facade.QueryAsync<TenantEmployeeIdentityModel>("SELECT TenantId, Id AS EmployeeId FROM Employees WITH(NOLOCK) WHERE AspNetUsersId = @AspNetUsersId ORDER BY TenantId", request);
+                    await facade.QueryAsync<TenantEmployeeIdentityModel>(sql, request);
                 return (
                     from e in employeesForUserByTenant
                     group e by e.TenantId into grouped

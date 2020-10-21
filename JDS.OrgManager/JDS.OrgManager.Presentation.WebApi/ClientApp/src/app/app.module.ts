@@ -17,11 +17,12 @@ import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app/app.component";
 import { CustomerModule } from "./customers/customer.module";
 import { UnauthorizedComponent } from "./home/unauthorized/unauthorized.component";
-import { TenantClient, CustomerClient } from "./shared/nswag";
+import { EmployeeModule } from "./employees/employee.module";
 
 @NgModule({
     imports: [
         CustomerModule,
+        EmployeeModule,
 
         // angular
         BrowserAnimationsModule,

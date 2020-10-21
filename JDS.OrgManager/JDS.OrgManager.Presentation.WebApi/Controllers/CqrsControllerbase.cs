@@ -22,26 +22,28 @@ namespace JDS.OrgManager.Presentation.WebApi.Controllers
         protected int? GetAspNetUsersId() =>
             GetClaimsValue(ClaimTypes.NameIdentifier, value => int.TryParse(value, out var id) ? id : (int?)null);
 
-        protected int[] GetAuthorizedTenantIds() =>
-            GetClaimsValue(nameof(UserClaims.AuthorizedTenantIds), value =>
-            {
-                if (string.IsNullOrWhiteSpace(value))
-                {
-                    return new int[0];
-                }
-                return (from t in value.Split(",") select int.Parse(t)).ToArray();
-            });
-
         protected bool GetIsCustomer() =>
             GetClaimsValue(nameof(UserClaims.IsCustomer), value => bool.TryParse(value, out var isCustomer) ? isCustomer : false);
 
         protected TenantEmployeeIdentityModel[] GetTenantEmployees() =>
             GetClaimsValue(nameof(UserClaims.TenantEmployees), value =>
-                string.IsNullOrWhiteSpace(value) ? new TenantEmployeeIdentityModel[0] :
-                (
-                    from tenantEmployee in value.Split(',')
-                    let n = tenantEmployee.Split('-')
-                    select new TenantEmployeeIdentityModel { TenantId = int.Parse(n[0]), EmployeeId = int.Parse(n[1]) }).ToArray());
+            {
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    return new TenantEmployeeIdentityModel[0];
+                }
+                var tenantEmployees = new List<TenantEmployeeIdentityModel>();
+                foreach (var tenantEmployeeString in value.Split(','))
+                {
+                    var ids = tenantEmployeeString.Split('-');
+                    if (!int.TryParse(ids[0], out var tenantId))
+                    {
+                        throw new InvalidOperationException("Invalid tenant Id in Tenant/Employee tuple.");
+                    }
+                    tenantEmployees.Add(new TenantEmployeeIdentityModel() { TenantId = tenantId, EmployeeId = int.TryParse(ids[1], out var employeeId) ? employeeId : (int?)null });
+                }
+                return tenantEmployees.ToArray();
+            });
 
         protected UserClaims GetUserClaims()
         {
@@ -53,7 +55,6 @@ namespace JDS.OrgManager.Presentation.WebApi.Controllers
             return new UserClaims
             {
                 AspNetUsersId = (int)userId,
-                AuthorizedTenantIds = GetAuthorizedTenantIds(),
                 IsCustomer = GetIsCustomer(),
                 TenantEmployees = GetTenantEmployees()
             };
@@ -77,7 +78,7 @@ namespace JDS.OrgManager.Presentation.WebApi.Controllers
                 // Ensure user is authenticated.
                 userClaims == null ||
                 // Ensure user is authenticated and associated with the specified tenant.
-                (tenantId != null && !userClaims.AuthorizedTenantIds.Contains((int)tenantId)) ||
+                (tenantId != null && !userClaims.TenantEmployees.Any(t => t.TenantId == tenantId)) ||
                 // Ensure user is authenticated and associated with the specified tenant and employee.
                 (tenantId != null && employeeId != null && !userClaims.TenantEmployees.Any(t => t.TenantId == tenantId && t.EmployeeId == employeeId)))
             {

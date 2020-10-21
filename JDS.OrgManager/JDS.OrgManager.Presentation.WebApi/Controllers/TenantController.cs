@@ -1,4 +1,5 @@
-﻿using JDS.OrgManager.Application.Tenants.Queries.GetTenantIdFromAssignmentKey;
+﻿using JDS.OrgManager.Application.Tenants.Queries.GetHasTenantAccess;
+using JDS.OrgManager.Application.Tenants.Queries.GetTenantIdFromAssignmentKey;
 using JDS.OrgManager.Application.Tenants.Queries.GetTenantIdFromSlug;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -22,7 +23,7 @@ namespace JDS.OrgManager.Presentation.WebApi.Controllers
         public async Task<ActionResult<bool>> GetHasTenantAccess(int tenantId) =>
             await WithAuthenticatedUserClaimsDo(async userClaims =>
             {
-                return userClaims.AuthorizedTenantIds.Contains(tenantId);
+                return userClaims.AuthorizedTenantIds.Contains(tenantId) || await Mediator.Send(new GetHasTenantAccessQuery() { AspNetUsersId = userClaims.AspNetUsersId, TenantId = tenantId });
             });
 
         [HttpGet("[action]")]

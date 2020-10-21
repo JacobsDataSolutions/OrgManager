@@ -41,6 +41,12 @@ namespace JDS.OrgManager.Utils
             using (var transaction = await context.Database.BeginTransactionAsync())
             {
                 var sqlTransaction = transaction.GetDbTransaction();
+
+                var createTestUserSql = @$"IF NOT EXISTS (SELECT 1 FROM AspNetUsers WHERE UserName = '{TestUserName}')
+INSERT [dbo].[AspNetUsers] ([UserName], [NormalizedUserName], [Email], [NormalizedEmail], [EmailConfirmed], [PasswordHash], [SecurityStamp], [ConcurrencyStamp], [PhoneNumber], [PhoneNumberConfirmed], [TwoFactorEnabled], [LockoutEnd], [LockoutEnabled], [AccessFailedCount], [IsCustomer]) VALUES (N'{TestUserName}', N'{TestUserName}', N'{TestUserName}', N'{TestUserName}', 1, N'AQAAAAEAACcQAAAAEEEeWPvxgc0pa7boxO1GvxzQKedhDNkI0aVCwaws/52ehWp8Wple22rf+zcXp3hhQA==', N'2QEPCZBRJ6NF6JKJ446RBKVZXH7SXZ6X', N'f6d7885b-0ef3-4db3-a913-72871353dd65', NULL, 0, 0, NULL, 1, 0, 1)
+";
+                await facade.ExecuteAsync(createTestUserSql, null, sqlTransaction);
+
                 var aspNetUsersId = await facade.QueryFirstOrDefaultAsync<int>(@$"SELECT TOP 1 Id FROM AspNetUsers WITH(NOLOCK) WHERE NormalizedUserName = '{TestUserName}'", transaction: sqlTransaction);
                 var tenantIds = await facade.QueryAsync<int>(@"SELECT Id FROM Tenants WITH(NOLOCK) WHERE Id > 1", transaction: sqlTransaction);
                 await facade.SetIdentitySeedAsync(nameof(IApplicationWriteDbContext.Employees), ApplicationLayerConstants.SystemSeedStartValue, sqlTransaction);
