@@ -11,8 +11,11 @@ using JDS.OrgManager.Application.Abstractions.Identity;
 using JDS.OrgManager.Application.Abstractions.Serialization;
 using JDS.OrgManager.Common.Abstractions.DateTimes;
 using JDS.OrgManager.Infrastructure.Dates;
+using JDS.OrgManager.Infrastructure.Http;
 using JDS.OrgManager.Infrastructure.Identity;
 using JDS.OrgManager.Infrastructure.Serialization;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace JDS.OrgManager.Infrastructure
@@ -24,5 +27,11 @@ namespace JDS.OrgManager.Infrastructure
             .AddSingleton<IDateTimeService, MachineDateTimeService>()
             .AddSingleton<ICurrentUserService, CurrentUserService>()
             .AddSingleton<IByteSerializer, ByteSerializer>();
+
+        public static IApplicationBuilder UseCustomHttpContextAccessor(this IApplicationBuilder app)
+        {
+            MyHttpContext.Configure(app.ApplicationServices.GetRequiredService<IHttpContextAccessor>());
+            return app;
+        }
     }
 }

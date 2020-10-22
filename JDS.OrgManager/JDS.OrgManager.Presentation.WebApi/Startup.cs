@@ -66,7 +66,9 @@ namespace JDS.OrgManager.Presentation.WebApi
             app.UseIdentityServer();
             app.UseAuthorization();
 
-            // JDS TODO: add in custom middleware
+            // JDS
+            app.UseCustomErrorHandlingMiddleware();
+            app.UseCustomHttpContextAccessor();
 
             app.UseEndpoints(endpoints =>
             {
@@ -98,6 +100,8 @@ namespace JDS.OrgManager.Presentation.WebApi
 
             // Add caching.
             services.AddSingleton<IDistributedCache, MemoryDistributedCache>();
+
+            // TODO: configure Serilog.
 
             // Add mediatR and associated types.
             services.AddMediatR((from t in new[] { typeof(DomainLayer), typeof(ApplicationLayer) } select t.Assembly).ToArray());

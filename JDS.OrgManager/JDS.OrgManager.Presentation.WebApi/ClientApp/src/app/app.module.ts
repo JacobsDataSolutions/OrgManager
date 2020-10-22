@@ -18,6 +18,7 @@ import { AppComponent } from "./app/app.component";
 import { CustomerModule } from "./customers/customer.module";
 import { UnauthorizedComponent } from "./home/unauthorized/unauthorized.component";
 import { EmployeeModule } from "./employees/employee.module";
+import { TestComponent } from './home/test/test.component';
 
 @NgModule({
     imports: [
@@ -34,7 +35,7 @@ import { EmployeeModule } from "./employees/employee.module";
         // app
         AppRoutingModule
     ],
-    declarations: [AppComponent, UnauthorizedComponent],
+    declarations: [AppComponent, UnauthorizedComponent, TestComponent],
     bootstrap: [AppComponent]
 })
 export class AppModule {}
