@@ -15,57 +15,57 @@ import { OverlayContainer } from "@angular/cdk/overlay";
 
 // JDS
 import {
-  AuthorizeService,
-  AuthenticationResultStatus
+    AuthorizeService,
+    AuthenticationResultStatus
 } from "../../api-authorization/authorize.service";
 
 import { routeAnimations, LocalStorageService } from "../core/core.module";
 
 @Component({
-  selector: "org-manager-root",
-  templateUrl: "./app.component.html",
-  styleUrls: ["./app.component.scss"],
-  animations: [routeAnimations]
+    selector: "org-manager-root",
+    templateUrl: "./app.component.html",
+    styleUrls: ["./app.component.scss"],
+    animations: [routeAnimations]
 })
 export class AppComponent implements OnInit {
-  isProd = env.production;
-  envName = env.envName;
-  version = env.versions.app;
-  year = new Date().getFullYear();
-  logo = require("../../assets/logo.png").default;
+    isProd = env.production;
+    envName = env.envName;
+    version = env.versions.app;
+    year = new Date().getFullYear();
+    logo = require("../../assets/logo.png").default;
 
-  isAuthenticated = false;
-  stickyHeader = true;
-  theme = "default-theme";
+    isAuthenticated = false;
+    stickyHeader = true;
+    theme = "default-theme";
 
-  constructor(
-    private authorizeService: AuthorizeService,
-    private storageService: LocalStorageService,
-    private overlayContainer: OverlayContainer
-  ) {}
+    constructor(
+        private authorizeService: AuthorizeService,
+        private storageService: LocalStorageService,
+        private overlayContainer: OverlayContainer
+    ) {}
 
-  private static isIEorEdgeOrSafari() {
-    return ["ie", "edge", "safari"].includes(browser().name);
-  }
-
-  ngOnInit(): void {
-    this.storageService.testLocalStorage();
-    if (AppComponent.isIEorEdgeOrSafari()) {
-      //TODO: disable animations.
+    private static isIEorEdgeOrSafari() {
+        return ["ie", "edge", "safari"].includes(browser().name);
     }
 
-    this.authorizeService.isAuthenticated().subscribe((r) => {
-      this.isAuthenticated = r;
-    });
+    ngOnInit(): void {
+        this.storageService.testLocalStorage();
+        if (AppComponent.isIEorEdgeOrSafari()) {
+            //TODO: disable animations.
+        }
 
-    // Set theme.
-    const classList = this.overlayContainer.getContainerElement().classList;
-    const toRemove = Array.from(classList).filter((item: string) =>
-      item.includes("-theme")
-    );
-    if (toRemove.length) {
-      classList.remove(...toRemove);
+        this.authorizeService.isAuthenticated().subscribe((r) => {
+            this.isAuthenticated = r;
+        });
+
+        // Set theme.
+        const classList = this.overlayContainer.getContainerElement().classList;
+        const toRemove = Array.from(classList).filter((item: string) =>
+            item.includes("-theme")
+        );
+        if (toRemove.length) {
+            classList.remove(...toRemove);
+        }
+        classList.add("default-theme");
     }
-    classList.add("default-theme");
-  }
 }

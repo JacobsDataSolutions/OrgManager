@@ -29,7 +29,7 @@ namespace JDS.OrgManager.Application
                 .AddSingleton<IDomainEntityToDbEntityMapper<Employee, EmployeeEntity>, EmployeeDomainToDbEntityMapper>()
                 .AddSingleton<IDomainEntityToDbEntityMapper<PaidTimeOffPolicy, PaidTimeOffPolicyEntity>, PaidTimeOffPolicyDomainToDbEntityMapper>()
                 .AddSingleton<IViewModelToDomainEntityMapper<RegisterOrUpdateEmployeeCommand, Employee>, RegisterOrUpdateEmployeeDomainEntityMapper>()
-                .AddSingleton < IViewModelToDbEntityMapper<TenantViewModel, TenantEntity>, TenantViewModelToDbEntityMapper>();
+                .AddSingleton<IViewModelToDbEntityMapper<TenantViewModel, TenantEntity>, TenantViewModelToDbEntityMapper>();
 
             if (addValidation)
             {

@@ -10,18 +10,18 @@
 import { CommonModule } from "@angular/common";
 import { NgModule, Optional, SkipSelf, ErrorHandler } from "@angular/core";
 import {
-  HttpClientModule,
-  HttpClient,
-  HTTP_INTERCEPTORS
+    HttpClientModule,
+    HttpClient,
+    HTTP_INTERCEPTORS
 } from "@angular/common/http";
 import {
-  StoreRouterConnectingModule,
-  RouterStateSerializer
+    StoreRouterConnectingModule,
+    RouterStateSerializer
 } from "@ngrx/router-store";
 import { StoreDevtoolsModule } from "@ngrx/store-devtools";
 import {
-  FaIconLibrary,
-  FontAwesomeModule
+    FaIconLibrary,
+    FontAwesomeModule
 } from "@fortawesome/angular-fontawesome";
 import { MatSidenavModule } from "@angular/material/sidenav";
 import { MatToolbarModule } from "@angular/material/toolbar";
@@ -40,8 +40,8 @@ import { ApiAuthorizationModule } from "../../api-authorization/api-authorizatio
 import { AuthorizeInterceptor } from "../../api-authorization/authorize.interceptor";
 
 import {
-  ROUTE_ANIMATIONS_ELEMENTS,
-  routeAnimations
+    ROUTE_ANIMATIONS_ELEMENTS,
+    routeAnimations
 } from "./animations/route.animations";
 import { AnimationsService } from "./animations/animations.service";
 import { AppErrorHandler } from "./error-handler/app-error-handler.service";
@@ -51,108 +51,118 @@ import { HttpErrorInterceptor } from "./http-interceptors/http-error.interceptor
 import { NotificationService } from "./notifications/notification.service";
 import { MatButtonModule } from "@angular/material/button";
 import {
-  faCog,
-  faBars,
-  faRocket,
-  faPowerOff,
-  faUserCircle,
-  faPlayCircle
+    faCog,
+    faBars,
+    faRocket,
+    faPowerOff,
+    faUserCircle,
+    faPlayCircle
 } from "@fortawesome/free-solid-svg-icons";
 import {
-  faGithub,
-  faMediumM,
-  faTwitter,
-  faInstagram,
-  faYoutube
+    faGithub,
+    faMediumM,
+    faTwitter,
+    faInstagram,
+    faYoutube
 } from "@fortawesome/free-brands-svg-icons";
 
 export {
-  routeAnimations,
-  LocalStorageService,
-  ROUTE_ANIMATIONS_ELEMENTS,
-  AnimationsService,
-  NotificationService
+    routeAnimations,
+    LocalStorageService,
+    ROUTE_ANIMATIONS_ELEMENTS,
+    AnimationsService,
+    NotificationService
 };
 
 @NgModule({
-  imports: [
-    // JDS
-    ApiAuthorizationModule,
+    imports: [
+        // JDS
+        ApiAuthorizationModule,
 
-    // angular
-    CommonModule,
-    HttpClientModule,
-    FormsModule,
+        // angular
+        CommonModule,
+        HttpClientModule,
+        FormsModule,
 
-    // material
-    MatSidenavModule,
-    MatToolbarModule,
-    MatListModule,
-    MatMenuModule,
-    MatIconModule,
-    MatSelectModule,
-    MatTooltipModule,
-    MatSnackBarModule,
-    MatButtonModule,
+        // material
+        MatSidenavModule,
+        MatToolbarModule,
+        MatListModule,
+        MatMenuModule,
+        MatIconModule,
+        MatSelectModule,
+        MatTooltipModule,
+        MatSnackBarModule,
+        MatButtonModule,
 
-    // ngrx
-    //StoreRouterConnectingModule.forRoot(),
-    //environment.production
-    //  ? []
-    //  : StoreDevtoolsModule.instrument({
-    //      name: "Org Manager"
-    //    }),
+        // ngrx
+        //StoreRouterConnectingModule.forRoot(),
+        //environment.production
+        //  ? []
+        //  : StoreDevtoolsModule.instrument({
+        //      name: "Org Manager"
+        //    }),
 
-    // 3rd party
-    FontAwesomeModule
-  ],
-  declarations: [],
-  providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
-    // JDS
-    { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true }
-  ],
-  exports: [
-    // angular
-    FormsModule,
+        // 3rd party
+        FontAwesomeModule
+    ],
+    declarations: [],
+    providers: [
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: HttpErrorInterceptor,
+            multi: true
+        },
+        // JDS
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: AuthorizeInterceptor,
+            multi: true
+        }
+    ],
+    exports: [
+        // angular
+        FormsModule,
 
-    // material
-    MatSidenavModule,
-    MatToolbarModule,
-    MatListModule,
-    MatMenuModule,
-    MatIconModule,
-    MatSelectModule,
-    MatTooltipModule,
-    MatSnackBarModule,
-    MatButtonModule,
+        // material
+        MatSidenavModule,
+        MatToolbarModule,
+        MatListModule,
+        MatMenuModule,
+        MatIconModule,
+        MatSelectModule,
+        MatTooltipModule,
+        MatSnackBarModule,
+        MatButtonModule,
 
-    // 3rd party
-    FontAwesomeModule
-  ]
+        // 3rd party
+        FontAwesomeModule
+    ]
 })
 export class CoreModule {
-  constructor(
-    @Optional()
-    @SkipSelf()
-    parentModule: CoreModule,
-    faIconLibrary: FaIconLibrary
-  ) {
-    if (parentModule) {
-      throw new Error("CoreModule is already loaded. Import only in AppModule");
+    constructor(
+        @Optional()
+        @SkipSelf()
+        parentModule: CoreModule,
+        faIconLibrary: FaIconLibrary
+    ) {
+        if (parentModule) {
+            throw new Error(
+                "CoreModule is already loaded. Import only in AppModule"
+            );
+        }
+        faIconLibrary.addIcons(
+            faCog,
+            faBars,
+            faRocket,
+            faPowerOff,
+            faUserCircle,
+            faPlayCircle,
+            faGithub,
+            faMediumM,
+            faTwitter,
+            faInstagram,
+            faYoutube
+        );
     }
-    faIconLibrary.addIcons(
-      faCog,
-      faBars,
-      faRocket,
-      faPowerOff,
-      faUserCircle,
-      faPlayCircle,
-      faGithub,
-      faMediumM,
-      faTwitter,
-      faInstagram,
-      faYoutube
-    );
-  }
 }
