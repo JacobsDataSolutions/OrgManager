@@ -35,6 +35,7 @@ import {
     FaIconLibrary
 } from "@fortawesome/angular-fontawesome";
 import {
+    faHotel,
     faPlus,
     faEdit,
     faTrash,
@@ -109,6 +110,7 @@ import { faMediumM, faGithub } from "@fortawesome/free-brands-svg-icons";
 export class SharedModule {
     constructor(faIconLibrary: FaIconLibrary) {
         faIconLibrary.addIcons(
+            faHotel,
             faGithub,
             faMediumM,
             faPlus,

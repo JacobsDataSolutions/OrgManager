@@ -5,9 +5,10 @@
     "webApiToOpenApi": {
       "controllerNames": [
         "JDS.OrgManager.Presentation.WebApi.Controllers.CustomerController",
+        "JDS.OrgManager.Presentation.WebApi.Controllers.EmployeeController",
         "JDS.OrgManager.Presentation.WebApi.Controllers.TenantController",
         "JDS.OrgManager.Presentation.WebApi.Controllers.UserController",
-        "JDS.OrgManager.Presentation.WebApi.Controllers.EmployeeController"
+        "JDS.OrgManager.Presentation.WebApi.Controllers.TestController"
       ],
       "isAspNetCore": true,
       "resolveJsonOptions": false,

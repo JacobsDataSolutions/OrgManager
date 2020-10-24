@@ -55,7 +55,7 @@ namespace JDS.OrgManager.Presentation.WebApi.Middleware
                 code = HttpStatusCode.BadRequest;
             }
 
-            var result = JsonConvert.SerializeObject(new { error = ex.Message });
+            var result = JsonConvert.SerializeObject(new { errorMessage = ex.Message });
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)code;
             return context.Response.WriteAsync(result);

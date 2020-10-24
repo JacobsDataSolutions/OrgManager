@@ -16,7 +16,7 @@ import {
     HttpErrorResponse
 } from "@angular/common/http";
 import { Observable, throwError } from "rxjs";
-import { tap } from "rxjs/operators";
+import { tap, catchError } from "rxjs/operators";
 import { NotificationService } from "../notifications/notification.service";
 import { Router } from "@angular/router";
 
@@ -29,40 +29,97 @@ export class HttpErrorInterceptor implements HttpInterceptor {
         next: HttpHandler
     ): Observable<HttpEvent<any>> {
         return next.handle(request).pipe(
-            //retry(1),
-            tap({
-                error: (error: any) => {
-                    let errorMessage = "";
-                    if (error.error instanceof ErrorEvent) {
-                        // client-side error
-                        errorMessage = `Error: ${error.error.message}`;
-                    } else {
-                        // server-side error
-                        errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
-                    }
-                    const notificationService = this.injector.get(
-                        NotificationService
-                    );
-                    const router = this.injector.get(Router);
-                    if (error instanceof HttpErrorResponse) {
-                        // Get server-side error
-                        switch (error.status) {
-                            case 401:
-                                router.navigate(["unauthorized"]);
-                                return;
-                            case 404:
-                                errorMessage = error.error.error;
-                                break;
-                            case 400:
-                                errorMessage = error.error.error;
-                                break;
-                        }
-                    }
+            catchError((response: Response) => {
+                const reader = new FileReader();
 
-                    notificationService.error(errorMessage);
-                    return throwError(errorMessage);
-                }
+                const notificationService = this.injector.get(
+                    NotificationService
+                );
+                const router = this.injector.get(Router);
+
+                let errorMessage = "";
+
+                //TODO: clean this up and handle response w/ no messages.
+                reader.onload = function () {
+                    const result = JSON.parse(this.result as string);
+                    switch (response.status) {
+                        case 401:
+                            router.navigate(["unauthorized"]);
+                            break;
+                        //return;
+                        case 404:
+                        case 403:
+                        case 500:
+                        case 400:
+                            errorMessage = result.errorMessage;
+                            notificationService.error(result.errorMessage);
+                            break;
+                    }
+                };
+
+                reader.readAsText(response["error"]);
+
+                return throwError(errorMessage);
+
+                //if (errorMessage) {
+                //    return throwError(errorMessage);
+                //}
+                //return request;
             })
         );
     }
+
+    //public handleError = (error: Response) => {
+    //    let reader = new FileReader();
+
+    //    let ngNotify = this._ngNotify;
+
+    //    reader.onload = function () {
+    //        var result = JSON.parse(this.result);
+
+    //        ngNotify.nofity("Error", result.error);
+    //    };
+
+    //    reader.readAsText(error["error"]);
+
+    //    return Observable.throw(error);
+    //};
+
+    //return next.handle(request).pipe(
+    //    //retry(1),
+    //    tap({
+    //        error: (error: any) => {
+    //            let errorMessage = "";
+    //            if (error.error instanceof ErrorEvent) {
+    //                // client-side error
+    //                errorMessage = `Error: ${error.error.message}`;
+    //            } else {
+    //                // server-side error
+    //                errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+    //            }
+    //            const notificationService = this.injector.get(
+    //                NotificationService
+    //            );
+    //            const router = this.injector.get(Router);
+    //            const httpErrorResponse = error as HttpErrorResponse;
+    //            if (httpErrorResponse) {
+    //                // Get server-side error
+    //                switch (error.status) {
+    //                    case 401:
+    //                        router.navigate(["unauthorized"]);
+    //                        return;
+    //                    case 404:
+    //                    case 400:
+    //                        errorMessage =
+    //                            httpErrorResponse.error.errorText;
+    //                        break;
+    //                }
+    //            }
+
+    //            notificationService.error(errorMessage);
+    //            return throwError(errorMessage);
+    //        }
+    //    })
+    //);
+    //}
 }

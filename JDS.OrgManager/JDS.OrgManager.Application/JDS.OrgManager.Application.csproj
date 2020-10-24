@@ -5,6 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Customers\Queries\GetCustomerStatus\**" />
+    <EmbeddedResource Remove="Customers\Queries\GetCustomerStatus\**" />
+    <None Remove="Customers\Queries\GetCustomerStatus\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="ExpressionDebugger" Version="2.2.0" />
     <PackageReference Include="FluentValidation" Version="9.2.2" />
     <PackageReference Include="Mapster" Version="6.5.0" />
@@ -19,10 +25,6 @@
   <ItemGroup>
     <ProjectReference Include="..\JDS.OrgManager.Domain.HumanResources.Advanced\JDS.OrgManager.Domain.HumanResources.Advanced.fsproj" />
     <ProjectReference Include="..\JDS.OrgManager.Domain\JDS.OrgManager.Domain.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Customers\Queries\GetCustomerStatus\" />
   </ItemGroup>
 
 </Project>

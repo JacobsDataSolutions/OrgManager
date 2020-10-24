@@ -1,7 +1,12 @@
 @import 'styles-variables';
 
-@import '~bootstrap/scss/bootstrap-reboot';
-@import '~bootstrap/scss/bootstrap-grid';
+// John - NO....
+//@import '~bootstrap/scss/bootstrap-reboot';
+//@import '~bootstrap/scss/bootstrap-grid';
+
+//... we don't want watered-down bootstrap. We want the whole thing.
+@import "~bootstrap/scss/bootstrap";
+
 @import 'styles-reset';
 
 @import '~@angular/material/theming';
@@ -39,4 +44,8 @@
 .nature-theme {
   @include angular-material-theme($org-manager-nature-theme);
   @include custom-components-theme($org-manager-nature-theme);
+}
+
+.mat-simple-snackbar {
+    justify-content: center !important;
 }

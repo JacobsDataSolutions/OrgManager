@@ -18,7 +18,9 @@ import { AppComponent } from "./app/app.component";
 import { CustomerModule } from "./customers/customer.module";
 import { UnauthorizedComponent } from "./home/unauthorized/unauthorized.component";
 import { EmployeeModule } from "./employees/employee.module";
-import { TestComponent } from './home/test/test.component';
+import { TestComponent } from "./home/test/test.component";
+import { TestClient } from "./shared/nswag";
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
     imports: [
@@ -35,7 +37,8 @@ import { TestComponent } from './home/test/test.component';
         // app
         AppRoutingModule
     ],
-    declarations: [AppComponent, UnauthorizedComponent, TestComponent],
-    bootstrap: [AppComponent]
+    declarations: [AppComponent, UnauthorizedComponent, TestComponent, HomeComponent],
+    bootstrap: [AppComponent],
+    providers: [TestClient]
 })
 export class AppModule {}
