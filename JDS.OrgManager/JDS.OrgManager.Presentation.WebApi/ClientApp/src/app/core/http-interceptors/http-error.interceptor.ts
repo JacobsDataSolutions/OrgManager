@@ -38,88 +38,38 @@ export class HttpErrorInterceptor implements HttpInterceptor {
                 const router = this.injector.get(Router);
 
                 let errorMessage = "";
+                switch (response.status) {
+                    case 401:
+                        router.navigate(["unauthorized"]);
+                        break;
+                    case 404:
+                        errorMessage = "Not Found";
+                        break;
+                    case 403:
+                        errorMessage = "Forbidden";
+                        break;
+                    case 500:
+                        errorMessage = "Server Error";
+                        break;
+                    case 400:
+                        errorMessage = "Bad Request";
+                        break;
+                }
 
-                //TODO: clean this up and handle response w/ no messages.
                 reader.onload = function () {
                     const result = JSON.parse(this.result as string);
-                    switch (response.status) {
-                        case 401:
-                            router.navigate(["unauthorized"]);
-                            break;
-                        //return;
-                        case 404:
-                        case 403:
-                        case 500:
-                        case 400:
-                            errorMessage = result.errorMessage;
-                            notificationService.error(result.errorMessage);
-                            break;
-                    }
+                    try {
+                        errorMessage = result.errorMessage;
+                    } catch {}
                 };
 
                 reader.readAsText(response["error"]);
+                if (errorMessage) {
+                    notificationService.error(errorMessage);
+                }
 
                 return throwError(errorMessage);
-
-                //if (errorMessage) {
-                //    return throwError(errorMessage);
-                //}
-                //return request;
             })
         );
     }
-
-    //public handleError = (error: Response) => {
-    //    let reader = new FileReader();
-
-    //    let ngNotify = this._ngNotify;
-
-    //    reader.onload = function () {
-    //        var result = JSON.parse(this.result);
-
-    //        ngNotify.nofity("Error", result.error);
-    //    };
-
-    //    reader.readAsText(error["error"]);
-
-    //    return Observable.throw(error);
-    //};
-
-    //return next.handle(request).pipe(
-    //    //retry(1),
-    //    tap({
-    //        error: (error: any) => {
-    //            let errorMessage = "";
-    //            if (error.error instanceof ErrorEvent) {
-    //                // client-side error
-    //                errorMessage = `Error: ${error.error.message}`;
-    //            } else {
-    //                // server-side error
-    //                errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
-    //            }
-    //            const notificationService = this.injector.get(
-    //                NotificationService
-    //            );
-    //            const router = this.injector.get(Router);
-    //            const httpErrorResponse = error as HttpErrorResponse;
-    //            if (httpErrorResponse) {
-    //                // Get server-side error
-    //                switch (error.status) {
-    //                    case 401:
-    //                        router.navigate(["unauthorized"]);
-    //                        return;
-    //                    case 404:
-    //                    case 400:
-    //                        errorMessage =
-    //                            httpErrorResponse.error.errorText;
-    //                        break;
-    //                }
-    //            }
-
-    //            notificationService.error(errorMessage);
-    //            return throwError(errorMessage);
-    //        }
-    //    })
-    //);
-    //}
 }
