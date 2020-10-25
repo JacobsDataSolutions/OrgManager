@@ -10,6 +10,7 @@
 using JDS.OrgManager.Application.Abstractions.Identity;
 using JDS.OrgManager.Application.Abstractions.Serialization;
 using JDS.OrgManager.Common.Abstractions.DateTimes;
+using JDS.OrgManager.Infrastructure.Authorization;
 using JDS.OrgManager.Infrastructure.Dates;
 using JDS.OrgManager.Infrastructure.Http;
 using JDS.OrgManager.Infrastructure.Identity;
@@ -33,5 +34,8 @@ namespace JDS.OrgManager.Infrastructure
             MyHttpContext.Configure(app.ApplicationServices.GetRequiredService<IHttpContextAccessor>());
             return app;
         }
+
+        public static IApplicationBuilder UseCustomErrorHandlingMiddleware(this IApplicationBuilder app) =>
+            app.UseMiddleware<CustomErrorHandlingMiddleware>();
     }
 }

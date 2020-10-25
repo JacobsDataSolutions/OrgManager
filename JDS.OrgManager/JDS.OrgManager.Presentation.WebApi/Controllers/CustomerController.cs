@@ -13,16 +13,14 @@ using JDS.OrgManager.Application.Customers.Commands.ProvisionTenant;
 using JDS.OrgManager.Application.Customers.Queries.GetNewAssignmentKey;
 using JDS.OrgManager.Application.Customers.Queries.GetTenantsForCustomer;
 using JDS.OrgManager.Application.Tenants;
-using JDS.OrgManager.Presentation.WebApi.Middleware;
+using JDS.OrgManager.Infrastructure.Authorization;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
 
 namespace JDS.OrgManager.Presentation.WebApi.Controllers
 {
-    [Authorize]
     [CustomerAuthorize]
     [ApiController]
     [Route("api/[controller]")]

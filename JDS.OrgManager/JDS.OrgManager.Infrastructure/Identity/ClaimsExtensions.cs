@@ -8,6 +8,7 @@ namespace JDS.OrgManager.Infrastructure.Identity
 {
     public static class ClaimsExtensions
     {
+        // FYI - ClaimTypes.NameIdentifier refers to the claim which holds the ASP.NET Core user Id. Not super intuitive...
         public static int? GetAspNetUsersId(this ClaimsPrincipal user) =>
             TryGetClaimsValue(user, ClaimTypes.NameIdentifier, value => int.TryParse(value, out var id) ? id : (int?)null);
         

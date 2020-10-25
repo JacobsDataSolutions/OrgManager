@@ -17,7 +17,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace JDS.OrgManager.Presentation.WebApi.Middleware
+namespace JDS.OrgManager.Infrastructure.Authorization
 {
     public class CustomerAuthorizeAttribute : TypeFilterAttribute
     {

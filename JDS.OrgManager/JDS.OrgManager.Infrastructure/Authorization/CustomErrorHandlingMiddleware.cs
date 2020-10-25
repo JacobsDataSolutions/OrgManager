@@ -14,7 +14,7 @@ using System;
 using System.Net;
 using System.Threading.Tasks;
 
-namespace JDS.OrgManager.Presentation.WebApi.Middleware
+namespace JDS.OrgManager.Infrastructure.Authorization
 {
     // Adapted from https://stackoverflow.com/questions/38630076/asp-net-core-web-api-exception-handling
     public class CustomErrorHandlingMiddleware
@@ -42,6 +42,10 @@ namespace JDS.OrgManager.Presentation.WebApi.Middleware
         {
             var code = HttpStatusCode.InternalServerError; // 500 if unexpected
 
+            if (ex is AccessDeniedException)
+            {
+                code = HttpStatusCode.Forbidden;
+            }
             if (ex is AuthorizationException)
             {
                 code = HttpStatusCode.Unauthorized;
