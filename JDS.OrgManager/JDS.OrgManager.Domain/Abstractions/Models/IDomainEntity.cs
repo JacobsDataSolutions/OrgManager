@@ -11,6 +11,6 @@ namespace JDS.OrgManager.Domain.Abstractions.Models
 {
     public interface IDomainEntity
     {
-        int? Id { get; }
+        int Id { get; }
     }
 }

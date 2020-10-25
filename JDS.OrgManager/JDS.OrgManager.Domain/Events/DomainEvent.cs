@@ -15,11 +15,15 @@ namespace JDS.OrgManager.Domain.Events
 {
     public abstract class DomainEvent : IDomainEvent
     {
+        private static IDateTimeService dateTimeService = new NullDateTimeService();
+
         public DateTime DateTimeOccurredUtc { get; }
 
         protected DomainEvent(IDateTimeService dateTimeService)
         {
             DateTimeOccurredUtc = dateTimeService.UtcNow;
         }
+
+        internal static void WireUpDateTimeService(IDateTimeService dateTimeService) => DomainEvent.dateTimeService = dateTimeService;
     }
 }

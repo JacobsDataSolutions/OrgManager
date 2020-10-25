@@ -7,6 +7,7 @@
 
 // Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
 // CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+using JDS.OrgManager.Common.Abstractions.DateTimes;
 using JDS.OrgManager.Domain.Abstractions.Events;
 using JDS.OrgManager.Domain.Events;
 using JDS.OrgManager.Domain.Models;
@@ -21,6 +22,12 @@ namespace JDS.OrgManager.Domain
         {
             services.AddSingleton<IDomainEventDispatcher, DomainEventDispatcher>();
             return services;
+        }
+
+        public static IServiceProvider WireUpDateTimeService(this IServiceProvider serviceProvider)
+        {
+            DomainEvent.WireUpDateTimeService(serviceProvider.GetRequiredService<IDateTimeService>());
+            return serviceProvider;
         }
 
         public static IServiceProvider WireUpDomainEventHandlers(this IServiceProvider serviceProvider)

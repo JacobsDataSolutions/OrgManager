@@ -19,19 +19,19 @@ import { NotificationService } from "../notifications/notification.service";
  */
 @Injectable()
 export class AppErrorHandler extends ErrorHandler {
-  constructor(private notificationsService: NotificationService) {
-    super();
-  }
-
-  handleError(error: Error | HttpErrorResponse) {
-    let displayMessage = "An error occurred.";
-
-    if (!environment.production) {
-      displayMessage += " See console for details.";
+    constructor(private notificationsService: NotificationService) {
+        super();
     }
 
-    this.notificationsService.error(displayMessage);
+    handleError(error: Error | HttpErrorResponse) {
+        let displayMessage = "An error occurred.";
 
-    super.handleError(error);
-  }
+        if (!environment.production) {
+            displayMessage += " See console for details.";
+        }
+
+        this.notificationsService.error(displayMessage);
+
+        super.handleError(error);
+    }
 }

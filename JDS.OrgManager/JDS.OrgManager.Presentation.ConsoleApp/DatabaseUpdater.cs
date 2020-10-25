@@ -7,35 +7,34 @@
 
 // Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
 // CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
-using JDS.OrgManager.Application.System.Commands.ClearAndReinitializeAllData;
-using JDS.OrgManager.Application.System.Commands.SeedInitialData;
-using JDS.OrgManager.Persistence.DbContexts;
-using MediatR;
-using Microsoft.EntityFrameworkCore;
+using JDS.OrgManager.Application.System;
+using JDS.OrgManager.Utils;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace JDS.OrgManager.Presentation.ConsoleApp
 {
     public class DatabaseUpdater
     {
+        private readonly DummyDataInserter dummyDataInserter;
+
         private readonly IServiceProvider services;
 
-        public DatabaseUpdater(IServiceProvider services)
+        public DatabaseUpdater(IServiceProvider services, DummyDataInserter dummyDataInserter)
         {
             this.services = services ?? throw new ArgumentNullException(nameof(services));
+            this.dummyDataInserter = dummyDataInserter ?? throw new ArgumentNullException(nameof(dummyDataInserter));
         }
 
-        public async Task UpdateDatabaseAsync()
+        public async Task UpdateDatabaseAsync(bool insertDummyData = false)
         {
-            var context = services.GetRequiredService<ApplicationWriteDbContext>();
-            context.Database.Migrate();
-
-            var mediator = services.GetRequiredService<IMediator>();
-            await mediator.Send(new ClearAndReinitializeAllDataCommand(), CancellationToken.None);
-            await mediator.Send(new SeedInitialDataCommand(), CancellationToken.None);
+            var dataInitializer = services.GetRequiredService<DataInitializerService>();
+            await dataInitializer.InitializeDataForSystemAsync();
+            if (insertDummyData)
+            {
+                await dummyDataInserter.InsertDummyDataAsync();
+            }
         }
     }
 }

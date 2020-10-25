@@ -8,6 +8,9 @@
 // Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
 // CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 using CsvHelper;
+using JDS.OrgManager.Application.Common.Employees;
+using JDS.OrgManager.Application.Common.PaidTimeOffPolicies;
+using JDS.OrgManager.Domain.Common.People;
 using JDS.OrgManager.Utils.Streets;
 using System;
 using System.Globalization;
@@ -35,7 +38,7 @@ namespace JDS.OrgManager.Utils
 
         static DummyData()
         {
-            using (var reader = new StreamReader(@"Streets\chicago-street-names.csv"))
+            using (var reader = new StreamReader(@"..\JDS.OrgManager.Utils\bin\Debug\netcoreapp3.1\Streets\chicago-street-names.csv"))
             {
                 using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
                 {
@@ -64,6 +67,37 @@ namespace JDS.OrgManager.Utils
             return Encoding.ASCII.GetString(bytes).Insert(3, "-").Insert(6, "-");
         }
 
+        public static EmployeeEntity GenerateRandomEmployeeEntity(int tenantId, int aspNetUsersId, PaidTimeOffPolicyEntity[] paidTimeOffPolicies)
+        {
+            var levelRoll = random.Next(100);
+            var dateHired = GetRandomHireDate();
+            var level = levelRoll >= 80 ? 3 : levelRoll >= 60 ? 2 : 1;
+            var gender = CoinToss() ? Gender.Male : Gender.Female;
+            var (addr1, addr2) = GetRandomChitownStreet();
+            return new EmployeeEntity
+            {
+                AspNetUsersId = aspNetUsersId,
+                TenantId = tenantId,
+                DateOfBirth = GetRandomBirthDate(),
+                FirstName = GenerateFakeFirstOrMiddleName(gender == Gender.Male),
+                MiddleName = random.Next(100) > 50 ? GenerateFakeFirstOrMiddleName(gender == Gender.Male) : null,
+                LastName = GenerateFakeLastName(),
+                Gender = gender,
+                Address1 = addr1,
+                Address2 = addr2,
+                City = "Chicago",
+                State = "IL",
+                Zip = GetRandomChitownZip(),
+                DateHired = dateHired,
+                DateTerminated = random.Next(100) > 90 ? GetRandomTerminationDate(dateHired) : (DateTime?)null,
+                CurrencyCode = "USD",
+                EmployeeLevel = level,
+                Salary = random.Next(50000) * level + 20000.0M,
+                SocialSecurityNumber = GenerateFakeSSN(),
+                PaidTimeOffPolicyId = paidTimeOffPolicies.First(p => p.EmployeeLevel == level && p.TenantId == tenantId).Id
+            };
+        }
+
         public static DateTime GetRandomBirthDate() => new DateTime(1981, 1, 1).AddDays(random.Next(5475)).Date;
 
         public static (string, string) GetRandomChitownStreet()
@@ -71,7 +105,7 @@ namespace JDS.OrgManager.Utils
             var street = streets[random.Next(streets.Length)];
             var num = random.Next(street.MinAddress, street.MaxAddress + 1);
             var addr1 = $"{num} {street.FullName}";
-            var addr2 = CoinToss() ? $"APT {random.Next(20) + 1}" : "";
+            var addr2 = CoinToss() ? $"APT {random.Next(20) + 1}" : null;
             return (addr1, addr2);
         }
 

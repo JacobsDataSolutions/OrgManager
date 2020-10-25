@@ -27,6 +27,11 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JDS.OrgManager.Domain.HumanResources.Advanced.UnitTests", "JDS.OrgManager.Domain.HumanResources.Advanced.Tests\JDS.OrgManager.Domain.HumanResources.Advanced.UnitTests.csproj", "{1E5563FD-F347-461A-9C0F-78EFDD4E1478}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JDS.OrgManager.Presentation.WebApi", "JDS.OrgManager.Presentation.WebApi\JDS.OrgManager.Presentation.WebApi.csproj", "{7233F81C-9D8F-4992-B2C5-506C9ACB005A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{7803461E-97E3-4115-BB00-7EE7C4358184} = {7803461E-97E3-4115-BB00-7EE7C4358184}
+	EndProjectSection
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "JDS.OrgManager.TypescriptGenerator", "JDS.OrgManager.TypescriptGenerator\JDS.OrgManager.TypescriptGenerator.fsproj", "{7803461E-97E3-4115-BB00-7EE7C4358184}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -86,6 +91,10 @@ Global
 		{7233F81C-9D8F-4992-B2C5-506C9ACB005A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7233F81C-9D8F-4992-B2C5-506C9ACB005A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7233F81C-9D8F-4992-B2C5-506C9ACB005A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7803461E-97E3-4115-BB00-7EE7C4358184}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7803461E-97E3-4115-BB00-7EE7C4358184}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7803461E-97E3-4115-BB00-7EE7C4358184}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7803461E-97E3-4115-BB00-7EE7C4358184}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

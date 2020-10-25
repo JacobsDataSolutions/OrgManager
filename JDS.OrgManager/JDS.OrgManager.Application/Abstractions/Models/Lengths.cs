@@ -35,9 +35,13 @@ namespace JDS.OrgManager.Application.Abstractions.Models
 
         public const int ForEmployee = 80;
 
+        public const int Guid = 36;
+
         public const int LastName = 35;
 
         public const int MiddleName = 25;
+
+        public const int Min = 4;
 
         public const int Name = 50;
 

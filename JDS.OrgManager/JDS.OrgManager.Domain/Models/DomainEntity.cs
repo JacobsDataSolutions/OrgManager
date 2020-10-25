@@ -24,7 +24,7 @@ namespace JDS.OrgManager.Domain.Models
         public IReadOnlyCollection<IDomainEvent> DomainEvents => domainEvents?.AsReadOnly();
 
         // Slightly breaking the rules here by having a public setter.
-        public int? Id { get; set; }
+        public int Id { get; set; }
 
         public void AddDomainEvent(IDomainEvent eventItem)
         {
@@ -46,9 +46,7 @@ namespace JDS.OrgManager.Domain.Models
 
         public override bool Equals(object other) => other is DomainEntity entity && entity != null ? Equals(entity) : base.Equals(other);
 
-        public override int GetHashCode() => Id != null ? Id.GetHashCode() : 0;
-
-        public bool IsTransient() => !Id.HasValue;
+        public override int GetHashCode() => Id;
 
         public void RemoveDomainEvent(IDomainEvent eventItem) => domainEvents?.Remove(eventItem);
 

@@ -52,7 +52,7 @@ namespace JDS.OrgManager.Application.HumanResources.Employees.Commands.RegisterO
 
         public Gender Gender { get; set; }
 
-        public int? Id { get; set; }
+        public int Id { get; set; }
 
         public string LastName { get; set; }
 
@@ -105,7 +105,7 @@ namespace JDS.OrgManager.Application.HumanResources.Employees.Commands.RegisterO
                 // Map the view model to a domain entity. We are now in the realm of business entities and logic.
                 var employee = employeeVmToDomainEntityMapper.MapToDomainEntity(request);
 
-                var isNewEmployee = employee.Id == null;
+                var isNewEmployee = employee.Id == 0;
 
                 // Look up manager from DB.
                 EmployeeEntity managerEntity = null;

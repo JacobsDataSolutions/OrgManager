@@ -15,20 +15,30 @@ import { CoreModule } from "./core/core.module";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app/app.component";
+import { CustomerModule } from "./customers/customer.module";
+import { UnauthorizedComponent } from "./home/unauthorized/unauthorized.component";
+import { EmployeeModule } from "./employees/employee.module";
+import { TestComponent } from "./home/test/test.component";
+import { TestClient } from "./shared/nswag";
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
-  imports: [
-    // angular
-    BrowserAnimationsModule,
-    BrowserModule,
+    imports: [
+        CustomerModule,
+        EmployeeModule,
 
-    // core
-    CoreModule,
+        // angular
+        BrowserAnimationsModule,
+        BrowserModule,
 
-    // app
-    AppRoutingModule
-  ],
-  declarations: [AppComponent],
-  bootstrap: [AppComponent]
+        // core
+        CoreModule,
+
+        // app
+        AppRoutingModule
+    ],
+    declarations: [AppComponent, UnauthorizedComponent, TestComponent, HomeComponent],
+    bootstrap: [AppComponent],
+    providers: [TestClient]
 })
 export class AppModule {}
