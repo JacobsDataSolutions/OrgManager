@@ -29,46 +29,53 @@ export class HttpErrorInterceptor implements HttpInterceptor {
         next: HttpHandler
     ): Observable<HttpEvent<any>> {
         return next.handle(request).pipe(
-            catchError((response: Response) => {
-                const reader = new FileReader();
+            catchError((response) => {
+                if (
+                    response instanceof HttpErrorResponse &&
+                    response.error instanceof Blob &&
+                    response.error.type === "application/problem+json"
+                ) {
+                    return new Promise<any>((resolve, reject) => {
+                        const notificationService = this.injector.get(
+                            NotificationService
+                        );
+                        const router = this.injector.get(Router);
 
-                const notificationService = this.injector.get(
-                    NotificationService
-                );
-                const router = this.injector.get(Router);
-
-                let errorMessage = "";
-                switch (response.status) {
-                    case 401:
-                        router.navigate(["unauthorized"]);
-                        break;
-                    case 404:
-                        errorMessage = "Not Found";
-                        break;
-                    case 403:
-                        errorMessage = "Forbidden";
-                        break;
-                    case 500:
-                        errorMessage = "Server Error";
-                        break;
-                    case 400:
-                        errorMessage = "Bad Request";
-                        break;
+                        if (response.status === 401) {
+                            router.navigate(["unauthorized"]);
+                        } else {
+                            const reader = new FileReader();
+                            reader.onload = (e: Event) => {
+                                try {
+                                    const error = JSON.parse(
+                                        (<any>e.target).result
+                                    );
+                                    notificationService.error(error.title);
+                                    reject(
+                                        new HttpErrorResponse({
+                                            error:
+                                                error.title +
+                                                " / " +
+                                                error.detail,
+                                            headers: response.headers,
+                                            status: response.status,
+                                            statusText: response.statusText,
+                                            url: response.url
+                                        })
+                                    );
+                                } catch (e) {
+                                    reject(response);
+                                }
+                            };
+                            reader.onerror = (e) => {
+                                reject(response);
+                            };
+                            reader.readAsText(response.error);
+                        }
+                    });
                 }
 
-                reader.onload = function () {
-                    const result = JSON.parse(this.result as string);
-                    try {
-                        errorMessage = result.errorMessage;
-                    } catch {}
-                };
-
-                reader.readAsText(response["error"]);
-                if (errorMessage) {
-                    notificationService.error(errorMessage);
-                }
-
-                return throwError(errorMessage);
+                return throwError(response);
             })
         );
     }

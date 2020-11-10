@@ -42,6 +42,13 @@ export class TestComponent implements OnInit, OnDestroy {
             .subscribe();
     }
 
+    onTestInvalidOperationException() {
+        this.testClient
+            .testInvalidOperationException()
+            .pipe(takeUntil(this.ngUnsubscribe))
+            .subscribe();
+    }
+
     ngOnDestroy() {
         this.ngUnsubscribe.next();
         this.ngUnsubscribe.complete();

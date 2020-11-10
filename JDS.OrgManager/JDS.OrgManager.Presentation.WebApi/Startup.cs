@@ -12,6 +12,7 @@ using JDS.OrgManager.Application;
 using JDS.OrgManager.Domain;
 using JDS.OrgManager.Domain.HumanResources.Advanced;
 using JDS.OrgManager.Infrastructure;
+using JDS.OrgManager.Infrastructure.ErrorHandling;
 using JDS.OrgManager.Infrastructure.Identity;
 using JDS.OrgManager.Persistence;
 using JDS.OrgManager.Utils;
@@ -41,17 +42,12 @@ namespace JDS.OrgManager.Presentation.WebApi
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
-            }
+            // API error handling.
+            // Approach 1: custom error handling middleware.
+            //app.UseCustomErrorHandlingMiddleware();
+
+            // Approach 2: use ASP.NET Core ExceptionHandlerMiddleware.
+            app.UseExceptionHandler(app2 => app2.UseCustomErrors(env));
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
@@ -67,7 +63,6 @@ namespace JDS.OrgManager.Presentation.WebApi
             app.UseAuthorization();
 
             // JDS
-            app.UseCustomErrorHandlingMiddleware();
             app.UseCustomHttpContextAccessor();
 
             app.UseEndpoints(endpoints =>

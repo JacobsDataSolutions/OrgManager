@@ -8,15 +8,17 @@
 // Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
 // CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 using JDS.OrgManager.Application;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using System;
 using System.Net;
 using System.Threading.Tasks;
 
-namespace JDS.OrgManager.Infrastructure.Authorization
+namespace JDS.OrgManager.Infrastructure.ErrorHandling
 {
-    // Adapted from https://stackoverflow.com/questions/38630076/asp-net-core-web-api-exception-handling
     public class CustomErrorHandlingMiddleware
     {
         private readonly RequestDelegate next;
@@ -26,7 +28,7 @@ namespace JDS.OrgManager.Infrastructure.Authorization
             this.next = next;
         }
 
-        public async Task Invoke(HttpContext context)
+        public async Task Invoke(HttpContext context, IWebHostEnvironment env)
         {
             try
             {
@@ -34,11 +36,11 @@ namespace JDS.OrgManager.Infrastructure.Authorization
             }
             catch (Exception ex)
             {
-                await HandleExceptionAsync(context, ex);
+                await HandleExceptionAsync(context, ex, env);
             }
         }
 
-        private static Task HandleExceptionAsync(HttpContext context, Exception ex)
+        private static Task HandleExceptionAsync(HttpContext context, Exception ex, IWebHostEnvironment env)
         {
             var code = HttpStatusCode.InternalServerError; // 500 if unexpected
 
@@ -59,9 +61,21 @@ namespace JDS.OrgManager.Infrastructure.Authorization
                 code = HttpStatusCode.BadRequest;
             }
 
-            var result = JsonConvert.SerializeObject(new { errorMessage = ex.Message });
-            context.Response.ContentType = "application/json";
+            var includeDetails = env.IsEnvironment("Development");
+            var title = includeDetails ? "An error occured: " + ex.Message : "An error occured";
+            var details = includeDetails ? ex.ToString() : null;
+
+            var problem = new ProblemDetails
+            {
+                Status = (int?)code,
+                Title = title,
+                Detail = details
+            };
+
+            context.Response.ContentType = "application/problem+json";
             context.Response.StatusCode = (int)code;
+
+            var result = JsonConvert.SerializeObject(problem);
             return context.Response.WriteAsync(result);
         }
     }

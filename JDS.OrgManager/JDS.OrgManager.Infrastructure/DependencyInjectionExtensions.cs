@@ -10,7 +10,7 @@
 using JDS.OrgManager.Application.Abstractions.Identity;
 using JDS.OrgManager.Application.Abstractions.Serialization;
 using JDS.OrgManager.Common.Abstractions.DateTimes;
-using JDS.OrgManager.Infrastructure.Authorization;
+using JDS.OrgManager.Infrastructure.ErrorHandling;
 using JDS.OrgManager.Infrastructure.Dates;
 using JDS.OrgManager.Infrastructure.Http;
 using JDS.OrgManager.Infrastructure.Identity;
@@ -18,6 +18,7 @@ using JDS.OrgManager.Infrastructure.Serialization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace JDS.OrgManager.Infrastructure
 {
@@ -37,5 +38,17 @@ namespace JDS.OrgManager.Infrastructure
 
         public static IApplicationBuilder UseCustomErrorHandlingMiddleware(this IApplicationBuilder app) =>
             app.UseMiddleware<CustomErrorHandlingMiddleware>();
+
+        public static void UseCustomErrors(this IApplicationBuilder app, IHostEnvironment environment)
+        {
+            if (environment.IsDevelopment())
+            {
+                app.Use(CustomErrorHandlerHelper.WriteDevelopmentResponse);
+            }
+            else
+            {
+                app.Use(CustomErrorHandlerHelper.WriteProductionResponse);
+            }
+        }
     }
 }

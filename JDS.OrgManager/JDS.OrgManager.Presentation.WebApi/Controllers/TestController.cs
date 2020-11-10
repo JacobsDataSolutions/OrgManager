@@ -11,6 +11,7 @@ using JDS.OrgManager.Application;
 using JDS.OrgManager.Infrastructure.Authorization;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace JDS.OrgManager.Presentation.WebApi.Controllers
@@ -39,6 +40,12 @@ namespace JDS.OrgManager.Presentation.WebApi.Controllers
         public async Task<ActionResult> TestNotFoundException()
         {
             throw new NotFoundException("NotFoundException was thrown.");
+        }
+
+        [HttpGet("[action]")]
+        public async Task<ActionResult> TestInvalidOperationException()
+        {
+            throw new InvalidOperationException("InvalidOperationException was thrown.");
         }
     }
 }
