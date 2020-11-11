@@ -42,7 +42,7 @@ export class NotificationService {
 
     warn(message: string) {
         this.show(message, {
-            duration: 2500,
+            duration: 3000,
             panelClass: "warning-notification-overlay"
         });
     }

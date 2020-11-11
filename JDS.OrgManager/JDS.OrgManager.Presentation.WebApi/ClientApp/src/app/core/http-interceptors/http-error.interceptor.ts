@@ -16,11 +16,13 @@ import {
     HttpErrorResponse
 } from "@angular/common/http";
 import { Observable, throwError } from "rxjs";
-import { tap, catchError } from "rxjs/operators";
+import { catchError } from "rxjs/operators";
 import { NotificationService } from "../notifications/notification.service";
 import { Router } from "@angular/router";
 
-@Injectable()
+@Injectable({
+    providedIn: "root"
+})
 export class HttpErrorInterceptor implements HttpInterceptor {
     constructor(private injector: Injector) {}
 
