@@ -41,6 +41,8 @@ namespace JDS.OrgManager.Presentation.WebApi.Areas.Identity.Pages.Account
         [BindProperty]
         public InputModel Input { get; set; }
 
+        public RegistrationUserType RegistrationUserType { get; set; }
+
         public string ReturnUrl { get; set; }
 
         public RegisterModel(
@@ -55,19 +57,20 @@ namespace JDS.OrgManager.Presentation.WebApi.Areas.Identity.Pages.Account
             _emailSender = emailSender;
         }
 
-        public async Task OnGetAsync(string returnUrl = null)
+        public async Task OnGetAsync(string returnUrl = null, RegistrationUserType registrationUserType = RegistrationUserType.Employee)
         {
             ReturnUrl = returnUrl;
+            RegistrationUserType = registrationUserType;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
 
-        public async Task<IActionResult> OnPostAsync(string returnUrl = null)
+        public async Task<IActionResult> OnPostAsync(string returnUrl = null, RegistrationUserType registrationUserType = RegistrationUserType.Employee)
         {
             returnUrl = returnUrl ?? Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email };
+                var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email, IsCustomer = registrationUserType == RegistrationUserType.Employer };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {

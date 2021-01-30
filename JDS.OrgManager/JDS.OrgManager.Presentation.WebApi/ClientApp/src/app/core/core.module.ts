@@ -9,16 +9,7 @@
 // CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 import { CommonModule } from "@angular/common";
 import { NgModule, Optional, SkipSelf, ErrorHandler } from "@angular/core";
-import {
-    HttpClientModule,
-    HttpClient,
-    HTTP_INTERCEPTORS
-} from "@angular/common/http";
-import {
-    StoreRouterConnectingModule,
-    RouterStateSerializer
-} from "@ngrx/router-store";
-import { StoreDevtoolsModule } from "@ngrx/store-devtools";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import {
     FaIconLibrary,
     FontAwesomeModule
@@ -33,8 +24,6 @@ import { MatTooltipModule } from "@angular/material/tooltip";
 import { FormsModule } from "@angular/forms";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
 
-import { environment } from "../../environments/environment";
-
 // JDS
 import { ApiAuthorizationModule } from "../../api-authorization/api-authorization.module";
 import { AuthorizeInterceptor } from "../../api-authorization/authorize.interceptor";
@@ -45,7 +34,6 @@ import {
 } from "./animations/route.animations";
 import { AnimationsService } from "./animations/animations.service";
 import { AppErrorHandler } from "./error-handler/app-error-handler.service";
-import { CustomSerializer } from "./router/custom-serializer";
 import { LocalStorageService } from "./local-storage/local-storage.service";
 import { HttpErrorInterceptor } from "./http-interceptors/http-error.interceptor";
 import { NotificationService } from "./notifications/notification.service";
@@ -95,14 +83,6 @@ export {
         MatSnackBarModule,
         MatButtonModule,
 
-        // ngrx
-        //StoreRouterConnectingModule.forRoot(),
-        //environment.production
-        //  ? []
-        //  : StoreDevtoolsModule.instrument({
-        //      name: "Org Manager"
-        //    }),
-
         // 3rd party
         FontAwesomeModule
     ],
@@ -113,6 +93,7 @@ export {
             useClass: HttpErrorInterceptor,
             multi: true
         },
+        { provide: ErrorHandler, useClass: AppErrorHandler },
         // JDS
         {
             provide: HTTP_INTERCEPTORS,
