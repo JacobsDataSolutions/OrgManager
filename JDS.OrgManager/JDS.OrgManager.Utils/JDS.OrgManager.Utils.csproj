@@ -1,25 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
-
-  <ItemGroup>
-    <None Remove="chicago-street-names.csv" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="Streets\chicago-street-names.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="CsvHelper" Version="15.0.8" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\JDS.OrgManager.Application\JDS.OrgManager.Application.csproj" />
-  </ItemGroup>
 
 </Project>

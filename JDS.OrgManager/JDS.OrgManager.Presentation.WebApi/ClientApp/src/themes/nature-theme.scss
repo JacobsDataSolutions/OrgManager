@@ -1,9 +1,0 @@
-$org-manager-nature-primary: mat-palette($mat-brown, 700, 300, 900);
-$org-manager-nature-accent: mat-palette($mat-deep-purple, 300);
-$org-manager-nature-warn: mat-palette($mat-red, 600);
-
-$org-manager-nature-theme: mat-light-theme(
-  $org-manager-nature-primary,
-  $org-manager-nature-accent,
-  $org-manager-nature-warn
-);

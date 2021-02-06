@@ -1,0 +1,9 @@
+$org-manager-light-primary: mat-palette($mat-grey, 200, 500, 300);
+$org-manager-light-accent: mat-palette($mat-brown, 200);
+$org-manager-light-warn: mat-palette($mat-deep-orange, 200);
+
+$org-manager-light-theme: mat-light-theme(
+    $org-manager-light-primary,
+    $org-manager-light-accent,
+    $org-manager-light-warn
+);
