@@ -21,7 +21,7 @@ namespace JDS.OrgManager.Application.Tenants
 
         public Guid AssignmentKey { get; set; }
 
-        public CustomerEntity Customer { get; set; }
+        public CustomerEntity Customer { get; set; } = default!;
 
         public int CustomerId { get; set; }
 
@@ -29,9 +29,9 @@ namespace JDS.OrgManager.Application.Tenants
 
         public int Id { get; set; }
 
-        public string Name { get; set; }
+        public string Name { get; set; } = default!;
 
-        public string Slug { get; set; }
+        public string Slug { get; set; } = default!;
 
         public TenantEntity()
         {

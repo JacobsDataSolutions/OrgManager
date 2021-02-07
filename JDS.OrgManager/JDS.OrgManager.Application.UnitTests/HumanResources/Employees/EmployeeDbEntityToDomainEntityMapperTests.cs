@@ -12,9 +12,9 @@ namespace JDS.OrgManager.Application.UnitTests.HumanResources.Employees
 {
     public class EmployeeDbEntityToDomainEntityMapperTests
     {
-        private Fixture fixture;
+        private readonly Fixture fixture;
 
-        private EmployeeDbEntityToDomainEntityMapper mapper;
+        private readonly EmployeeDbEntityToDomainEntityMapper mapper;
 
         public EmployeeDbEntityToDomainEntityMapperTests()
         {

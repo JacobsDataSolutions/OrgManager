@@ -15,6 +15,6 @@ namespace JDS.OrgManager.Application.Abstractions.DbFacades
 {
     public interface IApplicationWriteDbFacade : IApplicationReadDbFacade
     {
-        Task<int> ExecuteAsync(string sql, object param = null, IDbTransaction transaction = null, CancellationToken cancellationToken = default);
+        Task<int> ExecuteAsync(string sql, object? param = null, IDbTransaction? transaction = null, CancellationToken cancellationToken = default);
     }
 }

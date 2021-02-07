@@ -18,7 +18,7 @@ namespace JDS.OrgManager.Application.HumanResources.Employees.Commands.RegisterO
 {
     public class EmployeeRegisteredEventHandler : IDomainEventHandler<EmployeeRegisteredEvent>
     {
-        private ILogger logger;
+        private readonly ILogger logger;
 
         public EmployeeRegisteredEventHandler(ILogger<EmployeeRegisteredEventHandler> logger) => this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
 

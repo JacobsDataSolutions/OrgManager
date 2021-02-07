@@ -45,7 +45,7 @@ namespace JDS.OrgManager.Application.System.Commands.SeedInitialData
             this.tenantViewModelToDbEntityMapper = tenantViewModelToDbEntityMapper ?? throw new ArgumentNullException(nameof(tenantViewModelToDbEntityMapper));
         }
 
-        public async Task SeedAllAsync(IEnumerable<TenantViewModel> tenants = null)
+        public async Task SeedAllAsync(IEnumerable<TenantViewModel>? tenants = null)
         {
             tenants ??= Enumerable.Empty<TenantViewModel>();
 
@@ -55,21 +55,19 @@ namespace JDS.OrgManager.Application.System.Commands.SeedInitialData
                 return;
             }
 
-            using (var transaction = await context.Database.BeginTransactionAsync())
-            {
-                var sqlTransaction = transaction.GetDbTransaction();
+            using var transaction = await context.Database.BeginTransactionAsync();
+            var sqlTransaction = transaction.GetDbTransaction();
 
-                await facade.SetIdentitySeedForAllTablesAsync(ApplicationLayerConstants.SystemSeedStartValue, sqlTransaction);
-                await SeedCurrenciesAsync();
-                await CreateTestCompanyUserAsync(sqlTransaction);
-                var customer = await SeedDefaultCustomerAsync(sqlTransaction);
-                if (customer != null)
-                {
-                    await CreateDefaultTenantsAsync(sqlTransaction, customer, tenants);
-                }
-                await facade.SetIdentitySeedForAllTablesAsync(ApplicationLayerConstants.ProductionSeedStartValue, sqlTransaction);
-                await transaction.CommitAsync();
+            await facade.SetIdentitySeedForAllTablesAsync(ApplicationLayerConstants.SystemSeedStartValue, sqlTransaction);
+            await SeedCurrenciesAsync();
+            await CreateTestCompanyUserAsync(sqlTransaction);
+            var customer = await SeedDefaultCustomerAsync(sqlTransaction);
+            if (customer != null)
+            {
+                await CreateDefaultTenantsAsync(sqlTransaction, customer, tenants);
             }
+            await facade.SetIdentitySeedForAllTablesAsync(ApplicationLayerConstants.ProductionSeedStartValue, sqlTransaction);
+            await transaction.CommitAsync();
         }
 
         private async Task CreateDefaultTenantsAsync(DbTransaction sqlTransaction, CustomerEntity customer, IEnumerable<TenantViewModel> tenants)
@@ -90,7 +88,7 @@ namespace JDS.OrgManager.Application.System.Commands.SeedInitialData
             var sql = @$"IF NOT EXISTS (SELECT 1 FROM AspNetUsers WHERE UserName = '{SystemUserName}')
 INSERT [dbo].[AspNetUsers] ([UserName], [NormalizedUserName], [Email], [NormalizedEmail], [EmailConfirmed], [PasswordHash], [SecurityStamp], [ConcurrencyStamp], [PhoneNumber], [PhoneNumberConfirmed], [TwoFactorEnabled], [LockoutEnd], [LockoutEnabled], [AccessFailedCount], [IsCustomer]) VALUES (N'{SystemUserName}', N'{SystemUserName}', N'{SystemUserName}', N'{SystemUserName}', 1, N'AQAAAAEAACcQAAAAEEEeWPvxgc0pa7boxO1GvxzQKedhDNkI0aVCwaws/52ehWp8Wple22rf+zcXp3hhQA==', N'2QEPCZBRJ6NF6JKJ446RBKVZXH7SXZ6X', N'f6d7885b-0ef3-4db3-a913-72871353dd65', NULL, 0, 0, NULL, 1, 0, 1)
 ";
-            await facade.ExecuteAsync(sql, null, sqlTransaction);
+            await facade.ExecuteAsync(sql, default!, sqlTransaction);
         }
 
         private async Task SeedCurrenciesAsync()
@@ -99,7 +97,7 @@ INSERT [dbo].[AspNetUsers] ([UserName], [NormalizedUserName], [Email], [Normaliz
             await context.SaveChangesAsync();
         }
 
-        private async Task<CustomerEntity> SeedDefaultCustomerAsync(DbTransaction sqlTransaction)
+        private async Task<CustomerEntity?> SeedDefaultCustomerAsync(DbTransaction sqlTransaction)
         {
             var corpUserId = await facade.QueryFirstOrDefaultAsync<int?>($"SELECT TOP 1 Id FROM AspNetUsers WHERE NormalizedEmail = '{SystemUserName}'", transaction: sqlTransaction);
             if (corpUserId == null)

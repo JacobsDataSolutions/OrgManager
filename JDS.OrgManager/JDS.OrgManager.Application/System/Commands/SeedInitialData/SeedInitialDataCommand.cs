@@ -15,6 +15,7 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -22,7 +23,7 @@ namespace JDS.OrgManager.Application.System.Commands.SeedInitialData
 {
     public class SeedInitialDataCommand : IRequest
     {
-        public IEnumerable<TenantViewModel> Tenants { get; set; }
+        public IEnumerable<TenantViewModel> Tenants { get; set; } = Enumerable.Empty<TenantViewModel>();
 
         public class SeedInitialDataCommandHandler : IRequestHandler<SeedInitialDataCommand>
         {

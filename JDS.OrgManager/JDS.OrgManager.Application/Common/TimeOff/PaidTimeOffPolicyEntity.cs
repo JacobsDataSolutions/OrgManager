@@ -23,7 +23,7 @@ namespace JDS.OrgManager.Application.Common.TimeOff
 
         public decimal? MaxPtoHours { get; set; }
 
-        public string Name { get; set; }
+        public string Name { get; set; } = default!;
 
         public decimal? PtoAccrualRate { get; set; }
 

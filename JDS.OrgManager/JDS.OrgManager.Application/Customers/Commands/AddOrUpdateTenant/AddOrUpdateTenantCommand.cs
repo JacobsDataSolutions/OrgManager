@@ -24,7 +24,7 @@ namespace JDS.OrgManager.Application.Customers.Commands.AddOrUpdateTenant
     {
         public int AspNetUsersId { get; set; }
 
-        public TenantViewModel Tenant { get; set; }
+        public TenantViewModel Tenant { get; set; } = default!;
 
         public class AddOrUpdateTenantCommandHandler : IRequestHandler<AddOrUpdateTenantCommand, TenantViewModel>
         {
@@ -57,7 +57,7 @@ namespace JDS.OrgManager.Application.Customers.Commands.AddOrUpdateTenant
                 {
                     var sqlTransaction = transaction.GetDbTransaction();
 
-                    TenantEntity tenantEntity = null;
+                    TenantEntity? tenantEntity = null;
 
                     // Check for existing slug/key on a different tenant.
                     var slug = tenantViewModel.Slug.Sluggify();
@@ -75,9 +75,9 @@ namespace JDS.OrgManager.Application.Customers.Commands.AddOrUpdateTenant
                     }
 
                     // Update.
-                    if (tenantViewModel.Id != null)
+                    if (tenantViewModel.Id != 0)
                     {
-                        var tenantId = (int)tenantViewModel.Id;
+                        var tenantId = tenantViewModel.Id;
                         tenantEntity = context.Tenants.Find(tenantId);
                         if (tenantEntity == null)
                         {

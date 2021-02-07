@@ -21,23 +21,23 @@ namespace JDS.OrgManager.Application.HumanResources.Employees.Queries.GetEmploye
 
         public int EmployeeLevel { get; set; }
 
-        public string FirstName { get; set; }
+        public string FirstName { get; set; } = default!;
 
         public Gender Gender { get; set; }
 
         public int Id { get; set; }
 
-        public string LastName { get; set; }
+        public string LastName { get; set; } = default!;
 
-        public string ManagerFirstName { get; set; }
+        public string? ManagerFirstName { get; set; }
 
         public int? ManagerId { get; set; }
 
-        public string ManagerLastName { get; set; }
+        public string? ManagerLastName { get; set; }
 
-        public string ManagerMiddleName { get; set; }
+        public string? ManagerMiddleName { get; set; }
 
-        public string MiddleName { get; set; }
+        public string? MiddleName { get; set; }
 
         public int NumSubordinates { get; set; }
     }

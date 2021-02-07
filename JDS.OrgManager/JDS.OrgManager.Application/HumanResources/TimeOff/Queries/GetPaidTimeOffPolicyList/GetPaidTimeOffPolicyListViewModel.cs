@@ -22,6 +22,6 @@ namespace JDS.OrgManager.Application.HumanResources.TimeOff.Queries.GetPaidTimeO
 
         public bool IsDefaultForEmployeeLevel { get; set; }
 
-        public string Name { get; set; }
+        public string Name { get; set; } = default!;
     }
 }

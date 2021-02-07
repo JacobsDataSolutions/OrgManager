@@ -24,7 +24,7 @@ namespace JDS.OrgManager.Application.HumanResources.TimeOff.Queries.GetPaidTimeO
 
         public decimal? MaxPtoHours { get; set; }
 
-        public string Name { get; set; }
+        public string Name { get; set; } = default!;
 
         public decimal? PtoAccrualRate { get; set; }
     }

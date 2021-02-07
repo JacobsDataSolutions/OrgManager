@@ -14,11 +14,11 @@ namespace JDS.OrgManager.Application.Common.Employees
     // TODO: reimplement this using Closure Table pattern. See SQL Antipatterns p.36.
     public class EmployeeManagerEntity : IDbEntity
     {
-        public EmployeeEntity Employee { get; set; }
+        public EmployeeEntity Employee { get; set; } = default!;
 
         public int EmployeeId { get; set; }
 
-        public EmployeeEntity Manager { get; set; }
+        public EmployeeEntity Manager { get; set; } = default!;
 
         public int ManagerId { get; set; }
 

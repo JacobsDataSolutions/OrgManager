@@ -28,20 +28,17 @@ namespace JDS.OrgManager.Application.Tenants.Queries.GetTenantIdFromSlug
 
         public TimeSpan? SlidingExpiration { get; set; }
 
-        public string Slug { get; set; }
+        public string Slug { get; set; } = default!;
 
         public class GetTenantIdFromSlugQueryHandler : IRequestHandler<GetTenantIdFromSlugQuery, int>
         {
             private readonly IApplicationReadDbFacade facade;
 
-            public GetTenantIdFromSlugQueryHandler(IApplicationReadDbFacade facade)
-            {
-                this.facade = facade ?? throw new ArgumentNullException(nameof(facade));
-            }
+            public GetTenantIdFromSlugQueryHandler(IApplicationReadDbFacade facade) => this.facade = facade ?? throw new ArgumentNullException(nameof(facade));
 
             public async Task<int> Handle(GetTenantIdFromSlugQuery request, CancellationToken cancellationToken)
             {
-                var id = await facade.QueryFirstOrDefaultAsync<int?>(@"SELECT TOP 1 Id FROM Tenants WITH(NOLOCK) WHERE Slug = @Slug", request, null, cancellationToken);
+                var id = await facade.QueryFirstOrDefaultAsync<int?>(@"SELECT TOP 1 Id FROM Tenants WITH(NOLOCK) WHERE Slug = @Slug", request, default!, cancellationToken);
                 if (id == null)
                 {
                     throw new NotFoundException($"Tenant not found for slug '{request.Slug}'.");

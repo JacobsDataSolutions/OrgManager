@@ -19,9 +19,9 @@ namespace JDS.OrgManager.Application.UnitTests.HumanResources.Employees
 {
     public class EmployeeViewModelToDomainEntityMapperTests
     {
-        private Fixture fixture;
+        private readonly Fixture fixture;
 
-        private EmployeeViewModelToDomainEntityMapper mapper;
+        private readonly EmployeeViewModelToDomainEntityMapper mapper;
 
         public EmployeeViewModelToDomainEntityMapperTests()
         {

@@ -22,17 +22,17 @@ namespace JDS.OrgManager.Application.Common.Employees
     [DebuggerDisplay("({Id}) {LastName}, {FirstName}")]
     public class EmployeeEntity : AuditableDbEntity, IAddressEntity
     {
-        public string Address1 { get; set; }
+        public string Address1 { get; set; } = default!;
 
-        public string Address2 { get; set; }
+        public string? Address2 { get; set; }
 
         public int AspNetUsersId { get; set; }
 
-        public string City { get; set; }
+        public string City { get; set; } = default!;
 
-        public CurrencyEntity Currency { get; set; }
+        public CurrencyEntity Currency { get; set; } = default!;
 
-        public string CurrencyCode { get; set; }
+        public string CurrencyCode { get; set; } = default!;
 
         public DateTime DateHired { get; set; }
 
@@ -42,19 +42,19 @@ namespace JDS.OrgManager.Application.Common.Employees
 
         public int EmployeeLevel { get; set; }
 
-        public string FirstName { get; set; }
+        public string FirstName { get; set; } = default!;
 
         public Gender Gender { get; set; }
 
         public int Id { get; set; }
 
-        public string LastName { get; set; }
+        public string LastName { get; set; } = default!;
 
         public ICollection<EmployeeManagerEntity> Managers { get; set; }
 
-        public string MiddleName { get; set; }
+        public string? MiddleName { get; set; }
 
-        public PaidTimeOffPolicyEntity PaidTimeOffPolicy { get; set; }
+        public PaidTimeOffPolicyEntity PaidTimeOffPolicy { get; set; } = default!;
 
         public int PaidTimeOffPolicyId { get; set; }
 
@@ -63,17 +63,17 @@ namespace JDS.OrgManager.Application.Common.Employees
         public decimal Salary { get; set; }
 
         // Note: in a real application, do NOT store this in the DB. It should be kept in some kind of a secure data store.
-        public string SocialSecurityNumber { get; set; }
+        public string SocialSecurityNumber { get; set; } = default!;
 
-        public string State { get; set; }
+        public string State { get; set; } = default!;
 
         public ICollection<EmployeeManagerEntity> Subordinates { get; set; }
 
-        public TenantEntity Tenant { get; set; }
+        public TenantEntity Tenant { get; set; } = default!;
 
         public int TenantId { get; set; }
 
-        public string ZipCode { get; set; }
+        public string ZipCode { get; set; } = default!;
 
         public EmployeeEntity()
         {

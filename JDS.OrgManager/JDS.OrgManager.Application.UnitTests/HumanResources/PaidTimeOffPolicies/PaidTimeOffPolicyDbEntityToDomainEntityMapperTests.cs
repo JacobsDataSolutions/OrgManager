@@ -12,9 +12,9 @@ namespace JDS.OrgManager.Application.UnitTests.HumanResources.PaidTimeOffPolicie
 {
     public class PaidTimeOffPolicyDbEntityToDomainEntityMapperTests
     {
-        private Fixture fixture;
+        private readonly Fixture fixture;
 
-        private PaidTimeOffPolicyDbEntityToDomainEntityMapper mapper;
+        private readonly PaidTimeOffPolicyDbEntityToDomainEntityMapper mapper;
 
         public PaidTimeOffPolicyDbEntityToDomainEntityMapperTests()
         {

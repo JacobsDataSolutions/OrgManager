@@ -15,13 +15,13 @@ namespace JDS.OrgManager.Application.HumanResources.Employees.Queries.GetEmploye
 {
     public class GetEmployeeDetailViewModel : IViewModel
     {
-        public string Address1 { get; set; }
+        public string Address1 { get; set; } = default!;
 
-        public string Address2 { get; set; }
+        public string? Address2 { get; set; }
 
-        public string City { get; set; }
+        public string City { get; set; } = default!;
 
-        public string CurrencyCode { get; set; }
+        public string CurrencyCode { get; set; } = default!;
 
         public DateTime? DateTerminated { get; set; }
 
@@ -31,15 +31,15 @@ namespace JDS.OrgManager.Application.HumanResources.Employees.Queries.GetEmploye
 
         public int EmployeeLevel { get; set; }
 
-        public string FirstName { get; set; }
+        public string FirstName { get; set; } = default!;
 
         public Gender Gender { get; set; }
 
         public int Id { get; set; }
 
-        public string LastName { get; set; }
+        public string LastName { get; set; } = default!;
 
-        public string MiddleName { get; set; }
+        public string? MiddleName { get; set; }
 
         public int PaidTimeOffPolicyId { get; set; }
 
@@ -47,8 +47,8 @@ namespace JDS.OrgManager.Application.HumanResources.Employees.Queries.GetEmploye
 
         public decimal Salary { get; set; }
 
-        public string State { get; set; }
+        public string State { get; set; } = default!;
 
-        public string Zip { get; set; }
+        public string ZipCode { get; set; } = default!;
     }
 }

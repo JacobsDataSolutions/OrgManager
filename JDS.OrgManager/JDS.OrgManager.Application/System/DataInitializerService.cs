@@ -22,10 +22,7 @@ namespace JDS.OrgManager.Application.System
     {
         private readonly IMediator mediator;
 
-        public DataInitializerService(IMediator mediator)
-        {
-            this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
-        }
+        public DataInitializerService(IMediator mediator) => this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
 
         public async Task InitializeDataForSystemAsync()
         {

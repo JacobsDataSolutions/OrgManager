@@ -17,9 +17,9 @@ namespace JDS.OrgManager.Application.UnitTests.HumanResources.Employees
 {
     public class EmployeeDomainEntityToDbEntityMapperTests
     {
-        private Fixture fixture;
+        private readonly Fixture fixture;
 
-        private EmployeeDomainEntityToDbEntityMapper mapper;
+        private readonly EmployeeDomainEntityToDbEntityMapper mapper;
 
         public EmployeeDomainEntityToDbEntityMapperTests()
         {

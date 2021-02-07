@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 
 namespace JDS.OrgManager.Application.Behaviors
 {
-    public class RequestCachingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+    public class RequestCachingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : notnull
     {
         private static readonly DistributedCacheEntryOptions defaultCacheOptions = new DistributedCacheEntryOptions() { SlidingExpiration = TimeSpan.FromHours(1.0) };
 

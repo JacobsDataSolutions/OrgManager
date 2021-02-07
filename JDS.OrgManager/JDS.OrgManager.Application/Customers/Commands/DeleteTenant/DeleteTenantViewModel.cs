@@ -13,7 +13,7 @@ namespace JDS.OrgManager.Application.Customers.Commands.DeleteTenant
 {
     public class DeleteTenantViewModel : IViewModel
     {
-        public string ConfirmationCode { get; set; }
+        public string ConfirmationCode { get; set; } = default!;
 
         public int TenantId { get; set; }
     }

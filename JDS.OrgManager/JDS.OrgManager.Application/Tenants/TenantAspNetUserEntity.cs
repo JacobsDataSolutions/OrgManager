@@ -15,7 +15,7 @@ namespace JDS.OrgManager.Application.Tenants
     {
         public int AspNetUsersId { get; set; }
 
-        public TenantEntity Tenant { get; set; }
+        public TenantEntity Tenant { get; set; } = default!;
 
         public int TenantId { get; set; }
     }

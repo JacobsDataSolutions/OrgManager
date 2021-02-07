@@ -21,7 +21,7 @@ namespace JDS.OrgManager.Application.Customers.Commands.DeleteTenant
 {
     public class DeleteTenantCommand : IRequest<DeleteTenantViewModel>
     {
-        public DeleteTenantViewModel DeleteTenant { get; set; }
+        public DeleteTenantViewModel DeleteTenant { get; set; } = default!;
 
         public class DeleteTenantCommandHandler : IRequestHandler<DeleteTenantCommand, DeleteTenantViewModel>
         {

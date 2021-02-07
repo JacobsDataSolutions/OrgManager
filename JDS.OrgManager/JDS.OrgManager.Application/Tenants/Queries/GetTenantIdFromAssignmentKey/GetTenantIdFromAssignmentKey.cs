@@ -34,14 +34,11 @@ namespace JDS.OrgManager.Application.Tenants.Queries.GetTenantIdFromAssignmentKe
         {
             private readonly IApplicationReadDbFacade facade;
 
-            public GetTenantIdFromAssignmentKeyQueryHandler(IApplicationReadDbFacade facade)
-            {
-                this.facade = facade ?? throw new ArgumentNullException(nameof(facade));
-            }
+            public GetTenantIdFromAssignmentKeyQueryHandler(IApplicationReadDbFacade facade) => this.facade = facade ?? throw new ArgumentNullException(nameof(facade));
 
             public async Task<int> Handle(GetTenantIdFromAssignmentKeyQuery request, CancellationToken cancellationToken)
             {
-                var id = await facade.QueryFirstOrDefaultAsync<int?>(@"SELECT TOP 1 Id FROM Tenants WITH(NOLOCK) WHERE AssignmentKey = @AssignmentKey", request, null, cancellationToken);
+                var id = await facade.QueryFirstOrDefaultAsync<int?>(@"SELECT TOP 1 Id FROM Tenants WITH(NOLOCK) WHERE AssignmentKey = @AssignmentKey", request, default!, cancellationToken);
                 if (id == null)
                 {
                     throw new NotFoundException($"Tenant not found for assignment key '{request.AssignmentKey}'.");

@@ -41,18 +41,12 @@ namespace JDS.OrgManager.Utils
         {
             var assembly = Assembly.GetExecutingAssembly();
             var resourceName = assembly.GetManifestResourceNames().Single(str => str.EndsWith("chicago-street-names.csv"));
-            using (var stream = assembly.GetManifestResourceStream(resourceName))
-            {
-                using (var reader = new StreamReader(stream))
-                {
-                    using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
-                    {
-                        csv.Context.RegisterClassMap<StreetClassMap>();
-                        var records = csv.GetRecords<Street>();
-                        streets = (from s in records where !ignoreSuffixes.Contains(s.Suffix) && !ignoreSuffixDirections.Contains(s.SuffixDirection) && !s.Name.Contains("RAMP") select s).ToArray();
-                    }
-                }
-            }
+            using var stream = assembly.GetManifestResourceStream(resourceName);
+            using var reader = new StreamReader(stream);
+            using var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
+            csv.Context.RegisterClassMap<StreetClassMap>();
+            var records = csv.GetRecords<Street>();
+            streets = (from s in records where !ignoreSuffixes.Contains(s.Suffix) && !ignoreSuffixDirections.Contains(s.SuffixDirection) && !s.Name.Contains("RAMP") select s).ToArray();
         }
 
         public static bool CoinToss() => random.Next() % 2 == 0;
@@ -123,9 +117,6 @@ namespace JDS.OrgManager.Utils
             return companyFounded.AddDays(random.Next((DateTime.Today - companyFounded).Days));
         }
 
-        public static DateTime GetRandomTerminationDate(DateTime startDate)
-        {
-            return startDate.AddDays(random.Next(90) + 90);
-        }
+        public static DateTime GetRandomTerminationDate(DateTime startDate) => startDate.AddDays(random.Next(90) + 90);
     }
 }

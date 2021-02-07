@@ -15,6 +15,8 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 
+#pragma warning disable IDE0060 // Remove unused parameter
+
 namespace JDS.OrgManager.Application.System
 {
     public static class ApplicationWriteDbFacadeExtensions
@@ -30,7 +32,7 @@ namespace JDS.OrgManager.Application.System
             nameof(IApplicationWriteDbContext.Currencies)
         };
 
-        public static Task ClearAllTablesAsync(this IApplicationWriteDbFacade facade, IDbTransaction transaction = null)
+        public static Task ClearAllTablesAsync(this IApplicationWriteDbFacade facade, IDbTransaction? transaction = null)
             => facade.ExecuteAsync(string.Join(Environment.NewLine, from t in tablesOrderedByRelation select GetDeleteStatement(t)), transaction: transaction);
 
         public static string[] GetTenantTables(this IApplicationWriteDbFacade facade)
@@ -43,16 +45,16 @@ namespace JDS.OrgManager.Application.System
             return (from t in tablesOrderedByRelation where tenantTables.Contains(t) select t).ToArray();
         }
 
-        public static Task SetIdentitySeedAsync(this IApplicationWriteDbFacade facade, string tableName, int seedValue, IDbTransaction transaction = null)
+        public static Task SetIdentitySeedAsync(this IApplicationWriteDbFacade facade, string tableName, int seedValue, IDbTransaction? transaction = null)
                      => facade.ExecuteAsync(GetReseedStatement(tableName, seedValue), transaction: transaction);
 
-        public static Task SetIdentitySeedForAllTablesAsync(this IApplicationWriteDbFacade facade, int seedValue, IDbTransaction transaction = null)
+        public static Task SetIdentitySeedForAllTablesAsync(this IApplicationWriteDbFacade facade, int seedValue, IDbTransaction? transaction = null)
                     => facade.ExecuteAsync(string.Join(Environment.NewLine, from t in tablesOrderedByRelation select GetReseedStatement(t, seedValue)), transaction: transaction);
 
-        public static Task TurnOffIdentityIncrementAsync(this IApplicationWriteDbFacade facade, string tableName, IDbTransaction transaction = null)
+        public static Task TurnOffIdentityIncrementAsync(this IApplicationWriteDbFacade facade, string tableName, IDbTransaction? transaction = null)
             => facade.ExecuteAsync(GetIdentityIncrementStatement(tableName, true), transaction: transaction);
 
-        public static Task TurnOnIdentityIncrementAsync(this IApplicationWriteDbFacade facade, string tableName, IDbTransaction transaction = null)
+        public static Task TurnOnIdentityIncrementAsync(this IApplicationWriteDbFacade facade, string tableName, IDbTransaction? transaction = null)
             => facade.ExecuteAsync(GetIdentityIncrementStatement(tableName, false), transaction: transaction);
 
         // Note: you cannot turn off identity increment for all tables. SQL server only lets you do this for one table at a time.
@@ -64,3 +66,5 @@ namespace JDS.OrgManager.Application.System
         private static string GetReseedStatement(string tableName, int seedValue) => $"IF EXISTS (SELECT * FROM sys.identity_columns WHERE OBJECT_NAME(OBJECT_ID) = '{tableName}' AND last_value IS NOT NULL) DBCC CHECKIDENT ({tableName}, RESEED, {seedValue});";
     }
 }
+
+#pragma warning restore IDE0060 // Remove unused parameter

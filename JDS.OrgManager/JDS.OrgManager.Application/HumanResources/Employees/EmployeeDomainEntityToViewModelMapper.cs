@@ -12,11 +12,6 @@ namespace JDS.OrgManager.Application.Common.Mapping
 {
     public partial class EmployeeDomainEntityToViewModelMapper
     {
-        private int DebugIt(int id)
-        {
-            Debug.WriteLine(id);
-            return id;
-        }
         protected override TypeAdapterSetter<Employee, EmployeeViewModel> Configure(TypeAdapterSetter<Employee, EmployeeViewModel> typeAdapterSetter)
         => base.Configure(typeAdapterSetter)
             .Ignore(dest => dest.TenantId)

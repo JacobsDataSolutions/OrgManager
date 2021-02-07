@@ -23,10 +23,7 @@ namespace JDS.OrgManager.Application.Common.Mapping
     {
         private readonly IViewModelToValueObjectMapper<IAddressViewModel, Address> addressMapper;
 
-        public EmployeeViewModelToDomainEntityMapper(IViewModelToValueObjectMapper<IAddressViewModel, Address> addressMapper)
-        {
-            this.addressMapper = addressMapper ?? throw new ArgumentNullException(nameof(addressMapper));
-        }
+        public EmployeeViewModelToDomainEntityMapper(IViewModelToValueObjectMapper<IAddressViewModel, Address> addressMapper) => this.addressMapper = addressMapper ?? throw new ArgumentNullException(nameof(addressMapper));
 
         protected override TypeAdapterSetter<EmployeeViewModel, Employee> Configure(TypeAdapterSetter<EmployeeViewModel, Employee> typeAdapterSetter)
             => base.Configure(typeAdapterSetter)

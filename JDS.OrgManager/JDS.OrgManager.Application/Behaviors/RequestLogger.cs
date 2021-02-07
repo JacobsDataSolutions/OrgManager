@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace JDS.OrgManager.Application.Behaviors
 {
-    public class RequestLogger<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+    public class RequestLogger<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : notnull
     {
         private readonly ICurrentUserService currentUserService;
 

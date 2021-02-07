@@ -15,12 +15,9 @@ namespace JDS.OrgManager.Domain.HumanResources.Advanced.UnitTests
 {
     public class OrganizationVerifierTests
     {
-        private IOrganizationVerifier organizationVerifier;
+        private readonly IOrganizationVerifier organizationVerifier;
 
-        public OrganizationVerifierTests()
-        {
-            organizationVerifier = new OrganizationVerifier();
-        }
+        public OrganizationVerifierTests() => organizationVerifier = new OrganizationVerifier();
 
         [Fact]
         public void VerifyOrg_MultipleTrees_ReturnsExpectedStats()

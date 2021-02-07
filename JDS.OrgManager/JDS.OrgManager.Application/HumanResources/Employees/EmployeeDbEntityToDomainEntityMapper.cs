@@ -22,10 +22,7 @@ namespace JDS.OrgManager.Application.Common.Mapping
     {
         private readonly IDbEntityToValueObjectMapper<IAddressEntity, Address> addressMapper;
 
-        public EmployeeDbEntityToDomainEntityMapper(IDbEntityToValueObjectMapper<IAddressEntity, Address> addressMapper)
-        {
-            this.addressMapper = addressMapper ?? throw new ArgumentNullException(nameof(addressMapper));
-        }
+        public EmployeeDbEntityToDomainEntityMapper(IDbEntityToValueObjectMapper<IAddressEntity, Address> addressMapper) => this.addressMapper = addressMapper ?? throw new ArgumentNullException(nameof(addressMapper));
 
         protected override TypeAdapterSetter<EmployeeEntity, Employee> Configure(TypeAdapterSetter<EmployeeEntity, Employee> typeAdapterSetter)
             => base.Configure(typeAdapterSetter)

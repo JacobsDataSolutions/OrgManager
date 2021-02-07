@@ -13,15 +13,15 @@ namespace JDS.OrgManager.Application.HumanResources.Employees.Queries.GetEmploye
 {
     public class GetEmployeeOrgChartViewModel
     {
-        public string FirstName { get; set; }
+        public string FirstName { get; set; } = default!;
 
         public int Id { get; set; }
 
-        public string LastName { get; set; }
+        public string LastName { get; set; } = default!;
 
         public int? ManagerId { get; set; }
 
-        public string MiddleName { get; set; }
+        public string? MiddleName { get; set; }
 
         public List<GetEmployeeOrgChartViewModel> Subordinates { get; set; } = new List<GetEmployeeOrgChartViewModel>();
     }

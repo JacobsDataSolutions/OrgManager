@@ -13,8 +13,8 @@ namespace JDS.OrgManager.Application.Common.Currencies
 {
     public class CurrencyEntity : IDbEntity
     {
-        public string Code { get; set; }
+        public string Code { get; set; } = default!;
 
-        public string Name { get; set; }
+        public string? Name { get; set; }
     }
 }

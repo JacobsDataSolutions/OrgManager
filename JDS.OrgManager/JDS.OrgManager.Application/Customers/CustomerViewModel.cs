@@ -14,26 +14,26 @@ namespace JDS.OrgManager.Application.Customers
 {
     public class CustomerViewModel : IAddressViewModel
     {
-        public string Address1 { get; set; }
+        public string Address1 { get; set; } = default!;
 
-        public string Address2 { get; set; }
+        public string? Address2 { get; set; }
 
-        public string City { get; set; }
+        public string City { get; set; } = default!;
 
         public int? CompanyId { get; set; }
 
-        public string CurrencyCode { get; set; }
+        public string CurrencyCode { get; set; } = default!;
 
-        public string FirstName { get; set; }
+        public string FirstName { get; set; } = default!;
 
-        public string LastName { get; set; }
+        public string LastName { get; set; } = default!;
 
-        public string MiddleName { get; set; }
+        public string? MiddleName { get; set; }
 
-        public string State { get; set; }
+        public string State { get; set; } = default!;
 
         public Title? Title { get; set; }
 
-        public string ZipCode { get; set; }
+        public string ZipCode { get; set; } = default!;
     }
 }
