@@ -46,8 +46,6 @@ namespace JDS.OrgManager.Application.HumanResources.Employees.Commands.RegisterO
 
             private readonly IViewModelToDomainEntityMapper<EmployeeViewModel, Employee> employeeVmToDomainEntityMapper;
 
-            //private readonly IDomainEntityToDbEntityMapper<PaidTimeOffPolicy, PaidTimeOffPolicyEntity> ptoPolicyDomainToDbEntityMapper;
-
             private readonly IDbEntityToDomainEntityMapper<PaidTimeOffPolicyEntity, PaidTimeOffPolicy> ptoPolicyDbEntityToDomainEntityMapper;
 
             private readonly IDomainEntityToViewModelMapper<Employee, EmployeeViewModel> employeeDomainEntityToViewModelMapper;
@@ -59,7 +57,6 @@ namespace JDS.OrgManager.Application.HumanResources.Employees.Commands.RegisterO
                 IDomainEntityToViewModelMapper<Employee, EmployeeViewModel> employeeDomainEntityToViewModelMapper,
                 IDomainEntityToDbEntityMapper<Employee, EmployeeEntity> employeeDomainToDbEntityMapper,
                 IDbEntityToDomainEntityMapper<EmployeeEntity, Employee> employeeDbEntityToDomainEntityMapper,
-                //IDomainEntityToDbEntityMapper<PaidTimeOffPolicy, PaidTimeOffPolicyEntity> ptoPolicyDomainToDbEntityMapper,
                 IDbEntityToDomainEntityMapper<PaidTimeOffPolicyEntity, PaidTimeOffPolicy> ptoPolicyDbEntityToDomainEntityMapper
                 )
             {
@@ -69,7 +66,6 @@ namespace JDS.OrgManager.Application.HumanResources.Employees.Commands.RegisterO
                 this.employeeDomainEntityToViewModelMapper = employeeDomainEntityToViewModelMapper ?? throw new ArgumentNullException(nameof(employeeDomainEntityToViewModelMapper));
                 this.employeeDomainToDbEntityMapper = employeeDomainToDbEntityMapper ?? throw new ArgumentNullException(nameof(employeeDomainToDbEntityMapper));
                 this.employeeDbEntityToDomainEntityMapper = employeeDbEntityToDomainEntityMapper ?? throw new ArgumentNullException(nameof(employeeDbEntityToDomainEntityMapper));
-                //this.ptoPolicyDomainToDbEntityMapper = ptoPolicyDomainToDbEntityMapper ?? throw new ArgumentNullException(nameof(ptoPolicyDomainToDbEntityMapper));
                 this.ptoPolicyDbEntityToDomainEntityMapper = ptoPolicyDbEntityToDomainEntityMapper ?? throw new ArgumentNullException(nameof(ptoPolicyDbEntityToDomainEntityMapper));
             }
 
@@ -141,6 +137,7 @@ namespace JDS.OrgManager.Application.HumanResources.Employees.Commands.RegisterO
                 }
                 // End business logic.
 
+                // PERSISTENCE LAYER
                 // Convert back to persistence entity.
                 var employeeEntity = employeeDomainToDbEntityMapper.Map(employee);
                 employeeEntity.TenantId = employeeViewModel.TenantId;

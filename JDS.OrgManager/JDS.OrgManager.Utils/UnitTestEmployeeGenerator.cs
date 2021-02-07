@@ -43,10 +43,11 @@ namespace JDS.OrgManager.Utils
                 SocialSecurityNumber = new SocialSecurityNumber(DummyData.GenerateFakeSSN()),
                 DateTerminated = DummyData.GetRandomTerminationDate(dateHired),
                 MiddleName = DummyData.GenerateFakeFirstOrMiddleName(male),
-                PtoHoursRemaining = 10.0m,
-                Subordinates = employeeLevel > 1 ? (from n in Enumerable.Range(1, employeeLevel) select GenerateEmployee(employeeLevel - 1)).ToList() : new List<Employee>()
+                PtoHoursRemaining = 10.0m
             };
+            var subordinates = employeeLevel > 1 ? (from n in Enumerable.Range(1, employeeLevel) select GenerateEmployee(employeeLevel - 1)).ToList() : new List<Employee>();
             employee.Id = random.Next();
+            employee = employee.WithSubordinates(subordinates);
             return employee;
         }
     }

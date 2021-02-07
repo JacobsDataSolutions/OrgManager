@@ -1,4 +1,5 @@
-﻿using JDS.OrgManager.Domain.Abstractions.Models;
+﻿using ExpressionDebugger;
+using JDS.OrgManager.Domain.Abstractions.Models;
 using JDS.OrgManager.Domain.Models;
 using Mapster;
 
@@ -25,5 +26,7 @@ namespace JDS.OrgManager.Application.Common.Mapping
         protected virtual TypeAdapterSetter<TSource, TDestination> Configure(TypeAdapterSetter<TSource, TDestination> typeAdapterSetter) => typeAdapterSetter;
 
         protected virtual void PerformAdditionalInitialization() { }
+
+        public virtual string ToScript(TSource source) => source.BuildAdapter().CreateMapExpression<TDestination>().ToScript();
     }
 }

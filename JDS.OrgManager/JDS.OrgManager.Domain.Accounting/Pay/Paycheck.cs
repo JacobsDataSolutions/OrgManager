@@ -16,26 +16,26 @@ namespace JDS.OrgManager.Domain.Accounting.Pay
 {
     public class Paycheck : DomainEntity<Paycheck>
     {
-        public Address AddressOnFile { get; init; }
+        public Address AddressOnFile { get; init; } = default!;
 
         public DateTime CheckDate { get; init; }
 
         public int CheckNumber { get; init; }
 
-        public Money ContributionTo401k { get; init; }
+        public Money ContributionTo401k { get; init; } = default!;
 
-        public Money FederalMedicare { get; init; }
+        public Money FederalMedicare { get; init; } = default!;
 
-        public Money FederalOasdi { get; init; }
+        public Money FederalOasdi { get; init; } = default!;
 
-        public Money FederalWithholding { get; init; }
+        public Money FederalWithholding { get; init; } = default!;
 
-        public Money GrossPay { get; init; }
+        public Money GrossPay { get; init; } = default!;
 
-        public Money NetPay { get; init; }
+        public Money NetPay { get; init; } = default!;
 
-        public string RecipientName { get; init; }
+        public string RecipientName { get; init; } = default!;
 
-        public Money StateWithholding { get; init; }
+        public Money StateWithholding { get; init; } = default!;
     }
 }

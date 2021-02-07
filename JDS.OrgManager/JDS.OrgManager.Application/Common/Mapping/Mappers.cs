@@ -31,6 +31,9 @@ namespace JDS.OrgManager.Application.Common.Mapping
     public partial class PaidTimeOffPolicyDbEntityToDomainEntityMapper : MapperBase<PaidTimeOffPolicyEntity, PaidTimeOffPolicy>, IDbEntityToDomainEntityMapper<PaidTimeOffPolicyEntity, PaidTimeOffPolicy>
     { }
 
+    public partial class PaidTimeOffPolicyDomainEntityToDbEntityMapper : MapperBase<PaidTimeOffPolicy, PaidTimeOffPolicyEntity>, IDomainEntityToDbEntityMapper<PaidTimeOffPolicy, PaidTimeOffPolicyEntity>
+    { }
+
     public partial class TenantViewModelToDbEntityMapper : MapperBase<TenantViewModel, TenantEntity>, IViewModelToDbEntityMapper<TenantViewModel, TenantEntity>
     { }
 }

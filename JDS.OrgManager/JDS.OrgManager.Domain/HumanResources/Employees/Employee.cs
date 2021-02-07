@@ -150,16 +150,18 @@ namespace JDS.OrgManager.Domain.HumanResources.Employees
             {
                 throw new EmployeeException("You cannot assign subordinates whose employee levels are greater than or equal to that of the current employee.");
             }
+            // Prevent circular references. Subordinates reference a copy of this employee.
+            var employeeAsManager = CloneWith(e => e.subordinates = new List<Employee>());
             var employee = CloneWith(e => e.subordinates = subordinatesList);
-            CrossLinkSubordinates();
+            employee.CrossLinkSubordinates(employeeAsManager);
             return employee;
         }
 
-        private void CrossLinkSubordinates()
+        private void CrossLinkSubordinates(Employee employeeAsManager)
         {
             foreach (var subordinate in Subordinates)
             {
-                subordinate.manager = this;
+                subordinate.manager = employeeAsManager;
             }
         }
 

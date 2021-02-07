@@ -15,6 +15,7 @@ using JDS.OrgManager.Utils.Streets;
 using System;
 using System.Globalization;
 using System.IO;
+using System.Reflection;
 using System.Linq;
 using System.Text;
 
@@ -38,13 +39,18 @@ namespace JDS.OrgManager.Utils
 
         static DummyData()
         {
-            using (var reader = new StreamReader(@"..\JDS.OrgManager.Utils\bin\Debug\netcoreapp3.1\Streets\chicago-street-names.csv"))
+            var assembly = Assembly.GetExecutingAssembly();
+            var resourceName = assembly.GetManifestResourceNames().Single(str => str.EndsWith("chicago-street-names.csv"));
+            using (var stream = assembly.GetManifestResourceStream(resourceName))
             {
-                using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+                using (var reader = new StreamReader(stream))
                 {
-                    csv.Context.RegisterClassMap<StreetClassMap>();
-                    var records = csv.GetRecords<Street>();
-                    streets = (from s in records where !ignoreSuffixes.Contains(s.Suffix) && !ignoreSuffixDirections.Contains(s.SuffixDirection) && !s.Name.Contains("RAMP") select s).ToArray();
+                    using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+                    {
+                        csv.Context.RegisterClassMap<StreetClassMap>();
+                        var records = csv.GetRecords<Street>();
+                        streets = (from s in records where !ignoreSuffixes.Contains(s.Suffix) && !ignoreSuffixDirections.Contains(s.SuffixDirection) && !s.Name.Contains("RAMP") select s).ToArray();
+                    }
                 }
             }
         }

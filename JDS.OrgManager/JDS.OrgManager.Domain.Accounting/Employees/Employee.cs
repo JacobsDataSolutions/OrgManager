@@ -20,24 +20,24 @@ namespace JDS.OrgManager.Domain.Accounting.Employees
 {
     public class Employee : DomainEntity<Employee>
     {
-        public Money Elected401kContribution { get; init; }
+        public Money Elected401kContribution { get; init; } = default!;
 
-        public string FirstName { get; init; }
+        public string FirstName { get; init; } = default!;
 
         public Gender Gender { get; init; }
 
-        public Address HomeAddress { get; init; }
+        public Address HomeAddress { get; init; } = default!;
 
-        public string LastName { get; init; }
+        public string LastName { get; init; } = default!;
 
-        public string MiddleName { get; init; }
+        public string? MiddleName { get; init; }
 
-        public IReadOnlyList<Paycheck> Paychecks { get; init; }
+        public IReadOnlyList<Paycheck> Paychecks { get; init; } = new List<Paycheck>();
 
         public decimal PtoHoursRemaining { get; init; }
 
-        public Money Salary { get; init; }
+        public Money Salary { get; init; } = default!;
 
-        public SocialSecurityNumber SocialSecurityNumber { get; init; }
+        public SocialSecurityNumber SocialSecurityNumber { get; init; } = default!;
     }
 }
