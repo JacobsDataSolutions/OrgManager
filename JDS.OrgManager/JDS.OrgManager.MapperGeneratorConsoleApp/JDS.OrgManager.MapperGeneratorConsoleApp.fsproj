@@ -9,4 +9,9 @@
     <Compile Include="Program.fs" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\JDS.OrgManager.Application\JDS.OrgManager.Application.csproj" />
+    <ProjectReference Include="..\JDS.OrgManager.Domain\JDS.OrgManager.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

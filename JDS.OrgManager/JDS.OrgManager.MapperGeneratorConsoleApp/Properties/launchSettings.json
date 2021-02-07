@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "JDS.OrgManager.MapperGeneratorConsoleApp": {
+      "commandName": "Project",
+      "commandLineArgs": "\"$(ProjectDir)..\\JDS.OrgManager.Application\\Common\\Mapping\\Mappers.cs\" \"$(ProjectDir)..\\JDS.OrgManager.Application\\Common\\Mapping\\map.txt\""
+    }
+  }
+}
