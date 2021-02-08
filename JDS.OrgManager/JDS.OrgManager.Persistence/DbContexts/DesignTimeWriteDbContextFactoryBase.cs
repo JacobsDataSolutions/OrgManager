@@ -23,7 +23,8 @@ namespace JDS.OrgManager.Persistence.DbContexts
         public TContext CreateDbContext(string[] args)
         {
             var basePath = Directory.GetCurrentDirectory() + string.Format("{0}..{0}JDS.OrgManager.Presentation.WebApi", Path.DirectorySeparatorChar);
-            return Create(basePath, Environment.GetEnvironmentVariable(AspNetCoreEnvironment) ?? throw new PersistenceLayerException("Invalid configuration setting for Persistence DB context."));
+            //return Create(basePath, Environment.GetEnvironmentVariable(AspNetCoreEnvironment) ?? throw new PersistenceLayerException("Invalid configuration setting for Persistence DB context."));
+            return Create(basePath, "Development");
         }
 
         protected abstract TContext CreateNewInstance(DbContextOptions<TContext> options);
