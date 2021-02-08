@@ -89,7 +89,7 @@ namespace JDS.OrgManager.Application.HumanResources.Employees.Commands.RegisterO
                 {
                     // Even though this is a read operation, we are using the Write dapper facade because commands should only talk to the Write database (never
                     // assume the two databases/sides of the stack will be in sync).
-                    var t = await facade.QueryFirstOrDefaultAsync<int?>("SELECT TOP 1 Id FROM Tenants WITH(NOLOCK) WHERE AssignmentKey = @AssignmentKey", employeeViewModel, default!, cancellationToken);
+                    var t = await facade.QueryFirstOrDefaultAsync<int?>("SELECT TOP 1 Id FROM Tenants WITH(NOLOCK) WHERE AssignmentKey = @AssignmentKey", employeeViewModel, null, cancellationToken);
                     if (t == null)
                     {
                         throw new ApplicationLayerException($"Invalid assignment key specified: {employeeViewModel.AssignmentKey}. There is no tenant that corresponds to the specified key.");

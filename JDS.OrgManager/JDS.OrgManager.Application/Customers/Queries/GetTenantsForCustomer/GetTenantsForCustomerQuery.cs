@@ -25,17 +25,13 @@ namespace JDS.OrgManager.Application.Customers.Queries.GetTenantsForCustomer
         {
             private readonly IApplicationReadDbFacade facade;
 
-            public GetTenantsForCustomerQueryHandler(IApplicationReadDbFacade facade)
-            {
-                this.facade = facade ?? throw new ArgumentNullException(nameof(facade));
-            }
+            public GetTenantsForCustomerQueryHandler(IApplicationReadDbFacade facade) => this.facade = facade ?? throw new ArgumentNullException(nameof(facade));
 
             public async Task<TenantViewModel[]> Handle(GetTenantsForCustomerQuery request, CancellationToken cancellationToken) =>
-                (await facade.QueryAsync<TenantViewModel>(
-                    @"SELECT t.Id, t.AssignmentKey, t.Name, t.Slug FROM Tenants t WITH(NOLOCK)
+                (await facade.QueryAsync<TenantViewModel>(@"SELECT t.Id, t.AssignmentKey, t.Name, t.Slug FROM Tenants t WITH(NOLOCK)
                     JOIN Customers c WITH(NOLOCK) ON t.CustomerId = c.Id
                     WHERE c.AspNetUsersId = @AspNetUsersId
-                    ", request)).ToArray();
+                    ", request, transaction: null, cancellationToken: cancellationToken)).ToArray();
         }
     }
 }

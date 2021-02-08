@@ -38,7 +38,7 @@ namespace JDS.OrgManager.Application.Tenants.Queries.GetTenantIdFromSlug
 
             public async Task<int> Handle(GetTenantIdFromSlugQuery request, CancellationToken cancellationToken)
             {
-                var id = await facade.QueryFirstOrDefaultAsync<int?>(@"SELECT TOP 1 Id FROM Tenants WITH(NOLOCK) WHERE Slug = @Slug", request, default!, cancellationToken);
+                var id = await facade.QueryFirstOrDefaultAsync<int?>(@"SELECT TOP 1 Id FROM Tenants WITH(NOLOCK) WHERE Slug = @Slug", request, null, cancellationToken);
                 if (id == null)
                 {
                     throw new NotFoundException($"Tenant not found for slug '{request.Slug}'.");

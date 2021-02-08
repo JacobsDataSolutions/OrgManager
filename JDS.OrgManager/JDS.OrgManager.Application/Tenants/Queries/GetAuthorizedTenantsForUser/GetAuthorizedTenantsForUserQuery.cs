@@ -24,13 +24,10 @@ namespace JDS.OrgManager.Application.Tenants.Queries.GetAuthorizedTenantsForUser
         {
             private readonly IApplicationReadDbFacade facade;
 
-            public GetAuthorizedTenantsForUserQueryHandler(IApplicationReadDbFacade facade)
-            {
-                this.facade = facade ?? throw new ArgumentNullException(nameof(facade));
-            }
+            public GetAuthorizedTenantsForUserQueryHandler(IApplicationReadDbFacade facade) => this.facade = facade ?? throw new ArgumentNullException(nameof(facade));
 
             public async Task<int[]> Handle(GetAuthorizedTenantsForUserQuery request, CancellationToken cancellationToken)
-                => (await facade.QueryAsync<int>("SELECT TenantId FROM TenantAspNetUsers WITH(NOLOCK) WHERE AspNetUsersId = @AspNetUsersId", request)).ToArray();
+                => (await facade.QueryAsync<int>("SELECT TenantId FROM TenantAspNetUsers WITH(NOLOCK) WHERE AspNetUsersId = @AspNetUsersId", request, cancellationToken: cancellationToken)).ToArray();
         }
     }
 }

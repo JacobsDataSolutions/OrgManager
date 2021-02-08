@@ -37,15 +37,11 @@ namespace JDS.OrgManager.Application.Users.GetUserStatus
         {
             private readonly IApplicationReadDbFacade facade;
 
-            public GetUserStatusQueryHandler(IApplicationReadDbFacade facade)
-            {
-                this.facade = facade ?? throw new ArgumentNullException(nameof(facade));
-            }
+            public GetUserStatusQueryHandler(IApplicationReadDbFacade facade) => this.facade = facade ?? throw new ArgumentNullException(nameof(facade));
 
             public async Task<UserStatusViewModel> Handle(GetUserStatusQuery request, CancellationToken cancellationToken)
             {
-                var userStatus = await facade.QueryFirstOrDefaultAsync<UserStatusViewModel>(
-                    @"
+                var userStatus = await facade.QueryFirstOrDefaultAsync<UserStatusViewModel>(@"
 						SELECT TOP 1
                             u.IsCustomer,
                             c.Id CustomerId,
@@ -55,8 +51,8 @@ namespace JDS.OrgManager.Application.Users.GetUserStatus
                         LEFT JOIN Customers c WITH(NOLOCK) ON c.AspNetUsersId = u.Id
                         LEFT JOIN Employees e WITH(NOLOCK) ON e.AspNetUsersId = u.Id AND (@TenantId IS NULL OR e.TenantId = @TenantId)
                         WHERE u.Id = @AspNetUsersId
-                    ", request);
-                userStatus.AuthorizedTenants = (await facade.QueryAsync<int>("SELECT TenantId FROM TenantAspNetUsers t WITH(NOLOCK) WHERE AspNetUsersId = @AspNetUsersId", request)).ToArray();
+                    ", request, cancellationToken: cancellationToken);
+                userStatus.AuthorizedTenants = (await facade.QueryAsync<int>("SELECT TenantId FROM TenantAspNetUsers t WITH(NOLOCK) WHERE AspNetUsersId = @AspNetUsersId", request, cancellationToken: cancellationToken)).ToArray();
                 return userStatus;
             }
         }

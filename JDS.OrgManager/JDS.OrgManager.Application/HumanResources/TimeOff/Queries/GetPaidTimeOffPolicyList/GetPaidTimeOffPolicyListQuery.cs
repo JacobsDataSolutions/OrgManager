@@ -34,13 +34,10 @@ namespace JDS.OrgManager.Application.HumanResources.TimeOff.Queries.GetPaidTimeO
         {
             private readonly IApplicationReadDbFacade facade;
 
-            public GetPaidTimeOffPolicyListQueryHandler(IApplicationReadDbFacade facade)
-            {
-                this.facade = facade ?? throw new ArgumentNullException(nameof(facade));
-            }
+            public GetPaidTimeOffPolicyListQueryHandler(IApplicationReadDbFacade facade) => this.facade = facade ?? throw new ArgumentNullException(nameof(facade));
 
             public async Task<GetPaidTimeOffPolicyListViewModel[]> Handle(GetPaidTimeOffPolicyListQuery request, CancellationToken cancellationToken) =>
-                (await facade.QueryAsync<GetPaidTimeOffPolicyListViewModel>("SELECT Id, Name, AllowsUnlimitedPto, EmployeeLevel, IsDefaultForEmployeeLevel FROM PaidTimeOffPolicies WITH(NOLOCK)")).ToArray();
+                (await facade.QueryAsync<GetPaidTimeOffPolicyListViewModel>("SELECT Id, Name, AllowsUnlimitedPto, EmployeeLevel, IsDefaultForEmployeeLevel FROM PaidTimeOffPolicies WITH(NOLOCK)", cancellationToken: cancellationToken)).ToArray();
         }
     }
 }
