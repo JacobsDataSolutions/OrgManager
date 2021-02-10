@@ -4,6 +4,10 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JDS.OrgManager.Presentation.WebApi", "JDS.OrgManager.Presentation.WebApi\JDS.OrgManager.Presentation.WebApi.csproj", "{A265C421-07FD-4F98-93B3-A0970E39CB06}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B11D6885-D498-4F8E-9B3D-D4E4548514C5} = {B11D6885-D498-4F8E-9B3D-D4E4548514C5}
+		{17F59FAB-CCD2-4F85-8B0A-9E50E67EFADD} = {17F59FAB-CCD2-4F85-8B0A-9E50E67EFADD}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JDS.OrgManager.Application", "JDS.OrgManager.Application\JDS.OrgManager.Application.csproj", "{3B1DBFD2-F30F-4B04-9A56-A1112B0B2853}"
 EndProject

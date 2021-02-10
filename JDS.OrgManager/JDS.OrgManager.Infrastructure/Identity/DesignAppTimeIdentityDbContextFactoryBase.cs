@@ -1,4 +1,4 @@
-// Copyright �2020 Jacobs Data Solutions
+﻿// Copyright ©2020 Jacobs Data Solutions
 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the
 // License at
@@ -13,9 +13,9 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.IO;
 
-namespace JDS.OrgManager.Persistence.DbContexts
+namespace JDS.OrgManager.Infrastructure.Identity
 {
-    public abstract class DesignTimeWriteDbContextFactoryBase<TContext> :
+    public abstract class DesignAppTimeIdentityDbContextFactoryBase<TContext> :
         IDesignTimeDbContextFactory<TContext> where TContext : DbContext
     {
         private const string AspNetCoreEnvironment = "ASPNETCORE_ENVIRONMENT";
@@ -23,8 +23,7 @@ namespace JDS.OrgManager.Persistence.DbContexts
         public TContext CreateDbContext(string[] args)
         {
             var basePath = Directory.GetCurrentDirectory() + string.Format("{0}..{0}JDS.OrgManager.Presentation.WebApi", Path.DirectorySeparatorChar);
-            return Create(basePath, Environment.GetEnvironmentVariable(AspNetCoreEnvironment) ?? throw new PersistenceLayerException("Invalid configuration setting for Persistence DB context."));
-            //return Create(basePath, "Development");
+            return Create(basePath, Environment.GetEnvironmentVariable(AspNetCoreEnvironment));
         }
 
         protected abstract TContext CreateNewInstance(DbContextOptions<TContext> options);
@@ -39,7 +38,7 @@ namespace JDS.OrgManager.Persistence.DbContexts
                 .AddEnvironmentVariables()
                 .Build();
 
-            var connectionString = configuration.GetConnectionString(PersistenceLayerConstants.WriteDatabaseConnectionStringName);
+            var connectionString = configuration.GetConnectionString(InfrastructureLayerConstants.TenantMasterDatabaseConnectionStringName);
 
             return Create(connectionString);
         }

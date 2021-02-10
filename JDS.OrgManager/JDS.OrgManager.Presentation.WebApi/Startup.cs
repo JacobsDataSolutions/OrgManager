@@ -1,5 +1,10 @@
-using JDS.OrgManager.Presentation.WebApi.Data;
-using JDS.OrgManager.Presentation.WebApi.Models;
+using JDS.OrgManager.Application;
+using JDS.OrgManager.Domain;
+using JDS.OrgManager.Infrastructure;
+using JDS.OrgManager.Infrastructure.Identity;
+using JDS.OrgManager.Persistence;
+using JDS.OrgManager.Utils;
+using MediatR;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -8,9 +13,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Linq;
 
 namespace JDS.OrgManager.Presentation.WebApi
 {
@@ -26,22 +33,42 @@ namespace JDS.OrgManager.Presentation.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
+            // JDS TODO: add in logging/serilog.
+
+            services.AddScoped<DummyDataInserter>();
+
+            // Add caching.
+            services.AddSingleton<IDistributedCache, MemoryDistributedCache>();
+
+            // TODO: configure Serilog.
+
+            // Add mediatR and associated types.
+            services.AddMediatR((from t in new[] { typeof(DomainLayer), typeof(ApplicationLayer) } select t.Assembly).ToArray());
+
+            services.AddDomainLayer();
+            services.AddApplicationLayer(addValidation: true, addRequestLogging: true, useReadThroughCachingForQueries: true);
+            services.AddInfrastructureLayer();
+            services.AddPersistenceLayer(Configuration);
+            services.AddScoped<DatabaseUpdater>();
+
+            services.AddDbContext<AppIdentityDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                    Configuration.GetConnectionString(InfrastructureLayerConstants.TenantMasterDatabaseConnectionStringName)));
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                .AddEntityFrameworkStores<AppIdentityDbContext>();
 
             services.AddIdentityServer()
-                .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
+                .AddApiAuthorization<ApplicationUser, AppIdentityDbContext>();
 
             services.AddAuthentication()
                 .AddIdentityServerJwt();
+
             services.AddControllersWithViews();
             services.AddRazorPages();
+
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
@@ -63,6 +90,9 @@ namespace JDS.OrgManager.Presentation.WebApi
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            // JDS. Custom exception handling.
+            app.UseExceptionHandler(app2 => app2.UseCustomErrors(env));
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

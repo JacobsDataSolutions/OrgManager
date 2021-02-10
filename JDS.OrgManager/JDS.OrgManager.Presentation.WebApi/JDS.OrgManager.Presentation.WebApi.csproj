@@ -13,6 +13,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="5.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.ApiAuthorization.IdentityServer" Version="5.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="5.0.2" />
@@ -21,6 +22,8 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.2" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.1" />
+    <PackageReference Include="NSwag.AspNetCore" Version="13.10.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -32,6 +35,19 @@
 
   <ItemGroup>
     <None Include="..\.editorconfig" Link=".editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\JDS.OrgManager.Application\JDS.OrgManager.Application.csproj" />
+    <ProjectReference Include="..\JDS.OrgManager.Common\JDS.OrgManager.Common.csproj" />
+    <ProjectReference Include="..\JDS.OrgManager.Domain\JDS.OrgManager.Domain.csproj" />
+    <ProjectReference Include="..\JDS.OrgManager.Infrastructure\JDS.OrgManager.Infrastructure.csproj" />
+    <ProjectReference Include="..\JDS.OrgManager.Persistence\JDS.OrgManager.Persistence.csproj" />
+    <ProjectReference Include="..\JDS.OrgManager.Utils\JDS.OrgManager.Utils.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ClientApp\src\app\shared\" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
@@ -60,6 +76,10 @@
         <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       </ResolvedFileToPublish>
     </ItemGroup>
+  </Target>
+  
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="if $(ConfigurationName) == Debug (&#xD;&#xA; $(SolutionDir)JDS.OrgManager.TypeScriptGenerator\$(OutDir)JDS.OrgManager.TypescriptGenerator.exe $(TargetDir) $(ProjectDir)&#xD;&#xA; nswag run .\org-manager.nswag.json version /runtime:Net50&#xD;&#xA;)" />
   </Target>
 
 </Project>
