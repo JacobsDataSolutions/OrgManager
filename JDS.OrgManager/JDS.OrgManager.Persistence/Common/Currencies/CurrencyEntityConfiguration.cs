@@ -20,6 +20,7 @@ namespace JDS.OrgManager.Persistence.Common.Currencies
         {
             builder.HasKey(e => e.Code);
             builder.Property(e => e.Code).HasMaxLength(Lengths.CurrencyCode).IsRequired();
+            builder.Property(e => e.Name).HasMaxLength(Lengths.Name);
         }
     }
 }

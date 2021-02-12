@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JDS.OrgManager.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationWriteDbContext))]
-    [Migration("20210212021515_Initial")]
+    [Migration("20210212023200_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -28,7 +28,8 @@ namespace JDS.OrgManager.Persistence.Migrations
                         .HasColumnType("nvarchar(3)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Code");
 

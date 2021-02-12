@@ -12,7 +12,7 @@ namespace JDS.OrgManager.Persistence.Migrations
                 columns: table => new
                 {
                     Code = table.Column<string>(type: "nvarchar(3)", maxLength: 3, nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true)
                 },
                 constraints: table =>
                 {
