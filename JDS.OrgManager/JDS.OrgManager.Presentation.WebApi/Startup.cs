@@ -1,5 +1,6 @@
 using JDS.OrgManager.Application;
 using JDS.OrgManager.Domain;
+using JDS.OrgManager.Domain.HumanResources.Advanced;
 using JDS.OrgManager.Infrastructure;
 using JDS.OrgManager.Infrastructure.Identity;
 using JDS.OrgManager.Persistence;
@@ -46,6 +47,7 @@ namespace JDS.OrgManager.Presentation.WebApi
             services.AddMediatR((from t in new[] { typeof(DomainLayer), typeof(ApplicationLayer) } select t.Assembly).ToArray());
 
             services.AddDomainLayer();
+            services.AddDomainLayerAdvanced();
             services.AddApplicationLayer(addValidation: true, addRequestLogging: true, useReadThroughCachingForQueries: true);
             services.AddInfrastructureLayer();
             services.AddPersistenceLayer(Configuration);

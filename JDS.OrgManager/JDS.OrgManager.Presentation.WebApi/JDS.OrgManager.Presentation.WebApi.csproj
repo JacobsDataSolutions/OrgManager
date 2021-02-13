@@ -40,6 +40,7 @@
   <ItemGroup>
     <ProjectReference Include="..\JDS.OrgManager.Application\JDS.OrgManager.Application.csproj" />
     <ProjectReference Include="..\JDS.OrgManager.Common\JDS.OrgManager.Common.csproj" />
+    <ProjectReference Include="..\JDS.OrgManager.Domain.HumanResources.Advanced\JDS.OrgManager.Domain.HumanResources.Advanced.fsproj" />
     <ProjectReference Include="..\JDS.OrgManager.Domain\JDS.OrgManager.Domain.csproj" />
     <ProjectReference Include="..\JDS.OrgManager.Infrastructure\JDS.OrgManager.Infrastructure.csproj" />
     <ProjectReference Include="..\JDS.OrgManager.Persistence\JDS.OrgManager.Persistence.csproj" />
