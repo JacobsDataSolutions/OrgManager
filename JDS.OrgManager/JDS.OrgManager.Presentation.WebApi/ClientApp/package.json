@@ -45,6 +45,7 @@
         "@ngrx/store-devtools": "~10.0.1",
         "@ngx-translate/core": "^13.0.0",
         "@ngx-translate/http-loader": "^6.0.0",
+        "oidc-client": "1.10.1",
         "bootstrap": "^4.5.3",
         "browser-detect": "^0.2.28",
         "rxjs": "~6.6.3",
