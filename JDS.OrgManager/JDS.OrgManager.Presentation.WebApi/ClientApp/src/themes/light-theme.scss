@@ -2,8 +2,4 @@ $om-light-primary: mat-palette($mat-grey, 200, 500, 300);
 $om-light-accent: mat-palette($mat-brown, 200);
 $om-light-warn: mat-palette($mat-deep-orange, 200);
 
-$om-light-theme: mat-light-theme(
-  $om-light-primary,
-  $om-light-accent,
-  $om-light-warn
-);
+$om-light-theme: mat-light-theme($om-light-primary, $om-light-accent, $om-light-warn);

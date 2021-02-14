@@ -14,8 +14,8 @@
         "e2e": "ng e2e",
         "e2e:ci": "ng e2e",
         "ci": "npm run format:test && npm run lint && ng test --configuration=test --browsers ChromeTravisCi --code-coverage && npm run build:prod -- --deploy-url / --base-href /",
-        "format:write": "prettier projects/**/*.{ts,json,md,scss} --write",
-        "format:test": "prettier projects/**/*.{ts,json,md,scss} --list-different",
+        "format:write": "npx prettier **/*.{ts,json,md,scss} --write",
+        "format:test": "npx prettier **/*.{ts,json,md,scss} --list-different",
         "release": "standard-version && git push --follow-tags origin master",
         "analyze": "npm run build:prod -- --stats-json && webpack-bundle-analyzer ./dist/org-manager/stats-es2015.json"
     },

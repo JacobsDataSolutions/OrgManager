@@ -1,4 +1,3 @@
-import { browser } from 'protractor';
+import { browser } from "protractor";
 
-export const getCurrentRouteUrl = () =>
-  browser.getCurrentUrl().then((url) => url.substr(url.lastIndexOf('/') + 1));
+export const getCurrentRouteUrl = () => browser.getCurrentUrl().then((url) => url.substr(url.lastIndexOf("/") + 1));

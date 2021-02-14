@@ -1,18 +1,18 @@
-@import '~@angular/material/theming';
+@import "~@angular/material/theming";
 
 $toolbar-breakpoint: 600px;
 
-$fa-font-path: '~@fortawesome/fontawesome-free-webfonts/webfonts';
+$fa-font-path: "~@fortawesome/fontawesome-free-webfonts/webfonts";
 
 $link-hover-decoration: none;
 $label-margin-bottom: 0;
 
 $grid-breakpoints: (
-  xs: 0,
-  sm: 576px,
-  md: 768px,
-  lg: 992px,
-  xl: 1200px
+    xs: 0,
+    sm: 576px,
+    md: 768px,
+    lg: 992px,
+    xl: 1200px
 );
 
 $success-colors: mat-palette($mat-green, 400);

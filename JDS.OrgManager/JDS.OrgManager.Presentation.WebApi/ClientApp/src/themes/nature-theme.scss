@@ -2,8 +2,4 @@ $om-nature-primary: mat-palette($mat-brown, 700, 300, 900);
 $om-nature-accent: mat-palette($mat-deep-purple, 300);
 $om-nature-warn: mat-palette($mat-red, 600);
 
-$om-nature-theme: mat-light-theme(
-  $om-nature-primary,
-  $om-nature-accent,
-  $om-nature-warn
-);
+$om-nature-theme: mat-light-theme($om-nature-primary, $om-nature-accent, $om-nature-warn);

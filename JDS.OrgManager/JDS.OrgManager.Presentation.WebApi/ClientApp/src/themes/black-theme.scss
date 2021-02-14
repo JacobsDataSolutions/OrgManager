@@ -2,8 +2,4 @@ $om-black-primary: mat-palette($mat-grey, 700, 300, 900);
 $om-black-accent: mat-palette($mat-blue-grey, 400);
 $om-black-warn: mat-palette($mat-red, 500);
 
-$om-black-theme: mat-dark-theme(
-  $om-black-primary,
-  $om-black-accent,
-  $om-black-warn
-);
+$om-black-theme: mat-dark-theme($om-black-primary, $om-black-accent, $om-black-warn);

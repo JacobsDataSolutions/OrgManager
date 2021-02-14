@@ -1,4 +1,3 @@
-
 export class Lengths {
     static readonly address1: number = 50;
     static readonly address2: number = 15;

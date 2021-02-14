@@ -1,23 +1,21 @@
-@import '~@angular/material/theming';
+@import "~@angular/material/theming";
 
 @mixin om-big-input-component-theme($theme) {
-  $primary: map-get($theme, primary);
-  $accent: map-get($theme, accent);
-  $foreground: map-get($theme, foreground);
-  $background: map-get($theme, background);
+    $primary: map-get($theme, primary);
+    $accent: map-get($theme, accent);
+    $foreground: map-get($theme, foreground);
+    $background: map-get($theme, background);
 
-  om-big-input {
-    .big-input {
-      input {
-        color: mat-color($foreground, text);
-        background-color: mat-color($background, card);
-      }
+    om-big-input {
+        .big-input {
+            input {
+                color: mat-color($foreground, text);
+                background-color: mat-color($background, card);
+            }
 
-      &.has-focus {
-        box-shadow: 0 0 15px 2px rgba(mat-color($accent), 0.4),
-          0 0 15px 2px rgba(mat-color($accent), 0.4),
-          0 0 15px 2px rgba(mat-color($accent), 0.4);
-      }
+            &.has-focus {
+                box-shadow: 0 0 15px 2px rgba(mat-color($accent), 0.4), 0 0 15px 2px rgba(mat-color($accent), 0.4), 0 0 15px 2px rgba(mat-color($accent), 0.4);
+            }
+        }
     }
-  }
 }
