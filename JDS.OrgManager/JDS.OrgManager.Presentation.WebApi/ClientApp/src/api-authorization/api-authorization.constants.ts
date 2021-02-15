@@ -40,8 +40,8 @@ let applicationPaths: ApplicationPathsType = {
     LogOutPathComponents: [],
     LoggedOutPathComponents: [],
     LogOutCallbackPathComponents: [],
-    IdentityRegisterPath: "Identity/Account/Register",
-    IdentityManagePath: "Identity/Account/Manage"
+    IdentityRegisterPath: "/Identity/Account/Register",
+    IdentityManagePath: "/Identity/Account/Manage"
 };
 
 applicationPaths = {

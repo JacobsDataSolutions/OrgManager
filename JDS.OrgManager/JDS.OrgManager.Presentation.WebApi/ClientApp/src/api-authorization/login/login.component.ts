@@ -35,7 +35,8 @@ export class LoginComponent implements OnInit {
                 this.redirectToProfile();
                 break;
             case LoginActions.Register:
-                this.redirectToRegister();
+                const registrationUserType = this.activatedRoute.snapshot.queryParamMap.get("registrationUserType");
+                this.redirectToRegister(registrationUserType);
                 break;
             default:
                 throw new Error(`Invalid action '${action}'`);
@@ -78,8 +79,11 @@ export class LoginComponent implements OnInit {
         }
     }
 
-    private redirectToRegister(): any {
-        this.redirectToApiAuthorizationPath(`${ApplicationPaths.IdentityRegisterPath}?returnUrl=${encodeURI("/" + ApplicationPaths.Login)}`);
+    private redirectToRegister(registrationUserType: string): any {
+        this.redirectToApiAuthorizationPath(
+            `${ApplicationPaths.IdentityRegisterPath}?returnUrl=${encodeURI("/" + ApplicationPaths.Login)}` +
+                (registrationUserType ? `&registrationUserType=${registrationUserType}` : "")
+        );
     }
 
     private redirectToProfile(): void {
@@ -109,7 +113,7 @@ export class LoginComponent implements OnInit {
         // It's important that we do a replace here so that when the user hits the back arrow on the
         // browser they get sent back to where it was on the app instead of to an endpoint on this
         // component.
-        const redirectUrl = `${window.location.origin}/${apiAuthorizationPath}`;
+        const redirectUrl = `${window.location.origin}${apiAuthorizationPath}`;
         window.location.replace(redirectUrl);
     }
 }

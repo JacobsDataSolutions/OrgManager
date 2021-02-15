@@ -80,7 +80,7 @@
     "import/no-deprecated": "warn",
     "max-len": [
       "error",
-      { "code": 120 }
+      { "code": 160 }
     ],
     "no-bitwise": "error",
     "no-caller": "error",
