@@ -7,6 +7,8 @@ import { LetsGetStartedComponent } from "./home/lets-get-started/lets-get-starte
 import { EmployeeRegisteredComponent } from "./home/employee-registered/employee-registered.component";
 import { RegisterNewEmployeeComponent } from "./home/register-new-employee/register-new-employee.component";
 import { AuthorizeGuard } from "../api-authorization/authorize.guard";
+import { AddOrUpdateCustomerComponent } from "./customers/add-or-update-customer/add-or-update-customer.component";
+import { ManageTenantsComponent } from "./customers/manage-tenants/manage-tenants.component";
 
 const routes: Routes = [
     {
@@ -30,6 +32,16 @@ const routes: Routes = [
     {
         path: "unauthorized",
         component: UnauthorizedComponent
+    },
+    {
+        path: "customer",
+        component: AddOrUpdateCustomerComponent,
+        canActivate: [AuthorizeGuard]
+    },
+    {
+        path: "customer/manage-tenants",
+        component: ManageTenantsComponent,
+        canActivate: [AuthorizeGuard]
     },
     {
         path: "test",

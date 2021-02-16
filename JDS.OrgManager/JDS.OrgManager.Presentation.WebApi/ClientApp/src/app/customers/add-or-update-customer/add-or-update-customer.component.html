@@ -1,0 +1,128 @@
+<div class="container">
+    <form [formGroup]="form" (ngSubmit)="save()">
+        <div class="row justify-content-center">
+            <div class="col-md-8" [formGroup]="form">
+                <mat-card>
+                    <span class="d-flex justify-content-between align-items-baseline">
+                        <h2>Customer sign-up: Please enter your billing information</h2>
+                    </span>
+                    <div class="row">
+                        <mat-form-field class="col" [ngClass]="routeAnimationsElements">
+                            <input matInput placeholder="Company Name"
+                                   formControlName="companyName">
+                            <mat-error *ngIf="form.get('companyName').hasError('required')">
+                                Company name is required.
+                            </mat-error>
+                            <mat-error *ngIf="form.get('companyName').hasError('maxlength')">
+                                Max length is {{ lengths._name }}.
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="col" [ngClass]="routeAnimationsElements">
+                            <mat-select placeholder="Title" formControlName="title">
+                                <mat-option></mat-option>
+                                <mat-option [value]="0">Mr</mat-option>
+                                <mat-option [value]="1">Miss</mat-option>
+                                <mat-option [value]="2">Mrs</mat-option>
+                                <mat-option [value]="3">Ms</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field class="col" [ngClass]="routeAnimationsElements">
+                            <input matInput placeholder="First Name"
+                                   formControlName="firstName">
+                            <mat-error *ngIf="form.get('firstName').hasError('required')">
+                                First name is required.
+                            </mat-error>
+                            <mat-error *ngIf="form.get('firstName').hasError('maxlength')">
+                                Max length is {{ lengths.firstName }}.
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="col" [ngClass]="routeAnimationsElements">
+                            <input matInput placeholder="Middle Name (optional)"
+                                   formControlName="middleName">
+                            <mat-error *ngIf="form.get('middleName').hasError('maxlength')">
+                                Max length is {{ lengths.middleName }}.
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="col" [ngClass]="routeAnimationsElements">
+                            <input matInput placeholder="Last Name"
+                                   formControlName="lastName">
+                            <mat-error *ngIf="form.get('lastName').hasError('required')">
+                                Last name is required.
+                            </mat-error>
+                            <mat-error *ngIf="form.get('lastName').hasError('maxlength')">
+                                Max length is {{ lengths.lastName }}.
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="row">
+                        <mat-form-field class="col" [ngClass]="routeAnimationsElements">
+                            <input matInput placeholder="Address Line 1"
+                                   formControlName="address1">
+                            <mat-error *ngIf="form.get('address1').hasError('required')">
+                                Address is required.
+                            </mat-error>
+                            <mat-error *ngIf="form.get('address1').hasError('maxlength')">
+                                Max length is {{ lengths.address1 }}.
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="col" [ngClass]="routeAnimationsElements">
+                            <input matInput placeholder="Address Line 2 (optional)"
+                                   formControlName="address2">
+                            <mat-error *ngIf="form.get('address2').hasError('maxlength')">
+                                Max length is {{ lengths.address2 }}.
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="row">
+                        <mat-form-field class="col" [ngClass]="routeAnimationsElements">
+                            <input matInput placeholder="City"
+                                   formControlName="city">
+                            <mat-error *ngIf="form.get('city').hasError('required')">
+                                City is required.
+                            </mat-error>
+                            <mat-error *ngIf="form.get('city').hasError('maxlength')">
+                                Max length is {{ lengths.city }}.
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="col" [ngClass]="routeAnimationsElements">
+                            <mat-select placeholder="State" formControlName="state">
+                                <mat-option *ngFor="let state of states" [value]="state">
+                                    {{state}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="form.get('state').hasError('required')">
+                                State is required.
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="col" [ngClass]="routeAnimationsElements">
+                            <input matInput placeholder="Zip Code"
+                                   formControlName="zipCode">
+                            <mat-error *ngIf="form.get('zipCode').hasError('required')">
+                                Zip is required.
+                            </mat-error>
+                            <mat-error *ngIf="form.get('zipCode').hasError('maxlength')">
+                                Max length is {{ lengths.zipCode }}.
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="col" [ngClass]="routeAnimationsElements">
+                            <mat-select placeholder="Currency" formControlName="currencyCode">
+                                <mat-option *ngFor="let currency of currencies" [value]="currency">
+                                    {{currency}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="form.get('currencyCode').hasError('required')">
+                                Currency is required.
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="row buttons d-flex justify-content-between pad">
+                        <button type="button" mat-raised-button color="accent"
+                                [ngClass]="routeAnimationsElements" (click)="save()" [disabled]="!form.valid">
+                            Save
+                        </button>
+                    </div>
+                </mat-card>
+            </div>
+        </div>
+    </form>
+</div>

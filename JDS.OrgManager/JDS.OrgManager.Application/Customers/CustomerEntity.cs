@@ -26,7 +26,7 @@ namespace JDS.OrgManager.Application.Customers
 
         public string City { get; set; } = default!;
 
-        public int? CompanyId { get; set; }
+        public string CompanyName { get; set; }
 
         public CurrencyEntity Currency { get; set; } = default!;
 

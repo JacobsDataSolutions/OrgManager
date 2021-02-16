@@ -88,9 +88,13 @@ namespace JDS.OrgManager.Application.Customers.Commands.AddOrUpdateTenant
                     else
                     {
                         // Add.
-                        var customerId = await facade.QueryFirstOrDefaultAsync<int>("SELECT TOP 1 Id FROM Customers WHERE AspNetUsersId = @AspNetUsersId", request, sqlTransaction);
+                        var customerId = await facade.QueryFirstOrDefaultAsync<int?>("SELECT TOP 1 Id FROM Customers WHERE AspNetUsersId = @AspNetUsersId", request, sqlTransaction);
+                        if (customerId == null)
+                        {
+                            throw new ApplicationLayerException("Customer information doesn't exist for the specified user.");
+                        }
                         tenantEntity = mapper.Map(tenantViewModel);
-                        tenantEntity.CustomerId = customerId;
+                        tenantEntity.CustomerId = (int)customerId;
                         await context.Tenants.AddAsync(tenantEntity);
                         isNew = true;
                     }

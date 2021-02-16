@@ -25,6 +25,58 @@ export class CustomerClient {
         this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
     }
 
+    addOrUpdateCustomer(customer?: CustomerViewModel | null | undefined): Observable<CustomerViewModel | null> {
+        let url_ = this.baseUrl + "/api/Customer/AddOrUpdateCustomer";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(customer);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processAddOrUpdateCustomer(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processAddOrUpdateCustomer(<any>response_);
+                } catch (e) {
+                    return <Observable<CustomerViewModel | null>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<CustomerViewModel | null>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processAddOrUpdateCustomer(response: HttpResponseBase): Observable<CustomerViewModel | null> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? CustomerViewModel.fromJS(resultData200) : <any>null;
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<CustomerViewModel | null>(<any>null);
+    }
+
     addOrUpdateTenant(tenant?: TenantViewModel | null | undefined): Observable<TenantViewModel | null> {
         let url_ = this.baseUrl + "/api/Customer/AddOrUpdateTenant";
         url_ = url_.replace(/[?&]$/, "");
@@ -127,6 +179,102 @@ export class CustomerClient {
             }));
         }
         return _observableOf<DeleteTenantViewModel | null>(<any>null);
+    }
+
+    getCustomer(): Observable<CustomerViewModel | null> {
+        let url_ = this.baseUrl + "/api/Customer/GetCustomer";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetCustomer(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetCustomer(<any>response_);
+                } catch (e) {
+                    return <Observable<CustomerViewModel | null>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<CustomerViewModel | null>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetCustomer(response: HttpResponseBase): Observable<CustomerViewModel | null> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? CustomerViewModel.fromJS(resultData200) : <any>null;
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<CustomerViewModel | null>(<any>null);
+    }
+
+    getCustomerId(): Observable<number | null> {
+        let url_ = this.baseUrl + "/api/Customer/GetCustomerId";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetCustomerId(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetCustomerId(<any>response_);
+                } catch (e) {
+                    return <Observable<number | null>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<number | null>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetCustomerId(response: HttpResponseBase): Observable<number | null> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 !== undefined ? resultData200 : <any>null;
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<number | null>(<any>null);
     }
 
     getNewAssignmentKey(): Observable<string> {
@@ -781,6 +929,89 @@ export class UserClient {
         }
         return _observableOf<UserStatusViewModel | null>(<any>null);
     }
+}
+
+export class CustomerViewModel implements ICustomerViewModel {
+    address1!: string;
+    address2?: string | undefined;
+    city!: string;
+    companyName!: string;
+    currencyCode!: string;
+    firstName!: string;
+    lastName!: string;
+    middleName?: string | undefined;
+    state!: string;
+    title?: Title | undefined;
+    zipCode!: string;
+
+    constructor(data?: ICustomerViewModel) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.address1 = _data["address1"];
+            this.address2 = _data["address2"];
+            this.city = _data["city"];
+            this.companyName = _data["companyName"];
+            this.currencyCode = _data["currencyCode"];
+            this.firstName = _data["firstName"];
+            this.lastName = _data["lastName"];
+            this.middleName = _data["middleName"];
+            this.state = _data["state"];
+            this.title = _data["title"];
+            this.zipCode = _data["zipCode"];
+        }
+    }
+
+    static fromJS(data: any): CustomerViewModel {
+        data = typeof data === 'object' ? data : {};
+        let result = new CustomerViewModel();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["address1"] = this.address1;
+        data["address2"] = this.address2;
+        data["city"] = this.city;
+        data["companyName"] = this.companyName;
+        data["currencyCode"] = this.currencyCode;
+        data["firstName"] = this.firstName;
+        data["lastName"] = this.lastName;
+        data["middleName"] = this.middleName;
+        data["state"] = this.state;
+        data["title"] = this.title;
+        data["zipCode"] = this.zipCode;
+        return data; 
+    }
+}
+
+export interface ICustomerViewModel {
+    address1: string;
+    address2?: string | undefined;
+    city: string;
+    companyName: string;
+    currencyCode: string;
+    firstName: string;
+    lastName: string;
+    middleName?: string | undefined;
+    state: string;
+    title?: Title | undefined;
+    zipCode: string;
+}
+
+export enum Title {
+    Mr = 0,
+    Miss = 1,
+    Mrs = 2,
+    Ms = 3,
 }
 
 export class TenantViewModel implements ITenantViewModel {

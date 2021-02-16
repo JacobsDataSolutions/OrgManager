@@ -108,6 +108,7 @@ INSERT [dbo].[AspNetUsers] ([UserName], [NormalizedUserName], [Email], [Normaliz
             var customer = new CustomerEntity
             {
                 AspNetUsersId = (int)corpUserId,
+                CompanyName = "TEST COMPANY",
                 FirstName = "TEST",
                 LastName = "TEST",
                 Address1 = "12345 TEST ST",

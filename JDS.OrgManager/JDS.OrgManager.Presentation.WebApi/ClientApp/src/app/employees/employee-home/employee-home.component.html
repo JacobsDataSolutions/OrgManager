@@ -1,0 +1,17 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h2>Employee home</h2>
+    </div>
+  </div>
+  <div class="row" *ngIf="userStatus?.isCustomer">
+    <div class="col-md-12">
+      <p><a (click)="manageEmployeesLinkClick()">Click here</a> to manage employees.</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <!--<om-current-employee-time-off-requests [tenantId]="tenantId"></om-current-employee-time-off-requests>-->
+    </div>
+  </div>
+</div>

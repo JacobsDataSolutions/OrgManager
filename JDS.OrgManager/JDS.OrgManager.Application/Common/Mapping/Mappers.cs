@@ -2,6 +2,7 @@ using JDS.OrgManager.Application.Abstractions.Mapping;
 using JDS.OrgManager.Application.Common.Addresses;
 using JDS.OrgManager.Application.Common.Employees;
 using JDS.OrgManager.Application.Common.TimeOff;
+using JDS.OrgManager.Application.Customers;
 using JDS.OrgManager.Application.HumanResources.Employees;
 using JDS.OrgManager.Application.Tenants;
 using JDS.OrgManager.Domain.Common.Addresses;
@@ -14,6 +15,9 @@ namespace JDS.OrgManager.Application.Common.Mapping
     { }
 
     public partial class AddressViewModelToValueObjectMapper : MapperBase<IAddressViewModel, Address>, IViewModelToValueObjectMapper<IAddressViewModel, Address>
+    { }
+
+    public partial class CustomerViewModelToDbEntityMapper : MapperBase<CustomerViewModel, CustomerEntity>, IViewModelToDbEntityMapper<CustomerViewModel, CustomerEntity>
     { }
 
     public partial class EmployeeDbEntityToDomainEntityMapper : MapperBase<EmployeeEntity, Employee>, IDbEntityToDomainEntityMapper<EmployeeEntity, Employee>

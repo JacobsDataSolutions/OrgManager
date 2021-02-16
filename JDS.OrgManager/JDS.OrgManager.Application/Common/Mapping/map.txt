@@ -1,9 +1,10 @@
-﻿IAddressEntity->Address
-IAddressViewModel->Address
-TenantViewModel->TenantEntity
+﻿CustomerViewModel->CustomerEntity
 Employee->EmployeeEntity
+Employee->EmployeeViewModel
 EmployeeEntity->Employee
 EmployeeViewModel->Employee
-PaidTimeOffPolicyEntity->PaidTimeOffPolicy
+IAddressEntity->Address
+IAddressViewModel->Address
 PaidTimeOffPolicy->PaidTimeOffPolicyEntity
-Employee->EmployeeViewModel
+PaidTimeOffPolicyEntity->PaidTimeOffPolicy
+TenantViewModel->TenantEntity
