@@ -46,7 +46,7 @@ namespace JDS.OrgManager.Application.Users.GetUserStatus
                             u.IsCustomer,
                             c.Id CustomerId,
 	                        CASE WHEN c.Id IS NULL THEN 0 ELSE 1 END HasProvidedCustomerInformation,
-	                        CASE WHEN e.Id IS NULL THEN 0 ELSE 1 END IsApprovedEmployee
+	                        CASE WHEN e.Id IS NULL THEN 0 ELSE 1 END HasProvidedEmployeeInformation
                         FROM AspNetUsers u WITH(NOLOCK)
                         LEFT JOIN Customers c WITH(NOLOCK) ON c.AspNetUsersId = u.Id
                         LEFT JOIN Employees e WITH(NOLOCK) ON e.AspNetUsersId = u.Id AND (@TenantId IS NULL OR e.TenantId = @TenantId)

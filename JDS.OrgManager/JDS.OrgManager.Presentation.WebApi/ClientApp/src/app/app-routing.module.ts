@@ -9,6 +9,9 @@ import { RegisterNewEmployeeComponent } from "./home/register-new-employee/regis
 import { AuthorizeGuard } from "../api-authorization/authorize.guard";
 import { AddOrUpdateCustomerComponent } from "./customers/add-or-update-customer/add-or-update-customer.component";
 import { ManageTenantsComponent } from "./customers/manage-tenants/manage-tenants.component";
+import { CustomerHomeComponent } from "./customers/customer-home/customer-home.component";
+import { EmployeeHomeComponent } from "./employees/employee-home/employee-home.component";
+import { AddOrUpdateEmployeeComponent } from "./employees/add-or-update-employee/add-or-update-employee.component";
 
 const routes: Routes = [
     {
@@ -35,6 +38,11 @@ const routes: Routes = [
     },
     {
         path: "customer",
+        component: CustomerHomeComponent,
+        canActivate: [AuthorizeGuard]
+    },
+    {
+        path: "customer/update",
         component: AddOrUpdateCustomerComponent,
         canActivate: [AuthorizeGuard]
     },
@@ -46,6 +54,21 @@ const routes: Routes = [
     {
         path: "test",
         component: TestComponent
+    },
+    {
+        path: "t/:slug",
+        component: EmployeeHomeComponent,
+        canActivate: [AuthorizeGuard]
+    },
+    {
+        path: "t/:slug/employee",
+        component: EmployeeHomeComponent,
+        canActivate: [AuthorizeGuard]
+    },
+    {
+        path: "t/:slug/employee/update",
+        component: AddOrUpdateEmployeeComponent,
+        canActivate: [AuthorizeGuard]
     }
 ];
 

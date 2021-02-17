@@ -35,7 +35,7 @@ namespace JDS.OrgManager.Application.System
 
             foreach (var tenant in tenants)
             {
-                await mediator.Send(new ProvisionTenantCommand { TenantId = (int)tenant.Id });
+                await mediator.Send(new ProvisionTenantCommand { TenantId = tenant.Id });
             }
         }
     }

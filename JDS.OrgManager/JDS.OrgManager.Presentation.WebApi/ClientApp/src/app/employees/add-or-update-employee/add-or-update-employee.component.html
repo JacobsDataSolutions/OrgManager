@@ -1,1 +1,145 @@
-<p>add-or-update-employee works!</p>
+<!--<div class="container">
+    <form [formGroup]="form" (ngSubmit)="save()">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <mat-card>
+                    <span class="d-flex justify-content-between align-items-baseline">
+                        <h2>Enter your employee information</h2>
+                    </span>
+                    <div class="row">
+                        <mat-form-field class="col" *ngIf="!hasValidAssignmentKey" [ngClass]="routeAnimationsElements">
+                            <input matInput placeholder="Paste Assignment Key Here"
+                                   formControlName="assignmentKey">
+                            <mat-error *ngIf="form.get('assignmentKey').hasError('invalidGuid')">
+                                Assignment Key must be a valid GUID.
+                            </mat-error>
+                            <mat-error *ngIf="form.get('assignmentKey').hasError('required')">
+                                Assignment Key is required.
+                            </mat-error>
+                            <mat-error *ngIf="form.get('assignmentKey').hasError('maxlength')">
+                                Max length is 36.
+                            </mat-error>
+                            <mat-error *ngIf="form.get('assignmentKey').hasError('minlength')">
+                                Min length is 36.
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="row">
+                        <mat-form-field class="col" [ngClass]="routeAnimationsElements">
+                            <input matInput placeholder="First Name"
+                                   formControlName="firstName">
+                            <mat-error *ngIf="form.get('firstName').hasError('required')">
+                                First name is required.
+                            </mat-error>
+                            <mat-error *ngIf="form.get('firstName').hasError('maxlength')">
+                                Max length is 25.
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="col" [ngClass]="routeAnimationsElements">
+                            <input matInput placeholder="Middle Name (optional)"
+                                   formControlName="middleName">
+                            <mat-error *ngIf="form.get('middleName').hasError('maxlength')">
+                                Max length is 25.
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="col" [ngClass]="routeAnimationsElements">
+                            <input matInput placeholder="Last Name"
+                                   formControlName="lastName">
+                            <mat-error *ngIf="form.get('lastName').hasError('required')">
+                                Last name is required.
+                            </mat-error>
+                            <mat-error *ngIf="form.get('lastName').hasError('maxlength')">
+                                Max length is 35.
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="row">
+                        <mat-form-field class="col" [ngClass]="routeAnimationsElements">
+                            <mat-select placeholder="Gender" formControlName="gender">
+                                <mat-option [value]="0">Male</mat-option>
+                                <mat-option [value]="1">Female</mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="form.get('state').hasError('required')">
+                                Gender is required.
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="col" [ngClass]="routeAnimationsElements">
+                            <input matInput formControlName="dateOfBirth" [matDatepicker]="picker" placeholder="Date of Birth">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                            <mat-error *ngIf="form.get('dateOfBirth').hasError('required')">
+                                Date of birth is required.
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="row">
+                        <mat-form-field class="col" [ngClass]="routeAnimationsElements">
+                            <input matInput placeholder="Address Line 1"
+                                   formControlName="address1">
+                            <mat-error *ngIf="form.get('address1').hasError('required')">
+                                Address is required.
+                            </mat-error>
+                            <mat-error *ngIf="form.get('address1').hasError('maxlength')">
+                                Max length is 50.
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="col" [ngClass]="routeAnimationsElements">
+                            <input matInput placeholder="Address Line 2 (optional)"
+                                   formControlName="address2">
+                            <mat-error *ngIf="form.get('address2').hasError('maxlength')">
+                                Max length is 15.
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="row">
+                        <mat-form-field class="col" [ngClass]="routeAnimationsElements">
+                            <input matInput placeholder="City"
+                                   formControlName="city">
+                            <mat-error *ngIf="form.get('city').hasError('required')">
+                                City is required.
+                            </mat-error>
+                            <mat-error *ngIf="form.get('city').hasError('maxlength')">
+                                Max length is 30.
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="col" [ngClass]="routeAnimationsElements">
+                            <mat-select placeholder="State" formControlName="state">
+                                <mat-option *ngFor="let state of states" [value]="state">
+                                    {{state}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="form.get('state').hasError('required')">
+                                State is required.
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="col" [ngClass]="routeAnimationsElements">
+                            <input matInput placeholder="Zip Code"
+                                   formControlName="zip">
+                            <mat-error *ngIf="form.get('zip').hasError('required')">
+                                Zip is required.
+                            </mat-error>
+                            <mat-error *ngIf="form.get('zip').hasError('maxlength')">
+                                Max length is 10.
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="row">
+                        <mat-form-field class="col" [ngClass]="routeAnimationsElements">
+                            <input matInput placeholder="External Employee ID (optional)"
+                                   formControlName="externalEmployeeId">
+                            <mat-error *ngIf="form.get('externalEmployeeId').hasError('maxlength')">
+                                Max length is 25.
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="row buttons d-flex justify-content-between pad">
+                        <button type="button" mat-raised-button color="accent"
+                                [ngClass]="routeAnimationsElements" (click)="save()" [disabled]="!form.valid">
+                            Save
+                        </button>
+                    </div>
+                </mat-card>
+            </div>
+        </div>
+    </form>
+</div>-->

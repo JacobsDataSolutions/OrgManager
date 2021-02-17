@@ -18,7 +18,7 @@ namespace JDS.OrgManager.Application.Users.GetUserStatus
 
         public bool HasProvidedCustomerInformation { get; set; }
 
-        public bool IsApprovedEmployee { get; set; }
+        public bool HasProvidedEmployeeInformation { get; set; }
 
         public bool IsCustomer { get; set; }
     }

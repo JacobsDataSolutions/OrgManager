@@ -26,7 +26,7 @@ namespace JDS.OrgManager.Application.System.Commands.SeedInitialData
 {
     public class InitialDataSeeder
     {
-        private const string SystemUserName = "TEST-CUSTOMER@ORGMANAGER.COM";
+        private const string SystemUserName = "TEST-CUSTOMER@ORG-MANAGER.COM";
 
         private readonly IApplicationWriteDbContext context;
 
@@ -58,6 +58,7 @@ namespace JDS.OrgManager.Application.System.Commands.SeedInitialData
             using var transaction = await context.Database.BeginTransactionAsync();
             var sqlTransaction = transaction.GetDbTransaction();
 
+            await facade.SetIdentitySeedForAllAspNetCoreTablesAsync(ApplicationLayerConstants.SystemSeedStartValue, sqlTransaction);
             await facade.SetIdentitySeedForAllTablesAsync(ApplicationLayerConstants.SystemSeedStartValue, sqlTransaction);
             await SeedCurrenciesAsync();
             await CreateTestCompanyUserAsync(sqlTransaction);

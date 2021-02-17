@@ -33,6 +33,8 @@ namespace JDS.OrgManager.Application.Tenants
 
         public string Slug { get; set; } = default!;
 
+        public TenantDefaultEntity TenantDefaults { get; set; }
+
         public TenantEntity()
         {
             Employees = new HashSet<EmployeeEntity>();

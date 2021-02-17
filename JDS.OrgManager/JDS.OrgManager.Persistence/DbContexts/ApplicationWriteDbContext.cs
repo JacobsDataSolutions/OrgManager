@@ -46,6 +46,8 @@ namespace JDS.OrgManager.Persistence.DbContexts
 
         public DbSet<TenantAspNetUserEntity> TenantAspNetUsers { get; set; } = default!;
 
+        public DbSet<TenantDefaultEntity> TenantDefaults { get; set; } = default!;
+
         public DbSet<TenantEntity> Tenants { get; set; } = default!;
 
         public ApplicationWriteDbContext(DbContextOptions<ApplicationWriteDbContext> options)

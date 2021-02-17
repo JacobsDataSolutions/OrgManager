@@ -39,7 +39,7 @@ export class HomeComponent implements OnInit, OnDestroy {
                                     console.log("Redirect to customer information page.");
                                 }
                             } else {
-                                if (status.isApprovedEmployee) {
+                                if (status.hasProvidedEmployeeInformation) {
                                     console.log("Redirect to employee dashboard.");
                                 } else {
                                     console.log("Redirect to register new employee page");

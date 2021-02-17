@@ -52,9 +52,9 @@ namespace JDS.OrgManager.Utils
 
             async Task<int> createTestUser(int userNum)
             {
-                var sql = @$"IF NOT EXISTS (SELECT 1 FROM AspNetUsers WHERE UserName = 'TEST-EMPLOYEE{userNum}@ORGMANAGER.COM')
-INSERT [dbo].[AspNetUsers] ([UserName], [NormalizedUserName], [Email], [NormalizedEmail], [EmailConfirmed], [PasswordHash], [SecurityStamp], [ConcurrencyStamp], [PhoneNumber], [PhoneNumberConfirmed], [TwoFactorEnabled], [LockoutEnd], [LockoutEnabled], [AccessFailedCount], [IsCustomer]) VALUES (N'TEST-EMPLOYEE{userNum}@ORGMANAGER.COM', N'TEST-EMPLOYEE{userNum}@ORGMANAGER.COM', N'TEST-EMPLOYEE{userNum}@ORGMANAGER.COM', N'TEST-EMPLOYEE{userNum}@ORGMANAGER.COM', 1, N'AQAAAAEAACcQAAAAEEEeWPvxgc0pa7boxO1GvxzQKedhDNkI0aVCwaws/52ehWp8Wple22rf+zcXp3hhQA==', N'2QEPCZBRJ6NF6JKJ446RBKVZXH7SXZ6X', N'f6d7885b-0ef3-4db3-a913-72871353dd65', NULL, 0, 0, NULL, 1, 0, 0)
-SELECT TOP 1 ISNULL(SCOPE_IDENTITY(), Id) FROM AspNetUsers WITH(NOLOCK) WHERE UserName = 'TEST-EMPLOYEE{userNum}@ORGMANAGER.COM'";
+                var sql = @$"IF NOT EXISTS (SELECT 1 FROM AspNetUsers WHERE UserName = 'TEST-EMPLOYEE{userNum}@ORG-MANAGER.COM')
+INSERT [dbo].[AspNetUsers] ([UserName], [NormalizedUserName], [Email], [NormalizedEmail], [EmailConfirmed], [PasswordHash], [SecurityStamp], [ConcurrencyStamp], [PhoneNumber], [PhoneNumberConfirmed], [TwoFactorEnabled], [LockoutEnd], [LockoutEnabled], [AccessFailedCount], [IsCustomer]) VALUES (N'TEST-EMPLOYEE{userNum}@ORG-MANAGER.COM', N'TEST-EMPLOYEE{userNum}@ORG-MANAGER.COM', N'TEST-EMPLOYEE{userNum}@ORG-MANAGER.COM', N'TEST-EMPLOYEE{userNum}@ORG-MANAGER.COM', 1, N'AQAAAAEAACcQAAAAEEEeWPvxgc0pa7boxO1GvxzQKedhDNkI0aVCwaws/52ehWp8Wple22rf+zcXp3hhQA==', N'2QEPCZBRJ6NF6JKJ446RBKVZXH7SXZ6X', N'f6d7885b-0ef3-4db3-a913-72871353dd65', NULL, 0, 0, NULL, 1, 0, 0)
+SELECT TOP 1 ISNULL(SCOPE_IDENTITY(), Id) FROM AspNetUsers WITH(NOLOCK) WHERE UserName = 'TEST-EMPLOYEE{userNum}@ORG-MANAGER.COM'";
                 return await facade.QueryFirstOrDefaultAsync<int>(sql, null, sqlTransaction);
             }
 

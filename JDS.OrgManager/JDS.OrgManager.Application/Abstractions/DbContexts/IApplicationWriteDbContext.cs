@@ -41,6 +41,8 @@ namespace JDS.OrgManager.Application.Abstractions.DbContexts
 
         DbSet<TenantAspNetUserEntity> TenantAspNetUsers { get; }
 
+        DbSet<TenantDefaultEntity> TenantDefaults { get; }
+
         DbSet<TenantEntity> Tenants { get; }
 
         EntityEntry Entry(object entity);

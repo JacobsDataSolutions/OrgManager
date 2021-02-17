@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JDS.OrgManager.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationWriteDbContext))]
-    [Migration("20210215213244_UpdatedCustomerModel")]
-    partial class UpdatedCustomerModel
+    [Migration("20210217030554_UpdatedModel")]
+    partial class UpdatedModel
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -76,7 +76,7 @@ namespace JDS.OrgManager.Persistence.Migrations
                         .HasMaxLength(3)
                         .HasColumnType("nvarchar(3)");
 
-                    b.Property<DateTime>("DateHired")
+                    b.Property<DateTime?>("DateHired")
                         .HasColumnType("date");
 
                     b.Property<DateTime>("DateOfBirth")
@@ -95,6 +95,9 @@ namespace JDS.OrgManager.Persistence.Migrations
 
                     b.Property<int>("Gender")
                         .HasColumnType("int");
+
+                    b.Property<bool>("IsPending")
+                        .HasColumnType("bit");
 
                     b.Property<string>("LastModifiedBy")
                         .HasMaxLength(10)
@@ -309,6 +312,46 @@ namespace JDS.OrgManager.Persistence.Migrations
                     b.ToTable("TenantAspNetUsers");
                 });
 
+            modelBuilder.Entity("JDS.OrgManager.Application.Tenants.TenantDefaultEntity", b =>
+                {
+                    b.Property<int>("TenantId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<DateTime>("CreatedUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CurrencyCode")
+                        .IsRequired()
+                        .HasMaxLength(3)
+                        .HasColumnType("nvarchar(3)");
+
+                    b.Property<int>("EmployeeLevel")
+                        .HasColumnType("int");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<DateTime?>("LastModifiedUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("PaidTimeOffPolicyId")
+                        .HasColumnType("int");
+
+                    b.HasKey("TenantId");
+
+                    b.HasIndex("CurrencyCode");
+
+                    b.HasIndex("TenantId", "PaidTimeOffPolicyId");
+
+                    b.ToTable("TenantDefaults");
+                });
+
             modelBuilder.Entity("JDS.OrgManager.Application.Tenants.TenantEntity", b =>
                 {
                     b.Property<int>("Id")
@@ -422,6 +465,33 @@ namespace JDS.OrgManager.Persistence.Migrations
                     b.Navigation("Tenant");
                 });
 
+            modelBuilder.Entity("JDS.OrgManager.Application.Tenants.TenantDefaultEntity", b =>
+                {
+                    b.HasOne("JDS.OrgManager.Application.Common.Currencies.CurrencyEntity", "Currency")
+                        .WithMany()
+                        .HasForeignKey("CurrencyCode")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("JDS.OrgManager.Application.Tenants.TenantEntity", "Tenant")
+                        .WithOne("TenantDefaults")
+                        .HasForeignKey("JDS.OrgManager.Application.Tenants.TenantDefaultEntity", "TenantId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("JDS.OrgManager.Application.Common.TimeOff.PaidTimeOffPolicyEntity", "PaidTimeOffPolicy")
+                        .WithMany()
+                        .HasForeignKey("TenantId", "PaidTimeOffPolicyId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Currency");
+
+                    b.Navigation("PaidTimeOffPolicy");
+
+                    b.Navigation("Tenant");
+                });
+
             modelBuilder.Entity("JDS.OrgManager.Application.Tenants.TenantEntity", b =>
                 {
                     b.HasOne("JDS.OrgManager.Application.Customers.CustomerEntity", "Customer")
@@ -450,6 +520,9 @@ namespace JDS.OrgManager.Persistence.Migrations
                     b.Navigation("AspNetUsers");
 
                     b.Navigation("Employees");
+
+                    b.Navigation("TenantDefaults")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

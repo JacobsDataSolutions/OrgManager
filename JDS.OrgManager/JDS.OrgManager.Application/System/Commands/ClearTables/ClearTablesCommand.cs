@@ -29,6 +29,7 @@ namespace JDS.OrgManager.Application.System.Commands.ClearTables
             public async Task<Unit> Handle(ClearTablesCommand request, CancellationToken cancellationToken)
             {
                 await facade.ClearAllTablesAsync();
+                await facade.ClearAllAspNetCoreTablesAsync();
                 return Unit.Value;
             }
         }

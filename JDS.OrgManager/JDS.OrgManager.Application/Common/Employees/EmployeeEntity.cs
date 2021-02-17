@@ -34,7 +34,7 @@ namespace JDS.OrgManager.Application.Common.Employees
 
         public string CurrencyCode { get; set; } = default!;
 
-        public DateTime DateHired { get; set; }
+        public DateTime? DateHired { get; set; }
 
         public DateTime DateOfBirth { get; set; }
 
@@ -47,6 +47,8 @@ namespace JDS.OrgManager.Application.Common.Employees
         public Gender Gender { get; set; }
 
         public int Id { get; set; }
+
+        public bool IsPending { get; set; }
 
         public string LastName { get; set; } = default!;
 

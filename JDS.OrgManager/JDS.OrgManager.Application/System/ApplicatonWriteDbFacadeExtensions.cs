@@ -32,6 +32,22 @@ namespace JDS.OrgManager.Application.System
             nameof(IApplicationWriteDbContext.Currencies)
         };
 
+        private static readonly string[] aspNetCoreTablesOrderedByRelation = new[]
+        {
+            "PersistedGrants",
+            "DeviceCodes",
+            "AspNetRoleClaims",
+            "AspNetUserRoles",
+            "AspNetUserTokens",
+            "AspNetUserLogins",
+            "AspNetUserClaims",
+            "AspNetRoles",
+            "AspNetUsers"
+        };
+
+        public static Task ClearAllAspNetCoreTablesAsync(this IApplicationWriteDbFacade facade, IDbTransaction? transaction = null)
+            => facade.ExecuteAsync(string.Join(Environment.NewLine, from t in aspNetCoreTablesOrderedByRelation select GetDeleteStatement(t)), transaction: transaction);
+
         public static Task ClearAllTablesAsync(this IApplicationWriteDbFacade facade, IDbTransaction? transaction = null)
             => facade.ExecuteAsync(string.Join(Environment.NewLine, from t in tablesOrderedByRelation select GetDeleteStatement(t)), transaction: transaction);
 
@@ -50,6 +66,9 @@ namespace JDS.OrgManager.Application.System
 
         public static Task SetIdentitySeedForAllTablesAsync(this IApplicationWriteDbFacade facade, int seedValue, IDbTransaction? transaction = null)
                     => facade.ExecuteAsync(string.Join(Environment.NewLine, from t in tablesOrderedByRelation select GetReseedStatement(t, seedValue)), transaction: transaction);
+
+        public static Task SetIdentitySeedForAllAspNetCoreTablesAsync(this IApplicationWriteDbFacade facade, int seedValue, IDbTransaction? transaction = null)
+                    => facade.ExecuteAsync(string.Join(Environment.NewLine, from t in aspNetCoreTablesOrderedByRelation select GetReseedStatement(t, seedValue)), transaction: transaction);
 
         public static Task TurnOffIdentityIncrementAsync(this IApplicationWriteDbFacade facade, string tableName, IDbTransaction? transaction = null)
             => facade.ExecuteAsync(GetIdentityIncrementStatement(tableName, true), transaction: transaction);

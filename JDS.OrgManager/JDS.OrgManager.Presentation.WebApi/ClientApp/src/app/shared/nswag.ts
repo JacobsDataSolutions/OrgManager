@@ -1249,7 +1249,7 @@ export enum Gender {
 export class UserStatusViewModel implements IUserStatusViewModel {
     authorizedTenants!: number[];
     hasProvidedCustomerInformation!: boolean;
-    isApprovedEmployee!: boolean;
+    hasProvidedEmployeeInformation!: boolean;
     isCustomer!: boolean;
 
     constructor(data?: IUserStatusViewModel) {
@@ -1272,7 +1272,7 @@ export class UserStatusViewModel implements IUserStatusViewModel {
                     this.authorizedTenants!.push(item);
             }
             this.hasProvidedCustomerInformation = _data["hasProvidedCustomerInformation"];
-            this.isApprovedEmployee = _data["isApprovedEmployee"];
+            this.hasProvidedEmployeeInformation = _data["hasProvidedEmployeeInformation"];
             this.isCustomer = _data["isCustomer"];
         }
     }
@@ -1292,7 +1292,7 @@ export class UserStatusViewModel implements IUserStatusViewModel {
                 data["authorizedTenants"].push(item);
         }
         data["hasProvidedCustomerInformation"] = this.hasProvidedCustomerInformation;
-        data["isApprovedEmployee"] = this.isApprovedEmployee;
+        data["hasProvidedEmployeeInformation"] = this.hasProvidedEmployeeInformation;
         data["isCustomer"] = this.isCustomer;
         return data; 
     }
@@ -1301,7 +1301,7 @@ export class UserStatusViewModel implements IUserStatusViewModel {
 export interface IUserStatusViewModel {
     authorizedTenants: number[];
     hasProvidedCustomerInformation: boolean;
-    isApprovedEmployee: boolean;
+    hasProvidedEmployeeInformation: boolean;
     isCustomer: boolean;
 }
 
