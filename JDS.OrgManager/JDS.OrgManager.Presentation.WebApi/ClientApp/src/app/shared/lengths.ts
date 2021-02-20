@@ -17,6 +17,7 @@ export class Lengths {
     static readonly middleName: number = 25;
     static readonly min: number = 4;
     static readonly _name: number = 50;
+    static readonly notes: number = 500;
     static readonly slug: number = 25;
     static readonly socialSecurityNumber: number = 11;
     static readonly state: number = 2;

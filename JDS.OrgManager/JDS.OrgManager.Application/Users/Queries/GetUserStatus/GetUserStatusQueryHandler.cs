@@ -15,7 +15,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace JDS.OrgManager.Application.Users.GetUserStatus
+namespace JDS.OrgManager.Application.Users.Queries.GetUserStatus
 {
     public class GetUserStatusQuery : IRequest<UserStatusViewModel>, ICacheableQuery
     {

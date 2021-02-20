@@ -44,6 +44,8 @@ namespace JDS.OrgManager.Persistence.DbContexts
 
         public DbSet<PaidTimeOffPolicyEntity> PaidTimeOffPolicies { get; set; } = default!;
 
+        public DbSet<PaidTimeOffRequestEntity> PaidTimeOffRequests { get; set; } = default!;
+
         public DbSet<TenantAspNetUserEntity> TenantAspNetUsers { get; set; } = default!;
 
         public DbSet<TenantDefaultEntity> TenantDefaults { get; set; } = default!;

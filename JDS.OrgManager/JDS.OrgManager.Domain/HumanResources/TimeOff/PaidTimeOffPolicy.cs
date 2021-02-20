@@ -10,7 +10,7 @@
 using JDS.OrgManager.Domain.Models;
 using System;
 
-namespace JDS.OrgManager.Domain.HumanResources.PaidTimeOffPolicies
+namespace JDS.OrgManager.Domain.HumanResources.TimeOff
 {
     public class PaidTimeOffPolicy : DomainEntity<PaidTimeOffPolicy>
     {

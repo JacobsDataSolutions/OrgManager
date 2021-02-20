@@ -44,6 +44,8 @@ namespace JDS.OrgManager.Application.Common.Employees
 
         public string FirstName { get; set; } = default!;
 
+        public ICollection<PaidTimeOffRequestEntity> ForPaidTimeOffRequests { get; set; }
+
         public Gender Gender { get; set; }
 
         public int Id { get; set; }
@@ -69,6 +71,8 @@ namespace JDS.OrgManager.Application.Common.Employees
 
         public string State { get; set; } = default!;
 
+        public ICollection<PaidTimeOffRequestEntity> SubmittedPaidTimeOffRequests { get; set; }
+
         public ICollection<EmployeeManagerEntity> Subordinates { get; set; }
 
         public TenantEntity Tenant { get; set; } = default!;
@@ -81,6 +85,8 @@ namespace JDS.OrgManager.Application.Common.Employees
         {
             Subordinates = new HashSet<EmployeeManagerEntity>();
             Managers = new HashSet<EmployeeManagerEntity>();
+            ForPaidTimeOffRequests = new HashSet<PaidTimeOffRequestEntity>();
+            SubmittedPaidTimeOffRequests = new HashSet<PaidTimeOffRequestEntity>();
         }
     }
 }

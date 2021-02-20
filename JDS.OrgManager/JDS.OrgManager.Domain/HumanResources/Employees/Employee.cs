@@ -12,7 +12,7 @@ using JDS.OrgManager.Domain.Common.Addresses;
 using JDS.OrgManager.Domain.Common.Employees;
 using JDS.OrgManager.Domain.Common.Finance;
 using JDS.OrgManager.Domain.Common.People;
-using JDS.OrgManager.Domain.HumanResources.PaidTimeOffPolicies;
+using JDS.OrgManager.Domain.HumanResources.TimeOff;
 using JDS.OrgManager.Domain.Models;
 using System;
 using System.Collections.Generic;
@@ -48,6 +48,9 @@ namespace JDS.OrgManager.Domain.HumanResources.Employees
 
         private List<Employee> subordinates = new List<Employee>();
         public List<Employee> Subordinates { get => subordinates; init => subordinates = value; }
+
+        private List<PaidTimeOffRequest> paidTimeOffRequests = new List<PaidTimeOffRequest>();
+        public List<PaidTimeOffRequest> PaidTimeOffRequests { get => paidTimeOffRequests; init => paidTimeOffRequests = value; }
 
         public decimal? PtoHoursRemaining { get; init; }
 

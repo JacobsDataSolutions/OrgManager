@@ -10,7 +10,7 @@
 using AutoFixture;
 using JDS.OrgManager.Application.Common.Mapping;
 using JDS.OrgManager.Application.Common.TimeOff;
-using JDS.OrgManager.Domain.HumanResources.PaidTimeOffPolicies;
+using JDS.OrgManager.Domain.HumanResources.TimeOff;
 using Xunit;
 
 namespace JDS.OrgManager.Application.UnitTests.Common.PaidTimeOffPolicies

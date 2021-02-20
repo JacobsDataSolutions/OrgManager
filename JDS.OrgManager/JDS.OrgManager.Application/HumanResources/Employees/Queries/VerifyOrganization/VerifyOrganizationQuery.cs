@@ -14,7 +14,7 @@ using JDS.OrgManager.Application.Common.Employees;
 using JDS.OrgManager.Application.Common.TimeOff;
 using JDS.OrgManager.Domain.HumanResources.Advanced;
 using JDS.OrgManager.Domain.HumanResources.Employees;
-using JDS.OrgManager.Domain.HumanResources.PaidTimeOffPolicies;
+using JDS.OrgManager.Domain.HumanResources.TimeOff;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -22,11 +22,11 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace JDS.OrgManager.Application.HumanResources.Employees.Commands.VerifyOrganization
+namespace JDS.OrgManager.Application.HumanResources.Employees.Queries.VerifyOrganization
 {
-    public class VerifyOrganizationCommand : IViewModel, IRequest<VerifyOrganizationViewModel>
+    public class VerifyOrganizationQuery : IViewModel, IRequest<VerifyOrganizationViewModel>
     {
-        public class VerifyOrganizationCommandHandler : IRequestHandler<VerifyOrganizationCommand, VerifyOrganizationViewModel>
+        public class VerifyOrganizationQueryHandler : IRequestHandler<VerifyOrganizationQuery, VerifyOrganizationViewModel>
         {
             private readonly IApplicationWriteDbContext context;
 
@@ -36,7 +36,7 @@ namespace JDS.OrgManager.Application.HumanResources.Employees.Commands.VerifyOrg
 
             private readonly IDbEntityToDomainEntityMapper<PaidTimeOffPolicyEntity, PaidTimeOffPolicy> ptoPolicyDbEntityToDomainEntityMapper;
 
-            public VerifyOrganizationCommandHandler(
+            public VerifyOrganizationQueryHandler(
                 IApplicationWriteDbContext context,
                 IDbEntityToDomainEntityMapper<EmployeeEntity, Employee> employeeDbEntityToDomainEntityMapper,
                 IDbEntityToDomainEntityMapper<PaidTimeOffPolicyEntity, PaidTimeOffPolicy> ptoPolicyDbEntityToDomainEntityMapper,
@@ -48,7 +48,7 @@ namespace JDS.OrgManager.Application.HumanResources.Employees.Commands.VerifyOrg
                 this.ptoPolicyDbEntityToDomainEntityMapper = ptoPolicyDbEntityToDomainEntityMapper ?? throw new ArgumentNullException(nameof(ptoPolicyDbEntityToDomainEntityMapper));
             }
 
-            public async Task<VerifyOrganizationViewModel> Handle(VerifyOrganizationCommand request, CancellationToken cancellationToken)
+            public async Task<VerifyOrganizationViewModel> Handle(VerifyOrganizationQuery request, CancellationToken cancellationToken)
             {
                 var employeeEntities =
                     await context.Employees

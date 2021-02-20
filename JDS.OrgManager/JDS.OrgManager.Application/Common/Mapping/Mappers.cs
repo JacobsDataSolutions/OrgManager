@@ -7,7 +7,7 @@ using JDS.OrgManager.Application.HumanResources.Employees;
 using JDS.OrgManager.Application.Tenants;
 using JDS.OrgManager.Domain.Common.Addresses;
 using JDS.OrgManager.Domain.HumanResources.Employees;
-using JDS.OrgManager.Domain.HumanResources.PaidTimeOffPolicies;
+using JDS.OrgManager.Domain.HumanResources.TimeOff;
 
 namespace JDS.OrgManager.Application.Common.Mapping
 {

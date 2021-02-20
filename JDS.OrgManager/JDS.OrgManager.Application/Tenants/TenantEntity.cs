@@ -9,6 +9,7 @@
 // CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 using JDS.OrgManager.Application.Abstractions.Models;
 using JDS.OrgManager.Application.Common.Employees;
+using JDS.OrgManager.Application.Common.TimeOff;
 using JDS.OrgManager.Application.Customers;
 using System;
 using System.Collections.Generic;
@@ -29,16 +30,19 @@ namespace JDS.OrgManager.Application.Tenants
 
         public int Id { get; set; }
 
+        public ICollection<PaidTimeOffRequestEntity> PaidTimeOffRequests { get; set; }
+
         public string Name { get; set; } = default!;
 
         public string Slug { get; set; } = default!;
 
-        public TenantDefaultEntity TenantDefaults { get; set; }
+        public TenantDefaultEntity TenantDefaults { get; set; } = default!;
 
         public TenantEntity()
         {
-            Employees = new HashSet<EmployeeEntity>();
             AspNetUsers = new HashSet<TenantAspNetUserEntity>();
+            Employees = new HashSet<EmployeeEntity>();
+            PaidTimeOffRequests = new HashSet<PaidTimeOffRequestEntity>();
         }
     }
 }

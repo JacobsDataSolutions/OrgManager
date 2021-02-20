@@ -45,6 +45,8 @@ namespace JDS.OrgManager.Application.Abstractions.Models
 
         public const int Name = 50;
 
+        public const int Notes = 500;
+
         public const int Slug = 25;
 
         public const int SocialSecurityNumber = 11;

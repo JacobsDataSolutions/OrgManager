@@ -16,7 +16,7 @@ using JDS.OrgManager.Application.Common.TimeOff;
 using JDS.OrgManager.Common.Abstractions.DateTimes;
 using JDS.OrgManager.Domain.Common.People;
 using JDS.OrgManager.Domain.HumanResources.Employees;
-using JDS.OrgManager.Domain.HumanResources.PaidTimeOffPolicies;
+using JDS.OrgManager.Domain.HumanResources.TimeOff;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;

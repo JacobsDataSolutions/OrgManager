@@ -11,7 +11,7 @@ using JDS.OrgManager.Domain.Common.Addresses;
 using JDS.OrgManager.Domain.Common.Finance;
 using JDS.OrgManager.Domain.Common.People;
 using JDS.OrgManager.Domain.HumanResources.Employees;
-using JDS.OrgManager.Domain.HumanResources.PaidTimeOffPolicies;
+using JDS.OrgManager.Domain.HumanResources.TimeOff;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -39,6 +39,8 @@ namespace JDS.OrgManager.Application.Abstractions.DbContexts
 
         DbSet<PaidTimeOffPolicyEntity> PaidTimeOffPolicies { get; }
 
+        DbSet<PaidTimeOffRequestEntity> PaidTimeOffRequests { get; }
+
         DbSet<TenantAspNetUserEntity> TenantAspNetUsers { get; }
 
         DbSet<TenantDefaultEntity> TenantDefaults { get; }
