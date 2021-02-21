@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JDS.OrgManager.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationWriteDbContext))]
-    [Migration("20210220220224_AddedPtoRequests")]
+    [Migration("20210220225227_AddedPtoRequests")]
     partial class AddedPtoRequests
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -254,11 +254,11 @@ namespace JDS.OrgManager.Persistence.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
+                    b.Property<bool>("Paid")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("date");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
 
                     b.Property<int>("SubmittedById")
                         .HasColumnType("int");

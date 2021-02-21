@@ -7,4 +7,8 @@ IAddressEntity->Address
 IAddressViewModel->Address
 PaidTimeOffPolicy->PaidTimeOffPolicyEntity
 PaidTimeOffPolicyEntity->PaidTimeOffPolicy
+PaidTimeOffRequestEntity->PaidTimeOffRequest
+PaidTimeOffRequestEntity->PaidTimeOffRequestViewModel
+PaidTimeOffRequest->PaidTimeOffRequestViewModel
+ValidateRequestedPaidTimeOffHoursViewModel->PaidTimeOffRequest
 TenantViewModel->TenantEntity

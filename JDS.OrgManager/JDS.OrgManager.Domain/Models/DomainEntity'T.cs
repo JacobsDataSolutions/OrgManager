@@ -7,14 +7,27 @@
 
 // Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
 // CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+using JDS.OrgManager.Common.Reflection;
 using JDS.OrgManager.Domain.Abstractions.Models;
+using Mapster;
 using System;
 using System.Linq;
+using System.Linq.Expressions;
 
 namespace JDS.OrgManager.Domain.Models
 {
     public abstract class DomainEntity<TEntity> : DomainEntity where TEntity : IDomainEntity
     {
+        // Note that this technique is not future-proof and may break with future versions of the framework.
+        public TEntity CloneWith2<TProperty>(Expression<Func<TEntity, TProperty>> expr, TProperty value)
+        {
+            var prop = expr.GetPropertyInfoFromLambda();
+
+            var e = CreateShallowCopy();
+            prop.SetValue(e, value);
+            return e;
+        }
+
         public TEntity CloneWith(Action<TEntity> action)
         {
             var e = CreateShallowCopy();

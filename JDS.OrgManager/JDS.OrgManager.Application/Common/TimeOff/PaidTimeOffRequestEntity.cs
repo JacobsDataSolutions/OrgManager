@@ -28,7 +28,7 @@ namespace JDS.OrgManager.Application.Common.TimeOff
 
         public DateTime StartDate { get; set; }
 
-        public PaidTimeOffRequestStatus Status { get; set; }
+        public bool Paid { get; set; }
 
         public EmployeeEntity SubmittedBy { get; set; } = default!;
 

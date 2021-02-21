@@ -9,7 +9,7 @@ namespace JDS.OrgManager.Domain.HumanResources.TimeOff
     public enum PaidTimeOffRequestStatus
     {
         Pending,
-        Paid,
+        Taken,
         Canceled
     }
 }

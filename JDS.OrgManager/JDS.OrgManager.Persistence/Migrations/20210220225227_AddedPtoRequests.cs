@@ -19,7 +19,7 @@ namespace JDS.OrgManager.Persistence.Migrations
                     HoursRequested = table.Column<int>(type: "int", nullable: false),
                     Notes = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
                     StartDate = table.Column<DateTime>(type: "date", nullable: false),
-                    Status = table.Column<int>(type: "int", nullable: false),
+                    Paid = table.Column<bool>(type: "bit", nullable: false),
                     SubmittedById = table.Column<int>(type: "int", nullable: false),
                     TenantId = table.Column<int>(type: "int", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),

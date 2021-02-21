@@ -252,11 +252,11 @@ namespace JDS.OrgManager.Persistence.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
+                    b.Property<bool>("Paid")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("date");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
 
                     b.Property<int>("SubmittedById")
                         .HasColumnType("int");

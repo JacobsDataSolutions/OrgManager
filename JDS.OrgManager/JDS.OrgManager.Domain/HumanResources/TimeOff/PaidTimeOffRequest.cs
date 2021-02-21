@@ -36,5 +36,11 @@ namespace JDS.OrgManager.Domain.HumanResources.TimeOff
                 throw new PaidTimeOffException("PTO end date must be later than start date.");
             }
         }
+
+        public void Deconstruct(out DateTime startDate, out PaidTimeOffRequestApprovalStatus approvalStatus)
+        {
+            startDate = StartDate;
+            approvalStatus = ApprovalStatus;
+        }
     }
 }

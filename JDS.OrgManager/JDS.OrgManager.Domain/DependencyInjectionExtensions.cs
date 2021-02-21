@@ -10,6 +10,7 @@
 using JDS.OrgManager.Common.Abstractions.DateTimes;
 using JDS.OrgManager.Domain.Abstractions.Events;
 using JDS.OrgManager.Domain.Events;
+using JDS.OrgManager.Domain.HumanResources.TimeOff;
 using JDS.OrgManager.Domain.Models;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -21,6 +22,7 @@ namespace JDS.OrgManager.Domain
         public static IServiceCollection AddDomainLayer(this IServiceCollection services)
         {
             services.AddSingleton<IDomainEventDispatcher, DomainEventDispatcher>();
+            services.AddSingleton<PaidTimeOffRequestService>();
             return services;
         }
 

@@ -4,6 +4,8 @@ using JDS.OrgManager.Application.Common.Employees;
 using JDS.OrgManager.Application.Common.TimeOff;
 using JDS.OrgManager.Application.Customers;
 using JDS.OrgManager.Application.HumanResources.Employees;
+using JDS.OrgManager.Application.HumanResources.TimeOff;
+using JDS.OrgManager.Application.HumanResources.TimeOff.Queries.ValidateRequestedPaidTimeOffHours;
 using JDS.OrgManager.Application.Tenants;
 using JDS.OrgManager.Domain.Common.Addresses;
 using JDS.OrgManager.Domain.HumanResources.Employees;
@@ -38,6 +40,18 @@ namespace JDS.OrgManager.Application.Common.Mapping
     public partial class PaidTimeOffPolicyDomainEntityToDbEntityMapper : MapperBase<PaidTimeOffPolicy, PaidTimeOffPolicyEntity>, IDomainEntityToDbEntityMapper<PaidTimeOffPolicy, PaidTimeOffPolicyEntity>
     { }
 
+    public partial class PaidTimeOffRequestDbEntityToDomainEntityMapper : MapperBase<PaidTimeOffRequestEntity, PaidTimeOffRequest>, IDbEntityToDomainEntityMapper<PaidTimeOffRequestEntity, PaidTimeOffRequest>
+    { }
+
+    public partial class PaidTimeOffRequestDbEntityToViewModelMapper : MapperBase<PaidTimeOffRequestEntity, PaidTimeOffRequestViewModel>, IDbEntityToViewModelMapper<PaidTimeOffRequestEntity, PaidTimeOffRequestViewModel>
+    { }
+
+    public partial class PaidTimeOffRequestDomainEntityToViewModelMapper : MapperBase<PaidTimeOffRequest, PaidTimeOffRequestViewModel>, IDomainEntityToViewModelMapper<PaidTimeOffRequest, PaidTimeOffRequestViewModel>
+    { }
+
     public partial class TenantViewModelToDbEntityMapper : MapperBase<TenantViewModel, TenantEntity>, IViewModelToDbEntityMapper<TenantViewModel, TenantEntity>
+    { }
+
+    public partial class ValidateRequestedPaidTimeOffHoursViewModelToDomainEntityMapper : MapperBase<ValidateRequestedPaidTimeOffHoursViewModel, PaidTimeOffRequest>, IViewModelToDomainEntityMapper<ValidateRequestedPaidTimeOffHoursViewModel, PaidTimeOffRequest>
     { }
 }
