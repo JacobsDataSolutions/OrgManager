@@ -31,16 +31,16 @@ export class HomeComponent implements OnInit, OnDestroy {
                     this.userClient
                         .getUserStatus(null)
                         .pipe(takeUntil(this.ngUnsubscribe))
-                        .subscribe((status) => {
-                            if (status.isCustomer) {
-                                if (status.hasProvidedCustomerInformation) {
+                        .subscribe((userStatus) => {
+                            if (userStatus.isCustomer) {
+                                if (userStatus.hasProvidedCustomerInformation) {
                                     console.log("Redirect to customer dashboard.");
                                 } else {
                                     console.log("Redirect to customer information page.");
                                 }
                             } else {
-                                if (status.hasProvidedEmployeeInformation) {
-                                    console.log("Redirect to employee dashboard.");
+                                if (userStatus.hasProvidedEmployeeInformation) {
+                                    //this.router.navigate
                                 } else {
                                     console.log("Redirect to register new employee page");
                                 }

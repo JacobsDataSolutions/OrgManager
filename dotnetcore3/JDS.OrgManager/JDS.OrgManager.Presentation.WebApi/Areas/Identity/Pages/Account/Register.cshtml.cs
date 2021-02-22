@@ -46,7 +46,7 @@ namespace JDS.OrgManager.Presentation.WebApi.Areas.Identity.Pages.Account
         public string ReturnUrl { get; set; }
 
         public RegisterModel(
-                                    UserManager<ApplicationUser> userManager,
+            UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender)

@@ -669,6 +669,58 @@ export class TenantClient {
         }
         return _observableOf<number>(<any>null);
     }
+
+    getTenant(tenantId: number): Observable<TenantViewModel | null> {
+        let url_ = this.baseUrl + "/api/Tenant/GetTenant?";
+        if (tenantId === undefined || tenantId === null)
+            throw new Error("The parameter 'tenantId' must be defined and cannot be null.");
+        else
+            url_ += "tenantId=" + encodeURIComponent("" + tenantId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetTenant(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetTenant(<any>response_);
+                } catch (e) {
+                    return <Observable<TenantViewModel | null>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<TenantViewModel | null>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetTenant(response: HttpResponseBase): Observable<TenantViewModel | null> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? TenantViewModel.fromJS(resultData200) : <any>null;
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<TenantViewModel | null>(<any>null);
+    }
 }
 
 @Injectable()
@@ -864,6 +916,314 @@ export class TestClient {
             }));
         }
         return _observableOf<FileResponse | null>(<any>null);
+    }
+}
+
+@Injectable()
+export class TimeOffClient {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    getPaidTimeOffPolicyDetail(id: number, tenantId: number): Observable<GetPaidTimeOffPolicyDetailViewModel | null> {
+        let url_ = this.baseUrl + "/api/TimeOff/GetPaidTimeOffPolicyDetail?";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined and cannot be null.");
+        else
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
+        if (tenantId === undefined || tenantId === null)
+            throw new Error("The parameter 'tenantId' must be defined and cannot be null.");
+        else
+            url_ += "tenantId=" + encodeURIComponent("" + tenantId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetPaidTimeOffPolicyDetail(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetPaidTimeOffPolicyDetail(<any>response_);
+                } catch (e) {
+                    return <Observable<GetPaidTimeOffPolicyDetailViewModel | null>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<GetPaidTimeOffPolicyDetailViewModel | null>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetPaidTimeOffPolicyDetail(response: HttpResponseBase): Observable<GetPaidTimeOffPolicyDetailViewModel | null> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? GetPaidTimeOffPolicyDetailViewModel.fromJS(resultData200) : <any>null;
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<GetPaidTimeOffPolicyDetailViewModel | null>(<any>null);
+    }
+
+    getPaidTimeOffPolicyList(tenantId: number): Observable<GetPaidTimeOffPolicyListViewModel[] | null> {
+        let url_ = this.baseUrl + "/api/TimeOff/GetPaidTimeOffPolicyList?";
+        if (tenantId === undefined || tenantId === null)
+            throw new Error("The parameter 'tenantId' must be defined and cannot be null.");
+        else
+            url_ += "tenantId=" + encodeURIComponent("" + tenantId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetPaidTimeOffPolicyList(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetPaidTimeOffPolicyList(<any>response_);
+                } catch (e) {
+                    return <Observable<GetPaidTimeOffPolicyListViewModel[] | null>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<GetPaidTimeOffPolicyListViewModel[] | null>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetPaidTimeOffPolicyList(response: HttpResponseBase): Observable<GetPaidTimeOffPolicyListViewModel[] | null> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(GetPaidTimeOffPolicyListViewModel.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<GetPaidTimeOffPolicyListViewModel[] | null>(<any>null);
+    }
+
+    validateRequestedPaidTimeOffHours(forEmployeeId?: number | undefined, hoursRequested?: number | undefined, endDate?: Date | undefined, startDate?: Date | undefined, tenantId?: number | undefined): Observable<PaidTimeOffRequestValidationResult> {
+        let url_ = this.baseUrl + "/api/TimeOff/ValidateRequestedPaidTimeOffHours?";
+        if (forEmployeeId === null)
+            throw new Error("The parameter 'forEmployeeId' cannot be null.");
+        else if (forEmployeeId !== undefined)
+            url_ += "forEmployeeId=" + encodeURIComponent("" + forEmployeeId) + "&";
+        if (hoursRequested === null)
+            throw new Error("The parameter 'hoursRequested' cannot be null.");
+        else if (hoursRequested !== undefined)
+            url_ += "hoursRequested=" + encodeURIComponent("" + hoursRequested) + "&";
+        if (endDate === null)
+            throw new Error("The parameter 'endDate' cannot be null.");
+        else if (endDate !== undefined)
+            url_ += "endDate=" + encodeURIComponent(endDate ? "" + endDate.toJSON() : "") + "&";
+        if (startDate === null)
+            throw new Error("The parameter 'startDate' cannot be null.");
+        else if (startDate !== undefined)
+            url_ += "startDate=" + encodeURIComponent(startDate ? "" + startDate.toJSON() : "") + "&";
+        if (tenantId === null)
+            throw new Error("The parameter 'tenantId' cannot be null.");
+        else if (tenantId !== undefined)
+            url_ += "tenantId=" + encodeURIComponent("" + tenantId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processValidateRequestedPaidTimeOffHours(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processValidateRequestedPaidTimeOffHours(<any>response_);
+                } catch (e) {
+                    return <Observable<PaidTimeOffRequestValidationResult>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<PaidTimeOffRequestValidationResult>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processValidateRequestedPaidTimeOffHours(response: HttpResponseBase): Observable<PaidTimeOffRequestValidationResult> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 !== undefined ? resultData200 : <any>null;
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<PaidTimeOffRequestValidationResult>(<any>null);
+    }
+
+    getPaidTimeOffRequestsForEmployee(employeeId: number | null, tenantId: number): Observable<PaidTimeOffRequestViewModel[] | null> {
+        let url_ = this.baseUrl + "/api/TimeOff/GetPaidTimeOffRequestsForEmployee?";
+        if (employeeId === undefined)
+            throw new Error("The parameter 'employeeId' must be defined.");
+        else if(employeeId !== null)
+            url_ += "employeeId=" + encodeURIComponent("" + employeeId) + "&";
+        if (tenantId === undefined || tenantId === null)
+            throw new Error("The parameter 'tenantId' must be defined and cannot be null.");
+        else
+            url_ += "tenantId=" + encodeURIComponent("" + tenantId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetPaidTimeOffRequestsForEmployee(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetPaidTimeOffRequestsForEmployee(<any>response_);
+                } catch (e) {
+                    return <Observable<PaidTimeOffRequestViewModel[] | null>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<PaidTimeOffRequestViewModel[] | null>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetPaidTimeOffRequestsForEmployee(response: HttpResponseBase): Observable<PaidTimeOffRequestViewModel[] | null> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(PaidTimeOffRequestViewModel.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<PaidTimeOffRequestViewModel[] | null>(<any>null);
+    }
+
+    getPaidTimeOffRequestsForTenant(tenantId: number): Observable<PaidTimeOffRequestViewModel[] | null> {
+        let url_ = this.baseUrl + "/api/TimeOff/GetPaidTimeOffRequestsForTenant?";
+        if (tenantId === undefined || tenantId === null)
+            throw new Error("The parameter 'tenantId' must be defined and cannot be null.");
+        else
+            url_ += "tenantId=" + encodeURIComponent("" + tenantId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetPaidTimeOffRequestsForTenant(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetPaidTimeOffRequestsForTenant(<any>response_);
+                } catch (e) {
+                    return <Observable<PaidTimeOffRequestViewModel[] | null>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<PaidTimeOffRequestViewModel[] | null>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetPaidTimeOffRequestsForTenant(response: HttpResponseBase): Observable<PaidTimeOffRequestViewModel[] | null> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(PaidTimeOffRequestViewModel.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<PaidTimeOffRequestViewModel[] | null>(<any>null);
     }
 }
 
@@ -1244,6 +1604,221 @@ export interface IEmployeeViewModel {
 export enum Gender {
     Male = 0,
     Female = 1,
+}
+
+export class GetPaidTimeOffPolicyDetailViewModel implements IGetPaidTimeOffPolicyDetailViewModel {
+    allowsUnlimitedPto!: boolean;
+    employeeLevel!: number;
+    id!: number;
+    isDefaultForEmployeeLevel!: boolean;
+    maxPtoHours?: number | undefined;
+    name!: string;
+    ptoAccrualRate?: number | undefined;
+
+    constructor(data?: IGetPaidTimeOffPolicyDetailViewModel) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.allowsUnlimitedPto = _data["allowsUnlimitedPto"];
+            this.employeeLevel = _data["employeeLevel"];
+            this.id = _data["id"];
+            this.isDefaultForEmployeeLevel = _data["isDefaultForEmployeeLevel"];
+            this.maxPtoHours = _data["maxPtoHours"];
+            this.name = _data["name"];
+            this.ptoAccrualRate = _data["ptoAccrualRate"];
+        }
+    }
+
+    static fromJS(data: any): GetPaidTimeOffPolicyDetailViewModel {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetPaidTimeOffPolicyDetailViewModel();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["allowsUnlimitedPto"] = this.allowsUnlimitedPto;
+        data["employeeLevel"] = this.employeeLevel;
+        data["id"] = this.id;
+        data["isDefaultForEmployeeLevel"] = this.isDefaultForEmployeeLevel;
+        data["maxPtoHours"] = this.maxPtoHours;
+        data["name"] = this.name;
+        data["ptoAccrualRate"] = this.ptoAccrualRate;
+        return data; 
+    }
+}
+
+export interface IGetPaidTimeOffPolicyDetailViewModel {
+    allowsUnlimitedPto: boolean;
+    employeeLevel: number;
+    id: number;
+    isDefaultForEmployeeLevel: boolean;
+    maxPtoHours?: number | undefined;
+    name: string;
+    ptoAccrualRate?: number | undefined;
+}
+
+export class GetPaidTimeOffPolicyListViewModel implements IGetPaidTimeOffPolicyListViewModel {
+    allowsUnlimitedPto!: boolean;
+    employeeLevel!: number;
+    id!: number;
+    isDefaultForEmployeeLevel!: boolean;
+    name!: string;
+
+    constructor(data?: IGetPaidTimeOffPolicyListViewModel) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.allowsUnlimitedPto = _data["allowsUnlimitedPto"];
+            this.employeeLevel = _data["employeeLevel"];
+            this.id = _data["id"];
+            this.isDefaultForEmployeeLevel = _data["isDefaultForEmployeeLevel"];
+            this.name = _data["name"];
+        }
+    }
+
+    static fromJS(data: any): GetPaidTimeOffPolicyListViewModel {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetPaidTimeOffPolicyListViewModel();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["allowsUnlimitedPto"] = this.allowsUnlimitedPto;
+        data["employeeLevel"] = this.employeeLevel;
+        data["id"] = this.id;
+        data["isDefaultForEmployeeLevel"] = this.isDefaultForEmployeeLevel;
+        data["name"] = this.name;
+        return data; 
+    }
+}
+
+export interface IGetPaidTimeOffPolicyListViewModel {
+    allowsUnlimitedPto: boolean;
+    employeeLevel: number;
+    id: number;
+    isDefaultForEmployeeLevel: boolean;
+    name: string;
+}
+
+export enum PaidTimeOffRequestValidationResult {
+    NotEnoughHours = 0,
+    OverlapsWithExisting = 1,
+    InThePast = 2,
+    TooFarInTheFuture = 3,
+    StartDateAfterEndDate = 4,
+    OK = 5,
+}
+
+export class PaidTimeOffRequestViewModel implements IPaidTimeOffRequestViewModel {
+    approvalStatus!: PaidTimeOffRequestApprovalStatus;
+    status!: PaidTimeOffRequestStatus;
+    endDate!: Date;
+    forEmployeeId!: number;
+    forEmployeeName!: string;
+    hoursRequested!: number;
+    id!: number;
+    notes?: string | undefined;
+    startDate!: Date;
+    paid!: boolean;
+    submittedById!: number;
+    submittedByName!: string;
+
+    constructor(data?: IPaidTimeOffRequestViewModel) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.approvalStatus = _data["approvalStatus"];
+            this.status = _data["status"];
+            this.endDate = _data["endDate"] ? new Date(_data["endDate"].toString()) : <any>undefined;
+            this.forEmployeeId = _data["forEmployeeId"];
+            this.forEmployeeName = _data["forEmployeeName"];
+            this.hoursRequested = _data["hoursRequested"];
+            this.id = _data["id"];
+            this.notes = _data["notes"];
+            this.startDate = _data["startDate"] ? new Date(_data["startDate"].toString()) : <any>undefined;
+            this.paid = _data["paid"];
+            this.submittedById = _data["submittedById"];
+            this.submittedByName = _data["submittedByName"];
+        }
+    }
+
+    static fromJS(data: any): PaidTimeOffRequestViewModel {
+        data = typeof data === 'object' ? data : {};
+        let result = new PaidTimeOffRequestViewModel();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["approvalStatus"] = this.approvalStatus;
+        data["status"] = this.status;
+        data["endDate"] = this.endDate ? this.endDate.toISOString() : <any>undefined;
+        data["forEmployeeId"] = this.forEmployeeId;
+        data["forEmployeeName"] = this.forEmployeeName;
+        data["hoursRequested"] = this.hoursRequested;
+        data["id"] = this.id;
+        data["notes"] = this.notes;
+        data["startDate"] = this.startDate ? this.startDate.toISOString() : <any>undefined;
+        data["paid"] = this.paid;
+        data["submittedById"] = this.submittedById;
+        data["submittedByName"] = this.submittedByName;
+        return data; 
+    }
+}
+
+export interface IPaidTimeOffRequestViewModel {
+    approvalStatus: PaidTimeOffRequestApprovalStatus;
+    status: PaidTimeOffRequestStatus;
+    endDate: Date;
+    forEmployeeId: number;
+    forEmployeeName: string;
+    hoursRequested: number;
+    id: number;
+    notes?: string | undefined;
+    startDate: Date;
+    paid: boolean;
+    submittedById: number;
+    submittedByName: string;
+}
+
+export enum PaidTimeOffRequestApprovalStatus {
+    Submitted = 0,
+    Approved = 1,
+    Canceled = 2,
+    Rejected = 3,
+    Invalid = 4,
+}
+
+export enum PaidTimeOffRequestStatus {
+    Pending = 0,
+    Taken = 1,
+    Canceled = 2,
 }
 
 export class UserStatusViewModel implements IUserStatusViewModel {

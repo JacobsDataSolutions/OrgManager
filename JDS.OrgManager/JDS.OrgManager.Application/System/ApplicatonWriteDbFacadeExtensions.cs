@@ -23,6 +23,7 @@ namespace JDS.OrgManager.Application.System
     {
         private static readonly string[] tablesOrderedByRelation = new[]
         {
+            nameof(IApplicationWriteDbContext.PaidTimeOffRequests),
             nameof(IApplicationWriteDbContext.EmployeeManagers),
             nameof(IApplicationWriteDbContext.Employees),
             nameof(IApplicationWriteDbContext.TenantDefaults),

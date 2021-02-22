@@ -24,6 +24,8 @@ namespace JDS.OrgManager.Application.HumanResources.TimeOff.Queries.GetPaidTimeO
 
         public int Id { get; set; }
 
+        public int TenantId { get; set; }
+
         public bool RefreshCachedEntry { get; set; }
 
         public bool ReplaceCachedEntry { get; set; }
@@ -40,7 +42,8 @@ namespace JDS.OrgManager.Application.HumanResources.TimeOff.Queries.GetPaidTimeO
             }
 
             public Task<GetPaidTimeOffPolicyDetailViewModel> Handle(GetPaidTimeOffPolicyDetailQuery request, CancellationToken cancellationToken) =>
-                queryFacade.QuerySingleAsync<GetPaidTimeOffPolicyDetailViewModel>("SELECT TOP 1 AllowsUnlimitedPto, EmployeeLevel, Id, IsDefaultForEmployeeLevel, MaxPtoHours, Name, PtoAccrualRate FROM PaidTimeOffPolicies WITH(NOLOCK) WHERE Id = @Id", request);
+                queryFacade.QuerySingleAsync<GetPaidTimeOffPolicyDetailViewModel>(
+                    "SELECT TOP 1 AllowsUnlimitedPto, EmployeeLevel, Id, IsDefaultForEmployeeLevel, MaxPtoHours, Name, PtoAccrualRate FROM PaidTimeOffPolicies WITH(NOLOCK) WHERE Id = @Id AND TenantId = @TenantId", request);
         }
     }
 }

@@ -1,9 +1,9 @@
 import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from "@angular/core";
-import { EmployeeClient, UserClient, UserStatusViewModel } from "../../shared/nswag";
+import { EmployeeClient, PaidTimeOffRequestViewModel, TenantClient, TenantViewModel, TimeOffClient, UserClient, UserStatusViewModel } from "../../shared/nswag";
 import { ROUTE_ANIMATIONS_ELEMENTS } from "../../core/core.module";
 import { ActivatedRoute, Router } from "@angular/router";
 import { TenantService } from "../../tenants/tenant.service";
-import { Subject } from "rxjs";
+import { forkJoin, Observable, Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
 @Component({
@@ -17,13 +17,17 @@ export class EmployeeHomeComponent implements OnInit, OnDestroy {
 
     routeAnimationsElements = ROUTE_ANIMATIONS_ELEMENTS;
     userStatus: UserStatusViewModel = {} as UserStatusViewModel;
-    numPendingEmployees = 0;
+    tenant: TenantViewModel = {} as TenantViewModel;
+    paidTimeOffRequests$: Observable<PaidTimeOffRequestViewModel[]>;
     tenantId = 0;
+
     constructor(
         private tenantService: TenantService,
         private router: Router,
         private userClient: UserClient,
         private employeeClient: EmployeeClient,
+        private timeOffClient: TimeOffClient,
+        private tenantClient: TenantClient,
         private route: ActivatedRoute
     ) {}
 
@@ -33,15 +37,11 @@ export class EmployeeHomeComponent implements OnInit, OnDestroy {
             .pipe(takeUntil(this.ngUnsubscribe))
             .subscribe((tenantId) => {
                 this.tenantId = tenantId;
-                // TODO: reimplement user service in order to cache the user status?
-                this.userClient
-                    .getUserStatus(tenantId)
-                    .pipe(takeUntil(this.ngUnsubscribe))
-                    .subscribe((userStatus) => {
-                        this.userStatus = userStatus;
-                        if (userStatus.isCustomer) {
-                        }
-                    });
+                forkJoin(this.userClient.getUserStatus(tenantId), this.tenantClient.getTenant(tenantId)).subscribe(([userStatus, tenant]) => {
+                    this.userStatus = userStatus;
+                    this.tenant = tenant;
+                    this.paidTimeOffRequests$ = this.timeOffClient.getPaidTimeOffRequestsForEmployee(null, tenantId);
+                });
             });
     }
 

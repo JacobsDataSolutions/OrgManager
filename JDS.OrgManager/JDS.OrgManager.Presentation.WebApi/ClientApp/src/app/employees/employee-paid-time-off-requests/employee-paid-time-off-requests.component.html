@@ -1,0 +1,34 @@
+<h2>Paid Time Off Requests</h2>
+
+<mat-table class="pto-requests-table mat-elevation-z8" [dataSource]="paidTimeOffRequests">
+
+    <ng-container matColumnDef="startDate">
+        <div *matHeaderCellDef>Start Date</div>
+        <div *matCellDef="let req">{{req.startDate}}</div>
+    </ng-container>
+
+    <ng-container matColumnDef="endDate">
+        <div *matHeaderCellDef>End Date</div>
+        <div *matCellDef="let req">{{req.endDate}}</div>
+    </ng-container>
+
+    <ng-container matColumnDef="hoursRequested">
+        <div *matHeaderCellDef>Hours Requested</div>
+        <div *matCellDef="let req">{{req.hoursRequested}}</div>
+    </ng-container>
+
+    <ng-container matColumnDef="submittedByName">
+        <div *matHeaderCellDef>Submitted By</div>
+        <div *matCellDef="let req">{{req.submittedByName}}</div>
+    </ng-container>
+
+    <ng-container matColumnDef="notes">
+        <div *matHeaderCellDef>Notes</div>
+        <div *matCellDef="let req">{{req.notes}}</div>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+</mat-table>

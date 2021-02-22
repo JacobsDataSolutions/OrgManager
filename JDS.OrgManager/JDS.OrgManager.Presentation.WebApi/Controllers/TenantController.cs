@@ -7,6 +7,8 @@
 
 // Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
 // CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+using JDS.OrgManager.Application.Tenants;
+using JDS.OrgManager.Application.Tenants.Queries.GetTenant;
 using JDS.OrgManager.Application.Tenants.Queries.GetTenantIdFromAssignmentKey;
 using JDS.OrgManager.Application.Tenants.Queries.GetTenantIdFromSlug;
 using JDS.OrgManager.Application.Tenants.Queries.GetUserHasTenantAccess;
@@ -36,5 +38,8 @@ namespace JDS.OrgManager.Presentation.WebApi.Controllers
 
         [HttpGet("[action]")]
         public async Task<ActionResult<int>> GetTenantIdFromSlug(string slug) => Ok(await mediator.Send(new GetTenantIdFromSlugQuery() { Slug = slug }));
+
+        [HttpGet("[action]")]
+        public async Task<ActionResult<TenantViewModel>> GetTenant(int tenantId) => Ok(await mediator.Send(new GetTenantQuery() { TenantId = tenantId }));
     }
 }

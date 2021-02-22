@@ -2,6 +2,7 @@
 using JDS.OrgManager.Application.Abstractions.Mapping;
 using JDS.OrgManager.Application.Common.TimeOff;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,8 +35,8 @@ namespace JDS.OrgManager.Application.HumanResources.TimeOff.Queries.GetPaidTimeO
             {
                 // PERSISTENCE LAYER
                 var employee = request.EmployeeId != null ?
-                    await context.Employees.FindAsync(new { request.TenantId, Id = (int)request.EmployeeId }) :
-                    context.Employees.FirstOrDefault(e => e.AspNetUsersId == request.AspNetUsersId) ??
+                    await context.Employees.Include(e => e.ForPaidTimeOffRequests).FirstOrDefaultAsync(e => e.Id == (int)request.EmployeeId && e.TenantId == request.TenantId) :
+                    context.Employees.Include(e => e.ForPaidTimeOffRequests).FirstOrDefault(e => e.AspNetUsersId == request.AspNetUsersId) ??
                     throw new NotFoundException("Invalid employee ID or ASP.NET user ID specified.");
 
                 // PRESENTATION LAYER
