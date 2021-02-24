@@ -6,7 +6,7 @@ import { ROUTE_ANIMATIONS_ELEMENTS } from "../../core/core.module";
     selector: "om-unauthorized",
     templateUrl: "./unauthorized.component.html",
     styleUrls: ["./unauthorized.component.scss"],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.Default
 })
 export class UnauthorizedComponent implements OnInit {
     routeAnimationsElements = ROUTE_ANIMATIONS_ELEMENTS;

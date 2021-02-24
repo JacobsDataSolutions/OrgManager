@@ -8,13 +8,10 @@ import { AddOrUpdateEmployeeComponent } from "./add-or-update-employee/add-or-up
 import { EmployeeHomeComponent } from "./employee-home/employee-home.component";
 import { RouterModule } from "@angular/router";
 import { EmployeeClient, UserClient, TimeOffClient, TenantClient } from "../shared/nswag";
-import { EmployeePaidTimeOffRequestsComponent } from "./employee-paid-time-off-requests/employee-paid-time-off-requests.component";
-import { MatTableModule } from "@angular/material/table";
-import { MatPaginatorModule } from "@angular/material/paginator";
 
 @NgModule({
-    declarations: [AddOrUpdateEmployeeComponent, EmployeeHomeComponent, EmployeePaidTimeOffRequestsComponent],
-    imports: [CommonModule, SharedModule, CoreModule, RouterModule, MatTableModule, MatPaginatorModule],
+    declarations: [AddOrUpdateEmployeeComponent, EmployeeHomeComponent],
+    imports: [CommonModule, SharedModule, CoreModule, RouterModule],
     exports: [],
     providers: [EmployeeClient, UserClient, TimeOffClient, TenantClient]
 })

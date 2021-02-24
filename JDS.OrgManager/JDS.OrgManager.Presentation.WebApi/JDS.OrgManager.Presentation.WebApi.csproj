@@ -34,6 +34,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\time-off\time-off.module.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="..\.editorconfig" Link=".editorconfig" />
   </ItemGroup>
 
@@ -52,6 +56,10 @@
     <Folder Include="Data\" />
     <Folder Include="Models\" />
     <Folder Include="wwwroot\images\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\time-off\time-off.module.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

@@ -2,6 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from "@angular/
 import { TestClient } from "../../shared/nswag";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
+import { ROUTE_ANIMATIONS_ELEMENTS } from "../../core/core.module";
 
 @Component({
     selector: "om-test",
@@ -10,6 +11,7 @@ import { takeUntil } from "rxjs/operators";
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TestComponent implements OnInit, OnDestroy {
+    routeAnimationsElements = ROUTE_ANIMATIONS_ELEMENTS;
     private ngUnsubscribe = new Subject();
 
     constructor(private testClient: TestClient) {}

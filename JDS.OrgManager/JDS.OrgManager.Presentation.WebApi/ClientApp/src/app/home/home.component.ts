@@ -13,7 +13,7 @@ import { takeUntil } from "rxjs/operators";
     selector: "om-home",
     templateUrl: "./home.component.html",
     styleUrls: ["./home.component.scss"],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.Default
 })
 export class HomeComponent implements OnInit, OnDestroy {
     routeAnimationsElements = ROUTE_ANIMATIONS_ELEMENTS;

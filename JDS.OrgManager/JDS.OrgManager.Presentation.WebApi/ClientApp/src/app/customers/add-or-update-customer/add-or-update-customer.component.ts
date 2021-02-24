@@ -13,7 +13,7 @@ import { Lengths } from "../../shared/lengths";
     selector: "om-add-or-update-customer",
     templateUrl: "./add-or-update-customer.component.html",
     styleUrls: ["./add-or-update-customer.component.css"],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.Default
 })
 export class AddOrUpdateCustomerComponent implements OnInit, OnDestroy {
     lengths = Lengths;

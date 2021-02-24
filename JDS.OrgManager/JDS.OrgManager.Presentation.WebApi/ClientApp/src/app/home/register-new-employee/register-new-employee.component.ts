@@ -14,12 +14,12 @@ import { takeUntil } from "rxjs/operators";
     selector: "om-register-new-employee",
     templateUrl: "./register-new-employee.component.html",
     styleUrls: ["./register-new-employee.component.scss"],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.Default
 })
 export class RegisterNewEmployeeComponent implements OnInit, OnDestroy {
+    routeAnimationsElements = ROUTE_ANIMATIONS_ELEMENTS;
     private ngUnsubscribe = new Subject();
     states = States;
-    routeAnimationsElements = ROUTE_ANIMATIONS_ELEMENTS;
     hasValidAssignmentKey;
     form = this.fb.group({
         assignmentKey: ["", [Validators.required, Validators.maxLength(36), Validators.minLength(36), isValidGuidValidator()]],

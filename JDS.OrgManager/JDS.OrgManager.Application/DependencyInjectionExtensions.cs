@@ -11,6 +11,7 @@ using FastExpressionCompiler;
 using JDS.OrgManager.Application.Abstractions.Mapping;
 using JDS.OrgManager.Application.Behaviors;
 using JDS.OrgManager.Application.Common.Employees;
+using JDS.OrgManager.Application.Common.Mapping;
 using JDS.OrgManager.Application.Common.TimeOff;
 using JDS.OrgManager.Application.HumanResources.Employees.Commands.RegisterOrUpdateEmployee;
 using JDS.OrgManager.Application.System;
@@ -56,6 +57,7 @@ namespace JDS.OrgManager.Application
             }
 
             services.AddScoped<DataInitializerService>();
+            services.AddSingleton<IModelMapper, ModelMapper>();
 
             // Mapster
             TypeAdapterConfig.GlobalSettings.Compiler = exp => exp.CompileFast();

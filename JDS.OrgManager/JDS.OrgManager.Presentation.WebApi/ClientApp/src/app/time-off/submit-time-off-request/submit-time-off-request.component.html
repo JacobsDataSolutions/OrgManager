@@ -1,0 +1,37 @@
+<div class="container">
+    <form [formGroup]="form" (ngSubmit)="submit()">
+        <div class="row justify-content-center">
+            <div class="col-md-8" [formGroup]="form">
+                <mat-card>
+                    <span class="d-flex justify-content-between align-items-baseline">
+                        <h2>Submit Time Off Request</h2>
+                    </span>
+                    <div class="row">
+                        <mat-form-field class="col" [ngClass]="routeAnimationsElements">
+                            <input matInput formControlName="startDate" [matDatepicker]="startDatePicker" placeholder="Start Date">
+                            <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+                            <mat-datepicker #startDatePicker></mat-datepicker>
+                            <mat-error *ngIf="form.get('startDate').hasError('required')">
+                                Start date is required.
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="col" [ngClass]="routeAnimationsElements">
+                            <input matInput formControlName="endDate" [matDatepicker]="endDatePicker" placeholder="End Date">
+                            <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+                            <mat-datepicker #endDatePicker></mat-datepicker>
+                            <mat-error *ngIf="form.get('endDate').hasError('required')">
+                                End date is required.
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="row buttons d-flex justify-content-between pad">
+                        <button type="button" mat-raised-button color="accent"
+                                [ngClass]="routeAnimationsElements" (click)="submit()" [disabled]="!form.valid">
+                            Submit
+                        </button>
+                    </div>
+                </mat-card>
+            </div>
+        </div>
+    </form>
+</div>
