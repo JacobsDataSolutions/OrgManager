@@ -46,6 +46,9 @@ namespace JDS.OrgManager.Application.Common.Mapping
     public partial class PaidTimeOffRequestDbEntityToViewModelMapper : MapperBase<PaidTimeOffRequestEntity, PaidTimeOffRequestViewModel>, IDbEntityToViewModelMapper<PaidTimeOffRequestEntity, PaidTimeOffRequestViewModel>
     { }
 
+    public partial class PaidTimeOffRequestDomainEntityToDbEntityMapper : MapperBase<PaidTimeOffRequest, PaidTimeOffRequestEntity>, IDomainEntityToDbEntityMapper<PaidTimeOffRequest, PaidTimeOffRequestEntity>
+    { }
+
     public partial class PaidTimeOffRequestDomainEntityToViewModelMapper : MapperBase<PaidTimeOffRequest, PaidTimeOffRequestViewModel>, IDomainEntityToViewModelMapper<PaidTimeOffRequest, PaidTimeOffRequestViewModel>
     { }
 

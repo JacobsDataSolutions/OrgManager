@@ -48,9 +48,9 @@ namespace JDS.OrgManager.Domain.HumanResources.TimeOff
                     select request switch
                     {
                         PaidTimeOffRequest req when req.ApprovalStatus != PaidTimeOffRequestApprovalStatus.Approved &&
-                        req.ApprovalStatus != PaidTimeOffRequestApprovalStatus.Submitted => req.CloneWith2(r => r.Status, PaidTimeOffRequestStatus.Canceled),
-                        PaidTimeOffRequest req when req.StartDate <= today => req.CloneWith2(r => r.Status, PaidTimeOffRequestStatus.Taken),
-                        _ => request.CloneWith2(r => r.Status, PaidTimeOffRequestStatus.Pending)
+                        req.ApprovalStatus != PaidTimeOffRequestApprovalStatus.Submitted => req.ReflectionCloneWith(r => r.Status, PaidTimeOffRequestStatus.Canceled),
+                        PaidTimeOffRequest req when req.StartDate <= today => req.ReflectionCloneWith(r => r.Status, PaidTimeOffRequestStatus.Taken),
+                        _ => request.ReflectionCloneWith(r => r.Status, PaidTimeOffRequestStatus.Pending)
                     }).ToList();
         }
     }

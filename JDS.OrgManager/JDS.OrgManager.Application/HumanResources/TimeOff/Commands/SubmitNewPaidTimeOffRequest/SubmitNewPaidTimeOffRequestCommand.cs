@@ -3,6 +3,7 @@ using JDS.OrgManager.Application.Abstractions.DbFacades;
 using JDS.OrgManager.Application.Abstractions.Mapping;
 using JDS.OrgManager.Application.Common.Employees;
 using JDS.OrgManager.Application.Common.TimeOff;
+using JDS.OrgManager.Domain.HumanResources.Employees;
 using JDS.OrgManager.Domain.HumanResources.TimeOff;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -58,7 +59,7 @@ namespace JDS.OrgManager.Application.HumanResources.TimeOff.Commands.SubmitNewPa
 
                 var submittedByEntity = await facade.QueryFirstOrDefaultAsync<EmployeeEntity>(@"SELECT TOP 1 * FROM Employees WITH(NOLOCK) WHERE AspNetUsersId = @AspNetUsersId AND TenantId = @TenantId", new { request.AspNetUsersId, request.TenantId });
 
-                var forEmployeeEntity = 
+                var forEmployeeEntity =
                     timeOffRequestViewModel.ForEmployeeId == null ?
                     context.Employees.Include(e => e.PaidTimeOffPolicy).Include(e => e.ForPaidTimeOffRequests).FirstOrDefault(e => e.AspNetUsersId == request.AspNetUsersId && e.TenantId == request.TenantId) :
                     context.Employees.Include(e => e.PaidTimeOffPolicy).Include(e => e.ForPaidTimeOffRequests).FirstOrDefault(e => e.Id == timeOffRequestViewModel.ForEmployeeId && e.TenantId == request.TenantId)
@@ -74,12 +75,48 @@ namespace JDS.OrgManager.Application.HumanResources.TimeOff.Commands.SubmitNewPa
                 }
 
                 // DOMAIN LAYER
+                var forEmployee = mapper.MapDbEntityToDomainEntity<EmployeeEntity, Employee>(forEmployeeEntity);
+                var submittedByEmployee = mapper.MapDbEntityToDomainEntity<EmployeeEntity, Employee>(submittedByEntity);
                 var paidTimeOffPolicy = mapper.MapDbEntityToDomainEntity<PaidTimeOffPolicyEntity, PaidTimeOffPolicy>(forEmployeeEntity.PaidTimeOffPolicy);
                 var existingRequests = (from req in forEmployeeEntity.ForPaidTimeOffRequests select mapper.MapDbEntityToDomainEntity<PaidTimeOffRequestEntity, PaidTimeOffRequest>(req)).ToList();
-                var tentativeRequest = mapper.MapViewModelToDomainEntity<SubmitNewPaidTimeOffRequestViewModel, PaidTimeOffRequest>(request.PaidTimeOffRequest);
+                
+                // Build up the Domain aggregate entity so that complex business logic can be executed against it.
+                // In an enterprise (non-demo) solution this would likely involve special rules involving accrued hours, whether the company allows going negative in PTO hours,
+                // managerial overrides, etc. The point is that the entities, and the logic which operates against them, are separate from view models and database persistence models.
+                var submittedRequest =
+                    mapper.MapViewModelToDomainEntity<SubmitNewPaidTimeOffRequestViewModel, PaidTimeOffRequest>(request.PaidTimeOffRequest)
+                    .WithForEmployee(forEmployee)
+                    .WithSubmittedBy(submittedByEmployee)
+                    .WithPaidTimeOffPolicy(paidTimeOffPolicy);
 
-                var validationResult = paidTimeOffRequestService.ValidatePaidTimeOffRequest(tentativeRequest, existingRequests, paidTimeOffPolicy, today);
-                return null;
+                // Ensure the aggregate is in a valid state with which to perform business logic.
+                submittedRequest.ValidateAggregate();
+
+                // Perform basic validation against the request to make sure that the employee is OK to submit this paid time off request.
+                // Once again, the logic inside the service is naive and overly-simplistic. A real-life solution would be much more involved.
+                var validationResult = paidTimeOffRequestService.ValidatePaidTimeOffRequest(submittedRequest, existingRequests, paidTimeOffPolicy, today);
+                timeOffRequestViewModel.Result = validationResult;
+                if (validationResult != PaidTimeOffRequestValidationResult.OK)
+                {
+                    return timeOffRequestViewModel;
+                }
+
+                // Submit the time off request (changes Domain state and creates event).
+                submittedRequest = submittedRequest.Submit();
+
+                // PERSISTENCE LAYER
+                var paidTimeOffRequestEntity = mapper.MapDomainEntityToDbEntity<PaidTimeOffRequest, PaidTimeOffRequestEntity>(submittedRequest);
+                paidTimeOffRequestEntity.TenantId = request.TenantId;
+                await context.PaidTimeOffRequests.AddAsync(paidTimeOffRequestEntity, cancellationToken);
+                await context.SaveChangesAsync(cancellationToken);
+
+                // PRESENTATION LAYER
+                request.PaidTimeOffRequest.CreatedPaidTimeOffRequest = mapper.MapDomainEntityToViewModel<PaidTimeOffRequest, PaidTimeOffRequestViewModel>(submittedRequest);
+
+                // DISPATCH DOMAIN EVENTS
+                await submittedRequest.DispatchDomainEventsAsync();
+
+                return request.PaidTimeOffRequest;
             }
         }
     }

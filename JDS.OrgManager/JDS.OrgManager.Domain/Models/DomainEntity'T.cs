@@ -19,7 +19,7 @@ namespace JDS.OrgManager.Domain.Models
     public abstract class DomainEntity<TEntity> : DomainEntity where TEntity : IDomainEntity
     {
         // Note that this technique is not future-proof and may break with future versions of the framework.
-        public TEntity CloneWith2<TProperty>(Expression<Func<TEntity, TProperty>> expr, TProperty value)
+        public TEntity ReflectionCloneWith<TProperty>(Expression<Func<TEntity, TProperty>> expr, TProperty value)
         {
             var prop = expr.GetPropertyInfoFromLambda();
 
@@ -46,7 +46,7 @@ namespace JDS.OrgManager.Domain.Models
             _ = domainEntities ?? throw new ArgumentNullException(nameof(domainEntities));
             if (domainEntities.Any(e => e is null))
             {
-                throw new NullReferenceException($"One or more child entities for aggregate of type '{typeof(TEntity).Name}' was null.");
+                throw new NullReferenceException($"One or more required child entities for aggregate of type '{typeof(TEntity).Name}' was null.");
             }
         }
     }

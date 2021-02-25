@@ -1,4 +1,5 @@
-﻿using JDS.OrgManager.Domain.Models;
+﻿using JDS.OrgManager.Domain.HumanResources.Employees;
+using JDS.OrgManager.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,12 +18,22 @@ namespace JDS.OrgManager.Domain.HumanResources.TimeOff
 
         public string? Notes { get; init; }
 
-        private PaidTimeOffPolicy paidTimeOffPolicy = default!;
-        public PaidTimeOffPolicy PaidTimeOffPolicy { get => paidTimeOffPolicy; init => paidTimeOffPolicy = value; }
+        public PaidTimeOffPolicy PaidTimeOffPolicy { get; init; } = default!;
 
         public DateTime StartDate { get; init; }
 
         public PaidTimeOffRequestStatus Status { get; init; }
+
+        public Employee ForEmployee { get; init; } = default!;
+
+        public Employee SubmittedBy { get; init; } = default!;
+
+        public PaidTimeOffRequest Submit()
+        {
+            var submittedRequest = ReflectionCloneWith(r => r.ApprovalStatus, PaidTimeOffRequestApprovalStatus.Submitted);
+            CreatePaidTimeOffRequestSubmittedEvent(submittedRequest);
+            return submittedRequest;
+        }
 
         public override void ValidateAggregate()
         {
@@ -35,12 +46,18 @@ namespace JDS.OrgManager.Domain.HumanResources.TimeOff
             {
                 throw new PaidTimeOffException("PTO end date must be later than start date.");
             }
+            ValidateNotNull(PaidTimeOffPolicy, ForEmployee, SubmittedBy);
+            ForEmployee.ValidateAggregate();
+            SubmittedBy.ValidateAggregate();
+            PaidTimeOffPolicy.ValidateAggregate();
         }
 
-        public void Deconstruct(out DateTime startDate, out PaidTimeOffRequestApprovalStatus approvalStatus)
-        {
-            startDate = StartDate;
-            approvalStatus = ApprovalStatus;
-        }
+        public PaidTimeOffRequest WithForEmployee(Employee employee) => ReflectionCloneWith(r => r.ForEmployee, employee);
+
+        public PaidTimeOffRequest WithSubmittedBy(Employee employee) => ReflectionCloneWith(r => r.SubmittedBy, employee);
+
+        public PaidTimeOffRequest WithPaidTimeOffPolicy(PaidTimeOffPolicy paidTimeOffPolicy) => ReflectionCloneWith(r => r.PaidTimeOffPolicy, paidTimeOffPolicy);
+
+        private void CreatePaidTimeOffRequestSubmittedEvent(PaidTimeOffRequest paidTimeOffRequest) => AddDomainEvent(new PaidTimeOffRequestSubmittedEvent(paidTimeOffRequest));
     }
 }

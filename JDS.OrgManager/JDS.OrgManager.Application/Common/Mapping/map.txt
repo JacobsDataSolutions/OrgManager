@@ -10,5 +10,6 @@ PaidTimeOffPolicyEntity->PaidTimeOffPolicy
 PaidTimeOffRequestEntity->PaidTimeOffRequest
 PaidTimeOffRequestEntity->PaidTimeOffRequestViewModel
 PaidTimeOffRequest->PaidTimeOffRequestViewModel
+PaidTimeOffRequest->PaidTimeOffRequestEntity
 ValidateRequestedPaidTimeOffHoursViewModel->PaidTimeOffRequest
 TenantViewModel->TenantEntity
