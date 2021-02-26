@@ -20,8 +20,6 @@ namespace JDS.OrgManager.Application.HumanResources.TimeOff.Commands.SubmitNewPa
     {
         public int AspNetUsersId { get; set; }
 
-        public int TenantId { get; set; }
-
         public SubmitNewPaidTimeOffRequestViewModel PaidTimeOffRequest { get; set; } = default!;
 
         public class SubmitNewPaidTimeOffRequestCommandHandler : IRequestHandler<SubmitNewPaidTimeOffRequestCommand, SubmitNewPaidTimeOffRequestViewModel>
@@ -106,7 +104,7 @@ namespace JDS.OrgManager.Application.HumanResources.TimeOff.Commands.SubmitNewPa
 
                 // PERSISTENCE LAYER
                 var paidTimeOffRequestEntity = mapper.MapDomainEntityToDbEntity<PaidTimeOffRequest, PaidTimeOffRequestEntity>(submittedRequest);
-                paidTimeOffRequestEntity.TenantId = request.TenantId;
+                paidTimeOffRequestEntity.TenantId = timeOffRequestViewModel.TenantId;
                 await context.PaidTimeOffRequests.AddAsync(paidTimeOffRequestEntity, cancellationToken);
                 await context.SaveChangesAsync(cancellationToken);
 

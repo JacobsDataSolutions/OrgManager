@@ -21,5 +21,7 @@ namespace JDS.OrgManager.Application.HumanResources.TimeOff.Commands.SubmitNewPa
         public DateTime StartDate { get; set; }
 
         public PaidTimeOffRequestViewModel? CreatedPaidTimeOffRequest { get; set; }
+
+        public int TenantId { get; set; }
     }
 }
