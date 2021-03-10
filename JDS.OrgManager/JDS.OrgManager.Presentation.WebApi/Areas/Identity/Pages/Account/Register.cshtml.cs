@@ -1,4 +1,4 @@
-﻿// Copyright ©2020 Jacobs Data Solutions
+﻿// Copyright ©2021 Jacobs Data Solutions
 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the
 // License at
@@ -46,7 +46,7 @@ namespace JDS.OrgManager.Presentation.WebApi.Areas.Identity.Pages.Account
         public string ReturnUrl { get; set; }
 
         public RegisterModel(
-                                    UserManager<ApplicationUser> userManager,
+                                            UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender)
@@ -66,7 +66,7 @@ namespace JDS.OrgManager.Presentation.WebApi.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null, RegistrationUserType registrationUserType = RegistrationUserType.Employee)
         {
-            returnUrl = returnUrl ?? Url.Content("~/");
+            returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {

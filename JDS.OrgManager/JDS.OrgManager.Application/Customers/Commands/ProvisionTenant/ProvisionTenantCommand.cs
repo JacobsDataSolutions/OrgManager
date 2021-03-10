@@ -1,4 +1,4 @@
-﻿// Copyright ©2020 Jacobs Data Solutions
+﻿// Copyright ©2021 Jacobs Data Solutions
 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the
 // License at
@@ -8,10 +8,12 @@
 // Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
 // CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 using JDS.OrgManager.Application.Abstractions.DbContexts;
-using JDS.OrgManager.Application.Common.PaidTimeOffPolicies;
+using JDS.OrgManager.Application.Common.TimeOff;
+using JDS.OrgManager.Application.Tenants;
 using MediatR;
 using Microsoft.EntityFrameworkCore.Storage;
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -53,6 +55,11 @@ namespace JDS.OrgManager.Application.Customers.Commands.ProvisionTenant
                         new PaidTimeOffPolicyEntity { TenantId = request.TenantId, EmployeeLevel = 10, Name = "Standard 10", IsDefaultForEmployeeLevel = true, MaxPtoHours = 320.0m, PtoAccrualRate = 16.0m },
                         new PaidTimeOffPolicyEntity { TenantId = request.TenantId, EmployeeLevel = 10, Name = "Unlimited 10", IsDefaultForEmployeeLevel = false, AllowsUnlimitedPto = true },
                     });
+
+                    await context.SaveChangesAsync();
+
+                    var ptoPolicy = context.PaidTimeOffPolicies.First(p => p.TenantId == request.TenantId && p.Name == "Standard 1");
+                    await context.TenantDefaults.AddAsync(new TenantDefaultEntity { TenantId = request.TenantId, CurrencyCode = "USD", EmployeeLevel = 1, PaidTimeOffPolicyId = ptoPolicy.Id });
 
                     await context.SaveChangesAsync();
                     await transaction.CommitAsync();

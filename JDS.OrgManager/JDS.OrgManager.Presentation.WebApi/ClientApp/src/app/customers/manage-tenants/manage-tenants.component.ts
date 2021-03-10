@@ -1,4 +1,4 @@
-// Copyright (c)2020 Jacobs Data Solutions
+// Copyright (c)2021 Jacobs Data Solutions
 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the
 // License at
@@ -7,68 +7,31 @@
 
 // Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
 // CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
-import {
-    FormBuilder,
-    Validators,
-    FormGroup,
-    FormGroupDirective,
-    ValidatorFn,
-    AbstractControl
-} from "@angular/forms";
-import {
-    Component,
-    ChangeDetectionStrategy,
-    OnInit,
-    OnDestroy
-} from "@angular/core";
+import { FormBuilder, Validators, FormGroupDirective } from "@angular/forms";
+import { Component, ChangeDetectionStrategy, OnInit } from "@angular/core";
 
 import { ROUTE_ANIMATIONS_ELEMENTS } from "../../core/core.module";
-import {
-    isValidGuidValidator,
-    matchesPropertyValidator
-} from "../../shared/validator-functions";
-import {
-    TenantViewModel,
-    DeleteTenantViewModel,
-    CustomerClient
-} from "../../shared/nswag";
+import { TenantViewModel, DeleteTenantViewModel, CustomerClient } from "../../shared/nswag";
+import { isValidGuidValidator, matchesPropertyValidator } from "../../shared/validator-functions";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
-import { Lengths } from "../../shared/lengths";
 
 @Component({
-    selector: "org-manager-manage-tenants",
+    selector: "om-manage-tenants",
     templateUrl: "./manage-tenants.component.html",
     styleUrls: ["./manage-tenants.component.scss"],
     changeDetection: ChangeDetectionStrategy.Default
 })
-export class ManageTenantsComponent implements OnInit, OnDestroy {
-    routeAnimationsElements = ROUTE_ANIMATIONS_ELEMENTS;
+export class ManageTenantsComponent implements OnInit {
     private ngUnsubscribe = new Subject();
-    get lengths() {
-        return Lengths;
-    }
+
+    routeAnimationsElements = ROUTE_ANIMATIONS_ELEMENTS;
 
     form = this.fb.group({
-        id: [undefined, []],
-        name: ["", [Validators.required, Validators.maxLength(Lengths._name)]],
-        slug: [
-            "",
-            [
-                Validators.required,
-                Validators.maxLength(Lengths.slug),
-                Validators.minLength(Lengths.min)
-            ]
-        ],
-        assignmentKey: [
-            "",
-            [
-                Validators.required,
-                Validators.maxLength(Lengths.guid),
-                Validators.minLength(Lengths.guid),
-                isValidGuidValidator()
-            ]
-        ]
+        id: [0, []],
+        name: ["", [Validators.required, Validators.maxLength(50)]],
+        slug: ["", [Validators.required, Validators.maxLength(25), Validators.minLength(4)]],
+        assignmentKey: ["", [Validators.required, Validators.maxLength(36), Validators.minLength(36), isValidGuidValidator()]]
     });
     deleteForm = this.fb.group({
         confirmationCode: [
@@ -93,7 +56,7 @@ export class ManageTenantsComponent implements OnInit, OnDestroy {
 
     static createTenant(): TenantViewModel {
         const tenant = {
-            id: null,
+            id: 0,
             name: "",
             slug: "",
             assignmentKey: ""
@@ -102,16 +65,15 @@ export class ManageTenantsComponent implements OnInit, OnDestroy {
         return tenant;
     }
 
-    constructor(
-        public fb: FormBuilder,
-        private customerClient: CustomerClient
-    ) {}
+    constructor(public fb: FormBuilder, private customerClient: CustomerClient) {}
 
     ngOnInit() {
         this.customerClient
             .getTenantsForCustomer()
             .pipe(takeUntil(this.ngUnsubscribe))
-            .subscribe((tenants) => (this.tenants = tenants));
+            .subscribe((t) => {
+                this.tenants = t;
+            });
     }
 
     ngOnDestroy() {
@@ -144,6 +106,7 @@ export class ManageTenantsComponent implements OnInit, OnDestroy {
                 formDirective.resetForm();
                 this.form.reset();
                 this.form.controls["assignmentKey"].patchValue(key);
+                this.form.controls["id"].patchValue(0);
                 this.isEditing = true;
             });
     }
@@ -164,14 +127,12 @@ export class ManageTenantsComponent implements OnInit, OnDestroy {
 
     confirmDelete() {
         if (this.selectedTenant && this.deleteForm.valid) {
-            const confirmationCode = this.deleteForm.get("confirmationCode")
-                .value;
+            const confirmationCode = this.deleteForm.get("confirmationCode").value;
             this.customerClient
                 .deleteTenant({
                     tenantId: this.selectedTenant.id,
                     confirmationCode: confirmationCode
                 } as DeleteTenantViewModel)
-                .pipe(takeUntil(this.ngUnsubscribe))
                 .subscribe((result) => {
                     this.deselect();
                     this.isDeleting = false;
@@ -186,19 +147,16 @@ export class ManageTenantsComponent implements OnInit, OnDestroy {
     save() {
         if (this.form.valid) {
             const tenant = this.form.value;
-            this.customerClient
-                .addOrUpdateTenant(tenant)
-                .pipe(takeUntil(this.ngUnsubscribe))
-                .subscribe((result) => {
-                    this.isEditing = false;
-                    if (!tenant.id) {
-                        this.tenants.push(result);
-                    } else {
-                        if (this.selectedTenant) {
-                            Object.assign(this.selectedTenant, result);
-                        }
+            this.customerClient.addOrUpdateTenant(tenant).subscribe((result) => {
+                this.isEditing = false;
+                if (!tenant.id) {
+                    this.tenants.push(result);
+                } else {
+                    if (this.selectedTenant) {
+                        Object.assign(this.selectedTenant, result);
                     }
-                });
+                }
+            });
         }
     }
 }

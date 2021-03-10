@@ -1,4 +1,4 @@
-// Copyright ©2020 Jacobs Data Solutions
+// Copyright ©2021 Jacobs Data Solutions
 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the
 // License at
@@ -12,7 +12,7 @@ using JDS.OrgManager.Application.Abstractions.Identity;
 using JDS.OrgManager.Application.Abstractions.Models;
 using JDS.OrgManager.Application.Common.Currencies;
 using JDS.OrgManager.Application.Common.Employees;
-using JDS.OrgManager.Application.Common.PaidTimeOffPolicies;
+using JDS.OrgManager.Application.Common.TimeOff;
 using JDS.OrgManager.Application.Customers;
 using JDS.OrgManager.Application.Tenants;
 using JDS.OrgManager.Common.Abstractions.DateTimes;
@@ -26,27 +26,31 @@ namespace JDS.OrgManager.Persistence.DbContexts
 {
     public class ApplicationWriteDbContext : DbContext, IApplicationWriteDbContext
     {
-        private readonly ICurrentUserService currentUserService;
+        private readonly ICurrentUserService currentUserService = default!;
 
-        private readonly IDateTimeService dateTimeService;
+        private readonly IDateTimeService dateTimeService = default!;
 
         public IDbConnection Connection => Database.GetDbConnection();
 
-        public DbSet<CurrencyEntity> Currencies { get; set; }
+        public DbSet<CurrencyEntity> Currencies { get; set; } = default!;
 
-        public DbSet<CustomerEntity> Customers { get; set; }
+        public DbSet<CustomerEntity> Customers { get; set; } = default!;
 
-        public DbSet<EmployeeManagerEntity> EmployeeManagers { get; set; }
+        public DbSet<EmployeeManagerEntity> EmployeeManagers { get; set; } = default!;
 
-        public DbSet<EmployeeEntity> Employees { get; set; }
+        public DbSet<EmployeeEntity> Employees { get; set; } = default!;
 
         public bool HasChanges => ChangeTracker.HasChanges();
 
-        public DbSet<PaidTimeOffPolicyEntity> PaidTimeOffPolicies { get; set; }
+        public DbSet<PaidTimeOffPolicyEntity> PaidTimeOffPolicies { get; set; } = default!;
 
-        public DbSet<TenantAspNetUserEntity> TenantAspNetUsers { get; set; }
+        public DbSet<PaidTimeOffRequestEntity> PaidTimeOffRequests { get; set; } = default!;
 
-        public DbSet<TenantEntity> Tenants { get; set; }
+        public DbSet<TenantAspNetUserEntity> TenantAspNetUsers { get; set; } = default!;
+
+        public DbSet<TenantDefaultEntity> TenantDefaults { get; set; } = default!;
+
+        public DbSet<TenantEntity> Tenants { get; set; } = default!;
 
         public ApplicationWriteDbContext(DbContextOptions<ApplicationWriteDbContext> options)
                                                     : base(options)

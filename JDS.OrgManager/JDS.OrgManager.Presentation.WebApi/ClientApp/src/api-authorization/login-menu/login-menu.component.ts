@@ -1,4 +1,4 @@
-// Copyright (c)2020 Jacobs Data Solutions
+// Copyright (c)2021 Jacobs Data Solutions
 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the
 // License at
@@ -25,8 +25,6 @@ export class LoginMenuComponent implements OnInit {
 
     ngOnInit() {
         this.isAuthenticated = this.authorizeService.isAuthenticated();
-        this.userName = this.authorizeService
-            .getUser()
-            .pipe(map((u) => u && u.name));
+        this.userName = this.authorizeService.getUser().pipe(map((u) => u && u.name));
     }
 }

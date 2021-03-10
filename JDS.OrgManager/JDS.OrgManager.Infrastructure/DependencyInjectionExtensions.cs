@@ -1,4 +1,4 @@
-// Copyright ©2020 Jacobs Data Solutions
+// Copyright ©2021 Jacobs Data Solutions
 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the
 // License at
@@ -10,8 +10,8 @@
 using JDS.OrgManager.Application.Abstractions.Identity;
 using JDS.OrgManager.Application.Abstractions.Serialization;
 using JDS.OrgManager.Common.Abstractions.DateTimes;
-using JDS.OrgManager.Infrastructure.ErrorHandling;
 using JDS.OrgManager.Infrastructure.Dates;
+using JDS.OrgManager.Infrastructure.ErrorHandling;
 using JDS.OrgManager.Infrastructure.Http;
 using JDS.OrgManager.Infrastructure.Identity;
 using JDS.OrgManager.Infrastructure.Serialization;
@@ -30,12 +30,6 @@ namespace JDS.OrgManager.Infrastructure
             .AddSingleton<ICurrentUserService, CurrentUserService>()
             .AddSingleton<IByteSerializer, ByteSerializer>();
 
-        public static IApplicationBuilder UseCustomHttpContextAccessor(this IApplicationBuilder app)
-        {
-            MyHttpContext.Configure(app.ApplicationServices.GetRequiredService<IHttpContextAccessor>());
-            return app;
-        }
-
         public static IApplicationBuilder UseCustomErrorHandlingMiddleware(this IApplicationBuilder app) =>
             app.UseMiddleware<CustomErrorHandlingMiddleware>();
 
@@ -49,6 +43,12 @@ namespace JDS.OrgManager.Infrastructure
             {
                 app.Use(CustomErrorHandlerHelper.WriteProductionResponse);
             }
+        }
+
+        public static IApplicationBuilder UseCustomHttpContextAccessor(this IApplicationBuilder app)
+        {
+            MyHttpContext.Configure(app.ApplicationServices.GetRequiredService<IHttpContextAccessor>());
+            return app;
         }
     }
 }

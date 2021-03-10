@@ -1,4 +1,4 @@
-// Copyright ©2020 Jacobs Data Solutions
+// Copyright ©2021 Jacobs Data Solutions
 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the
 // License at
@@ -19,17 +19,14 @@ namespace JDS.OrgManager.Domain.Models
     {
         private static IDomainEventDispatcher dispatcher = new NullDomainEventDispatcher();
 
-        private List<IDomainEvent> domainEvents = new List<IDomainEvent>();
+        private readonly List<IDomainEvent> domainEvents = new List<IDomainEvent>();
 
-        public IReadOnlyCollection<IDomainEvent> DomainEvents => domainEvents?.AsReadOnly();
+        public IReadOnlyCollection<IDomainEvent> DomainEvents => domainEvents.AsReadOnly();
 
         // Slightly breaking the rules here by having a public setter.
         public int Id { get; set; }
 
-        public void AddDomainEvent(IDomainEvent eventItem)
-        {
-            domainEvents.Add(eventItem);
-        }
+        public void AddDomainEvent(IDomainEvent eventItem) => domainEvents.Add(eventItem);
 
         public void ClearDomainEvents() => domainEvents?.Clear();
 
@@ -42,9 +39,9 @@ namespace JDS.OrgManager.Domain.Models
             ClearDomainEvents();
         }
 
-        public bool Equals(DomainEntity other) => other == null ? false : Id.Equals(other.Id);
+        public bool Equals(DomainEntity other) => other != null && Id.Equals(other.Id);
 
-        public override bool Equals(object other) => other is DomainEntity entity && entity != null ? Equals(entity) : base.Equals(other);
+        public override bool Equals(object? obj) => obj is DomainEntity entity && entity != null ? Equals(entity) : base.Equals(obj);
 
         public override int GetHashCode() => Id;
 

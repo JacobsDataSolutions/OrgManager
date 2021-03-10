@@ -1,4 +1,4 @@
-// Copyright ©2020 Jacobs Data Solutions
+// Copyright ©2021 Jacobs Data Solutions
 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the
 // License at
@@ -11,7 +11,7 @@ using JDS.OrgManager.Domain.Common.Addresses;
 using JDS.OrgManager.Domain.Common.Finance;
 using JDS.OrgManager.Domain.Common.People;
 using JDS.OrgManager.Domain.HumanResources.Employees;
-using JDS.OrgManager.Domain.HumanResources.PaidTimeOffPolicies;
+using JDS.OrgManager.Domain.HumanResources.TimeOff;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,23 +29,25 @@ namespace JDS.OrgManager.Utils
             var dateHired = DummyData.GetRandomHireDate();
             var male = isMale ?? DummyData.CoinToss();
 
-            var employee = new Employee(
-                dateHired: DummyData.GetRandomHireDate(),
-                dateOfBirth: DummyData.GetRandomBirthDate(),
-                employeeLevel: employeeLevel,
-                firstName: DummyData.GenerateFakeFirstOrMiddleName(male),
-                gender: male ? Gender.Male : Gender.Female,
-                homeAddress: new Address(addr1, "Chicago", new State("IL"), new ZipCode(zip), addr2),
-                lastName: DummyData.GenerateFakeLastName(),
-                paidTimeOffPolicy: new PaidTimeOffPolicy(false, employeeLevel, true, 320.0m, "DEMO POLICY", 10.0m) { Id = random.Next() },
-                salary: new Money((random.Next(25) + 25) * 1000.0M, Currency.USD),
-                socialSecurityNumber: new SocialSecurityNumber(DummyData.GenerateFakeSSN()),
-                dateTerminated: DummyData.GetRandomTerminationDate(dateHired),
-                middleName: DummyData.GenerateFakeFirstOrMiddleName(male),
-                ptoHoursRemaining: 10.0m,
-                subordinates: employeeLevel > 1 ? (from n in Enumerable.Range(1, employeeLevel) select GenerateEmployee(employeeLevel - 1)).ToList() : new List<Employee>()
-                );
+            var employee = new Employee()
+            {
+                DateHired = DummyData.GetRandomHireDate(),
+                DateOfBirth = DummyData.GetRandomBirthDate(),
+                EmployeeLevel = employeeLevel,
+                FirstName = DummyData.GenerateFakeFirstOrMiddleName(male),
+                Gender = male ? Gender.Male : Gender.Female,
+                HomeAddress = new Address(addr1, "Chicago", new State("IL"), new ZipCode(zip), addr2),
+                LastName = DummyData.GenerateFakeLastName(),
+                PaidTimeOffPolicy = new PaidTimeOffPolicy { AllowsUnlimitedPto = false, EmployeeLevel = employeeLevel, IsDefaultForEmployeeLevel = true, MaxPtoHours = 320.0m, Name = "DEMO POLICY", PtoAccrualRate = 10.0m, Id = random.Next() },
+                Salary = new Money((random.Next(25) + 25) * 1000.0M, Currency.USD),
+                SocialSecurityNumber = new SocialSecurityNumber(DummyData.GenerateFakeSSN()),
+                DateTerminated = DummyData.GetRandomTerminationDate(dateHired),
+                MiddleName = DummyData.GenerateFakeFirstOrMiddleName(male),
+                PtoHoursRemaining = 10.0m
+            };
+            var subordinates = employeeLevel > 1 ? (from n in Enumerable.Range(1, employeeLevel) select GenerateEmployee(employeeLevel - 1)).ToList() : new List<Employee>();
             employee.Id = random.Next();
+            employee = employee.WithSubordinates(subordinates);
             return employee;
         }
     }

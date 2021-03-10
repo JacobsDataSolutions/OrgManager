@@ -1,4 +1,4 @@
-// Copyright (c)2020 Jacobs Data Solutions
+// Copyright (c)2021 Jacobs Data Solutions
 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the
 // License at
@@ -9,7 +9,7 @@
 // CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 import { Injectable } from "@angular/core";
 
-const APP_PREFIX = "OrgManager-";
+const APP_PREFIX = "OM-";
 
 @Injectable({
     providedIn: "root"
@@ -27,20 +27,13 @@ export class LocalStorageService {
                     .map((key) =>
                         key
                             .split("-")
-                            .map((token, index) =>
-                                index === 0
-                                    ? token
-                                    : token.charAt(0).toUpperCase() +
-                                      token.slice(1)
-                            )
+                            .map((token, index) => (index === 0 ? token : token.charAt(0).toUpperCase() + token.slice(1)))
                             .join("")
                     );
                 let currentStateRef = state;
                 stateKeys.forEach((key, index) => {
                     if (index === stateKeys.length - 1) {
-                        currentStateRef[key] = JSON.parse(
-                            localStorage.getItem(storageKey)
-                        );
+                        currentStateRef[key] = JSON.parse(localStorage.getItem(storageKey));
                         return;
                     }
                     currentStateRef[key] = currentStateRef[key] || {};
@@ -67,11 +60,10 @@ export class LocalStorageService {
     testLocalStorage() {
         const testValue = "testValue";
         const testKey = "testKey";
-        let retrievedValue: string;
         const errorMessage = "localStorage did not return expected value";
 
         this.setItem(testKey, testValue);
-        retrievedValue = this.getItem(testKey);
+        const retrievedValue = this.getItem(testKey);
         this.removeItem(testKey);
 
         if (retrievedValue !== testValue) {

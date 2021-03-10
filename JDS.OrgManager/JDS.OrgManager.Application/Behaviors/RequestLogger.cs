@@ -1,4 +1,4 @@
-// Copyright ©2020 Jacobs Data Solutions
+// Copyright ©2021 Jacobs Data Solutions
 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the
 // License at
@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace JDS.OrgManager.Application.Behaviors
 {
-    public class RequestLogger<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+    public class RequestLogger<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : notnull
     {
         private readonly ICurrentUserService currentUserService;
 

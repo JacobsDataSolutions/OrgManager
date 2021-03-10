@@ -1,4 +1,4 @@
-// Copyright ©2020 Jacobs Data Solutions
+// Copyright ©2021 Jacobs Data Solutions
 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the
 // License at
@@ -20,6 +20,7 @@ namespace JDS.OrgManager.Persistence.Common.Currencies
         {
             builder.HasKey(e => e.Code);
             builder.Property(e => e.Code).HasMaxLength(Lengths.CurrencyCode).IsRequired();
+            builder.Property(e => e.Name).HasMaxLength(Lengths.Name);
         }
     }
 }

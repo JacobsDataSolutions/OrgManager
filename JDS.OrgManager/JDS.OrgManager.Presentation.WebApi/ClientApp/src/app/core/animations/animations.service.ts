@@ -1,4 +1,4 @@
-// Copyright (c)2020 Jacobs Data Solutions
+// Copyright (c)2021 Jacobs Data Solutions
 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the
 // License at
@@ -13,28 +13,19 @@ import { Injectable } from "@angular/core";
     providedIn: "root"
 })
 export class AnimationsService {
+    private static routeAnimationType: RouteAnimationType = "NONE";
+
     constructor() {
         AnimationsService.routeAnimationType = "NONE";
     }
-
-    private static routeAnimationType: RouteAnimationType = "NONE";
 
     static isRouteAnimationsType(type: RouteAnimationType) {
         return AnimationsService.routeAnimationType === type;
     }
 
-    updateRouteAnimationType(
-        pageAnimations: boolean,
-        elementsAnimations: boolean
-    ) {
+    updateRouteAnimationType(pageAnimations: boolean, elementsAnimations: boolean) {
         AnimationsService.routeAnimationType =
-            pageAnimations && elementsAnimations
-                ? "ALL"
-                : pageAnimations
-                ? "PAGE"
-                : elementsAnimations
-                ? "ELEMENTS"
-                : "NONE";
+            pageAnimations && elementsAnimations ? "ALL" : pageAnimations ? "PAGE" : elementsAnimations ? "ELEMENTS" : "NONE";
     }
 }
 

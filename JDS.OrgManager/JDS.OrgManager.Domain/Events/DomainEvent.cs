@@ -1,4 +1,4 @@
-// Copyright ©2020 Jacobs Data Solutions
+// Copyright ©2021 Jacobs Data Solutions
 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the
 // License at
@@ -19,10 +19,7 @@ namespace JDS.OrgManager.Domain.Events
 
         public DateTime DateTimeOccurredUtc { get; }
 
-        protected DomainEvent(IDateTimeService dateTimeService)
-        {
-            DateTimeOccurredUtc = dateTimeService.UtcNow;
-        }
+        protected DomainEvent() => DateTimeOccurredUtc = dateTimeService.UtcNow;
 
         internal static void WireUpDateTimeService(IDateTimeService dateTimeService) => DomainEvent.dateTimeService = dateTimeService;
     }

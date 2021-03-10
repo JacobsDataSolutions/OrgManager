@@ -1,4 +1,4 @@
-﻿// Copyright ©2020 Jacobs Data Solutions
+﻿// Copyright ©2021 Jacobs Data Solutions
 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the
 // License at
@@ -18,39 +18,36 @@ namespace JDS.OrgManager.Application.Customers
 {
     public class CustomerEntity : AuditableDbEntity, IAddressEntity
     {
-        public string Address1 { get; set; }
+        public string Address1 { get; set; } = default!;
 
-        public string Address2 { get; set; }
+        public string? Address2 { get; set; }
 
         public int AspNetUsersId { get; set; }
 
-        public string City { get; set; }
+        public string City { get; set; } = default!;
 
-        public int? CompanyId { get; set; }
+        public string CompanyName { get; set; }
 
-        public CurrencyEntity Currency { get; set; }
+        public CurrencyEntity Currency { get; set; } = default!;
 
-        public string CurrencyCode { get; set; }
+        public string CurrencyCode { get; set; } = default!;
 
-        public string FirstName { get; set; }
+        public string FirstName { get; set; } = default!;
 
         public int Id { get; set; }
 
-        public string LastName { get; set; }
+        public string LastName { get; set; } = default!;
 
-        public string MiddleName { get; set; }
+        public string? MiddleName { get; set; }
 
-        public string State { get; set; }
+        public string State { get; set; } = default!;
 
         public ICollection<TenantEntity> Tenants { get; set; }
 
         public Title? Title { get; set; }
 
-        public string Zip { get; set; }
+        public string ZipCode { get; set; } = default!;
 
-        public CustomerEntity()
-        {
-            Tenants = new HashSet<TenantEntity>();
-        }
+        public CustomerEntity() => Tenants = new HashSet<TenantEntity>();
     }
 }

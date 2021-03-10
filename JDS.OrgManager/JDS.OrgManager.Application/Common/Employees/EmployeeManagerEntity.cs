@@ -1,4 +1,4 @@
-// Copyright ©2020 Jacobs Data Solutions
+// Copyright ©2021 Jacobs Data Solutions
 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the
 // License at
@@ -14,11 +14,11 @@ namespace JDS.OrgManager.Application.Common.Employees
     // TODO: reimplement this using Closure Table pattern. See SQL Antipatterns p.36.
     public class EmployeeManagerEntity : IDbEntity
     {
-        public EmployeeEntity Employee { get; set; }
+        public EmployeeEntity Employee { get; set; } = default!;
 
         public int EmployeeId { get; set; }
 
-        public EmployeeEntity Manager { get; set; }
+        public EmployeeEntity Manager { get; set; } = default!;
 
         public int ManagerId { get; set; }
 

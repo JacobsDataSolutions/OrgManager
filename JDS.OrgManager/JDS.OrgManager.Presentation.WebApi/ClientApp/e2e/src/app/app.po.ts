@@ -1,4 +1,4 @@
-// Copyright (c)2020 Jacobs Data Solutions
+// Copyright (c)2021 Jacobs Data Solutions
 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the
 // License at
@@ -19,8 +19,6 @@ export class AppPage {
     }
 
     getAllMenus() {
-        return element
-            .all(by.css("mat-toolbar button.nav-button"))
-            .map((elm) => elm.getText());
+        return element.all(by.css("mat-toolbar button.nav-button")).map((elm) => elm.getText());
     }
 }

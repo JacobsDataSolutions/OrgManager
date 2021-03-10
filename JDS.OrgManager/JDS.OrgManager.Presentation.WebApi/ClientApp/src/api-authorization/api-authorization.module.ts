@@ -1,4 +1,4 @@
-// Copyright (c)2020 Jacobs Data Solutions
+// Copyright (c)2021 Jacobs Data Solutions
 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the
 // License at
@@ -28,10 +28,7 @@ import { HttpClientModule } from "@angular/common/http";
             { path: ApplicationPaths.LoginCallback, component: LoginComponent },
             { path: ApplicationPaths.LogOut, component: LogoutComponent },
             { path: ApplicationPaths.LoggedOut, component: LogoutComponent },
-            {
-                path: ApplicationPaths.LogOutCallback,
-                component: LogoutComponent
-            }
+            { path: ApplicationPaths.LogOutCallback, component: LogoutComponent }
         ])
     ],
     declarations: [LoginMenuComponent, LoginComponent, LogoutComponent],

@@ -1,4 +1,4 @@
-// Copyright ©2020 Jacobs Data Solutions
+// Copyright ©2021 Jacobs Data Solutions
 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the
 // License at
@@ -26,7 +26,7 @@ namespace JDS.OrgManager.Application.System.Commands.SeedInitialData
 {
     public class InitialDataSeeder
     {
-        private const string SystemUserName = "TEST-CUSTOMER@ORGMANAGER.COM";
+        private const string SystemUserName = "TEST-CUSTOMER@ORG-MANAGER.COM";
 
         private readonly IApplicationWriteDbContext context;
 
@@ -45,7 +45,7 @@ namespace JDS.OrgManager.Application.System.Commands.SeedInitialData
             this.tenantViewModelToDbEntityMapper = tenantViewModelToDbEntityMapper ?? throw new ArgumentNullException(nameof(tenantViewModelToDbEntityMapper));
         }
 
-        public async Task SeedAllAsync(IEnumerable<TenantViewModel> tenants = null)
+        public async Task SeedAllAsync(IEnumerable<TenantViewModel>? tenants = null)
         {
             tenants ??= Enumerable.Empty<TenantViewModel>();
 
@@ -55,21 +55,20 @@ namespace JDS.OrgManager.Application.System.Commands.SeedInitialData
                 return;
             }
 
-            using (var transaction = await context.Database.BeginTransactionAsync())
-            {
-                var sqlTransaction = transaction.GetDbTransaction();
+            using var transaction = await context.Database.BeginTransactionAsync();
+            var sqlTransaction = transaction.GetDbTransaction();
 
-                await facade.SetIdentitySeedForAllTablesAsync(ApplicationLayerConstants.SystemSeedStartValue, sqlTransaction);
-                await SeedCurrenciesAsync();
-                await CreateTestCompanyUserAsync(sqlTransaction);
-                var customer = await SeedDefaultCustomerAsync(sqlTransaction);
-                if (customer != null)
-                {
-                    await CreateDefaultTenantsAsync(sqlTransaction, customer, tenants);
-                }
-                await facade.SetIdentitySeedForAllTablesAsync(ApplicationLayerConstants.ProductionSeedStartValue, sqlTransaction);
-                await transaction.CommitAsync();
+            await facade.SetIdentitySeedForAllAspNetCoreTablesAsync(ApplicationLayerConstants.SystemSeedStartValue, sqlTransaction);
+            await facade.SetIdentitySeedForAllTablesAsync(ApplicationLayerConstants.SystemSeedStartValue, sqlTransaction);
+            await SeedCurrenciesAsync();
+            await CreateTestCompanyUserAsync(sqlTransaction);
+            var customer = await SeedDefaultCustomerAsync(sqlTransaction);
+            if (customer != null)
+            {
+                await CreateDefaultTenantsAsync(sqlTransaction, customer, tenants);
             }
+            await facade.SetIdentitySeedForAllTablesAsync(ApplicationLayerConstants.ProductionSeedStartValue, sqlTransaction);
+            await transaction.CommitAsync();
         }
 
         private async Task CreateDefaultTenantsAsync(DbTransaction sqlTransaction, CustomerEntity customer, IEnumerable<TenantViewModel> tenants)
@@ -99,7 +98,7 @@ INSERT [dbo].[AspNetUsers] ([UserName], [NormalizedUserName], [Email], [Normaliz
             await context.SaveChangesAsync();
         }
 
-        private async Task<CustomerEntity> SeedDefaultCustomerAsync(DbTransaction sqlTransaction)
+        private async Task<CustomerEntity?> SeedDefaultCustomerAsync(DbTransaction sqlTransaction)
         {
             var corpUserId = await facade.QueryFirstOrDefaultAsync<int?>($"SELECT TOP 1 Id FROM AspNetUsers WHERE NormalizedEmail = '{SystemUserName}'", transaction: sqlTransaction);
             if (corpUserId == null)
@@ -110,12 +109,13 @@ INSERT [dbo].[AspNetUsers] ([UserName], [NormalizedUserName], [Email], [Normaliz
             var customer = new CustomerEntity
             {
                 AspNetUsersId = (int)corpUserId,
+                CompanyName = "TEST COMPANY",
                 FirstName = "TEST",
                 LastName = "TEST",
                 Address1 = "12345 TEST ST",
                 City = "CHICAGO",
                 State = "IL",
-                Zip = "60606",
+                ZipCode = "60606",
                 CurrencyCode = "USD"
             };
             await context.Customers.AddAsync(customer);

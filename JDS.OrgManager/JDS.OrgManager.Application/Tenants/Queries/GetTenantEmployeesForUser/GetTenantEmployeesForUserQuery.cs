@@ -1,4 +1,4 @@
-﻿// Copyright ©2020 Jacobs Data Solutions
+﻿// Copyright ©2021 Jacobs Data Solutions
 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the
 // License at
@@ -35,10 +35,7 @@ namespace JDS.OrgManager.Application.Tenants.Queries.GetTenantEmployeesForUser
         {
             private readonly IApplicationReadDbFacade facade;
 
-            public GetTenantEmployeesForUserQueryHandler(IApplicationReadDbFacade facade)
-            {
-                this.facade = facade ?? throw new ArgumentNullException(nameof(facade));
-            }
+            public GetTenantEmployeesForUserQueryHandler(IApplicationReadDbFacade facade) => this.facade = facade ?? throw new ArgumentNullException(nameof(facade));
 
             public async Task<TenantEmployeeIdentityModel[]> Handle(GetTenantEmployeesForUserQuery request, CancellationToken cancellationToken)
             {
@@ -48,7 +45,7 @@ namespace JDS.OrgManager.Application.Tenants.Queries.GetTenantEmployeesForUser
                     WHERE t.AspNetUsersId = @AspNetUsersId";
 
                 var employeesForUserByTenant =
-                    await facade.QueryAsync<TenantEmployeeIdentityModel>(sql, request);
+                    await facade.QueryAsync<TenantEmployeeIdentityModel>(sql, request, cancellationToken: cancellationToken);
                 return (
                     from e in employeesForUserByTenant
                     group e by e.TenantId into grouped

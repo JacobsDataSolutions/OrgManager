@@ -1,4 +1,4 @@
-// Copyright ©2020 Jacobs Data Solutions
+// Copyright ©2021 Jacobs Data Solutions
 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the
 // License at
@@ -16,13 +16,10 @@ namespace JDS.OrgManager.Domain.Events
 {
     public class DomainEventDispatcher : IDomainEventDispatcher
     {
-        private IMediator mediator;
+        private readonly IMediator mediator;
 
-        public DomainEventDispatcher(IMediator mediator)
-        {
-            this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
-        }
+        public DomainEventDispatcher(IMediator mediator) => this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
 
-        public Task PublishAsync<TEvent>(TEvent domainEvent) where TEvent : IDomainEvent => mediator.Publish(domainEvent);
+        public async Task PublishAsync<TEvent>(TEvent domainEvent) where TEvent : IDomainEvent => await mediator.Publish(domainEvent);
     }
 }

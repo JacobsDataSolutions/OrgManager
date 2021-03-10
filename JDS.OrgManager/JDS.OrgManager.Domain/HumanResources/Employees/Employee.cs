@@ -1,4 +1,4 @@
-// Copyright ©2020 Jacobs Data Solutions
+// Copyright ©2021 Jacobs Data Solutions
 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the
 // License at
@@ -7,11 +7,11 @@
 
 // Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
 // CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
-using JDS.OrgManager.Common.Abstractions.DateTimes;
 using JDS.OrgManager.Domain.Common.Addresses;
+using JDS.OrgManager.Domain.Common.Employees;
 using JDS.OrgManager.Domain.Common.Finance;
 using JDS.OrgManager.Domain.Common.People;
-using JDS.OrgManager.Domain.HumanResources.PaidTimeOffPolicies;
+using JDS.OrgManager.Domain.HumanResources.TimeOff;
 using JDS.OrgManager.Domain.Models;
 using System;
 using System.Collections.Generic;
@@ -21,99 +21,76 @@ namespace JDS.OrgManager.Domain.HumanResources.Employees
 {
     public class Employee : DomainEntity<Employee>
     {
-        public DateTime DateHired { get; private set; }
+        private Employee? manager;
 
-        public DateTime DateOfBirth { get; private set; }
+        private PaidTimeOffPolicy paidTimeOffPolicy = default!;
 
-        public DateTime? DateTerminated { get; private set; }
+        private List<PaidTimeOffRequest> paidTimeOffRequests = new List<PaidTimeOffRequest>();
 
-        public int EmployeeLevel { get; private set; }
+        private List<Employee> subordinates = new List<Employee>();
 
-        public string FirstName { get; private set; }
+        public DateTime DateHired { get; init; }
 
-        public Gender Gender { get; private set; }
+        public DateTime DateOfBirth { get; init; }
 
-        public Address HomeAddress { get; private set; }
+        public DateTime? DateTerminated { get; init; }
 
-        public string LastName { get; private set; }
+        public int EmployeeLevel { get; init; }
 
-        public Employee Manager { get; private set; }
+        public string FirstName { get; init; } = default!;
 
-        public string MiddleName { get; private set; }
+        public Gender Gender { get; init; }
 
-        public PaidTimeOffPolicy PaidTimeOffPolicy { get; private set; }
+        public Address HomeAddress { get; init; } = default!;
 
-        public decimal? PtoHoursRemaining { get; private set; }
+        public string LastName { get; init; } = default!;
 
-        public Money Salary { get; private set; }
+        public Employee? Manager { get => manager; init => manager = value; }
 
-        public SocialSecurityNumber SocialSecurityNumber { get; private set; }
+        public string? MiddleName { get; init; }
 
-        public IReadOnlyList<Employee> Subordinates { get; private set; } = new List<Employee>();
+        public PaidTimeOffPolicy PaidTimeOffPolicy { get => paidTimeOffPolicy; init => paidTimeOffPolicy = value; }
 
-        public Employee()
+        public List<PaidTimeOffRequest> PaidTimeOffRequests { get => paidTimeOffRequests; init => paidTimeOffRequests = value; }
+
+        public decimal? PtoHoursRemaining { get; init; }
+
+        public Money Salary { get; init; } = default!;
+
+        public SocialSecurityNumber SocialSecurityNumber { get; init; } = default!;
+
+        public List<Employee> Subordinates { get => subordinates; init => subordinates = value; }
+
+        public void CreateEmployeeRegisteredEvent() => AddDomainEvent(new EmployeeRegisteredEvent(this));
+
+        public void CreateEmployeeUpdatedEvent() => AddDomainEvent(new EmployeeUpdatedEvent(this));
+
+        public override void ValidateAggregate()
         {
-        }
-
-        public Employee(
-            DateTime dateHired,
-            DateTime dateOfBirth,
-            int employeeLevel,
-            string firstName,
-            Gender gender,
-            Address homeAddress,
-            string lastName,
-            PaidTimeOffPolicy paidTimeOffPolicy,
-            Money salary,
-            SocialSecurityNumber socialSecurityNumber,
-            DateTime? dateTerminated = default,
-            string middleName = default,
-            decimal? ptoHoursRemaining = default,
-            IReadOnlyList<Employee> subordinates = default
-            )
-        {
-            if (employeeLevel <= 0)
+            base.ValidateAggregate();
+            if (DateHired < EmployeeConstants.MinimumValidDateOfHire)
             {
-                throw new ArgumentOutOfRangeException(nameof(employeeLevel));
+                throw new EmployeeException($"Invalid date of hire: {DateHired:d}.");
             }
-            DateTerminated = dateTerminated;
-            DateHired = dateHired;
-            DateOfBirth = dateOfBirth;
-            EmployeeLevel = employeeLevel;
-            FirstName = firstName ?? throw new ArgumentNullException(nameof(firstName));
-            Gender = gender;
-            HomeAddress = homeAddress ?? throw new ArgumentNullException(nameof(homeAddress));
-            LastName = lastName ?? throw new ArgumentNullException(nameof(lastName));
-            MiddleName = middleName ?? "";
-            PaidTimeOffPolicy = paidTimeOffPolicy;
-            PtoHoursRemaining = ptoHoursRemaining;
-            Salary = salary ?? throw new ArgumentNullException(nameof(salary));
-            if (salary.Amount <= 0.0m)
+            if (DateOfBirth < EmployeeConstants.MinimumValidDateOfBirth)
             {
-                throw new ArgumentOutOfRangeException(nameof(salary));
+                throw new EmployeeException($"Invalid date of birth: {DateOfBirth:d}.");
             }
-            SocialSecurityNumber = socialSecurityNumber ?? throw new ArgumentNullException(nameof(socialSecurityNumber));
-            Subordinates = (subordinates ?? Enumerable.Empty<Employee>()).ToList();
-            CrossLinkSubordinates();
-        }
-
-        public override void AssertAggregates()
-        {
-            if (
-                HomeAddress == null ||
-                (Manager != null && Manager.Id == null) ||
-                PaidTimeOffPolicy == null ||
-                PaidTimeOffPolicy.Id == null ||
-                Salary == null ||
-                SocialSecurityNumber == null ||
-                Subordinates == null ||
-                Subordinates.Any(e => e.Id == null))
+            if (Manager?.Subordinates?.Any() == true)
             {
-                throw new EmployeeException("One or more child aggregates were invalid for this employee.");
+                throw new EmployeeException("To avoid cyclical references, a manager instance may not have any subordinates for this employee aggregate.");
+            }
+            if (Salary.Amount <= 0.0m)
+            {
+                throw new EmployeeException($"Invalid salary: {Salary.Amount}");
+            }
+
+            Manager?.ValidateAggregate();
+            foreach (var subordinate in Subordinates)
+            {
+                subordinate.ValidateAggregate();
             }
         }
-
-        public void CreateEmployeeRegisteredEvent(IDateTimeService dateTimeService) => AddDomainEvent(new EmployeeRegisteredEvent(dateTimeService, this));
 
         public void VerifyEmployeeManagerAndSubordinates()
         {
@@ -161,11 +138,7 @@ namespace JDS.OrgManager.Domain.HumanResources.Employees
             {
                 throw new EmployeeException("You cannot assign a manager whose employee level is less than or equal to that of the current employee.");
             }
-
-            var e = CreateShallowCopy();
-            e.Manager = manager;
-
-            return e;
+            return CloneWith(e => e.manager = manager);
         }
 
         public Employee WithPaidTimeOffPolicy(PaidTimeOffPolicy paidTimeOffPolicy)
@@ -174,9 +147,7 @@ namespace JDS.OrgManager.Domain.HumanResources.Employees
             {
                 throw new EmployeeException("Invalid paid time off PaidTimeOffPolicy assigned to employee. The PaidTimeOffPolicy EmployeeLevel must be the same as the employee's EmployeeLevel.");
             }
-            var e = CreateShallowCopy();
-            e.PaidTimeOffPolicy = paidTimeOffPolicy;
-            return e;
+            return CloneWith(e => e.paidTimeOffPolicy = paidTimeOffPolicy);
         }
 
         public Employee WithSubordinates(IEnumerable<Employee> subordinates)
@@ -186,17 +157,18 @@ namespace JDS.OrgManager.Domain.HumanResources.Employees
             {
                 throw new EmployeeException("You cannot assign subordinates whose employee levels are greater than or equal to that of the current employee.");
             }
-            var e = CreateShallowCopy();
-            e.Subordinates = subordinatesList;
-            CrossLinkSubordinates();
-            return e;
+            // Prevent circular references. Subordinates reference a copy of this employee.
+            var employeeAsManager = CloneWith(e => e.subordinates = new List<Employee>());
+            var employee = CloneWith(e => e.subordinates = subordinatesList);
+            employee.CrossLinkSubordinates(employeeAsManager);
+            return employee;
         }
 
-        private void CrossLinkSubordinates()
+        private void CrossLinkSubordinates(Employee employeeAsManager)
         {
             foreach (var subordinate in Subordinates)
             {
-                subordinate.Manager = this;
+                subordinate.manager = employeeAsManager;
             }
         }
 

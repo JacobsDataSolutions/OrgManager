@@ -1,4 +1,4 @@
-// Copyright (c)2020 Jacobs Data Solutions
+// Copyright (c)2021 Jacobs Data Solutions
 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the
 // License at
@@ -21,15 +21,11 @@ function isString(value: any) {
     return typeof value === "string" || value instanceof String;
 }
 
-export function matchesOtherFormControlValidator(
-    other: AbstractControl
-): ValidatorFn {
+export function matchesOtherFormControlValidator(other: AbstractControl): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } | null => {
         let valid = false;
         if (isString(control.value) && isString(other.value)) {
-            valid =
-                (control.value ?? "").toUpperCase() ===
-                (other.value ?? "").toUpperCase();
+            valid = (control.value ?? "").toUpperCase() === (other.value ?? "").toUpperCase();
         } else {
             valid = control.value === other.value;
         }
@@ -42,9 +38,7 @@ export function matchesPropertyValidator(other: () => string): ValidatorFn {
         let valid = false;
         const otherVal = other();
         if (isString(control.value)) {
-            valid =
-                (control.value ?? "").toUpperCase() ===
-                (otherVal ?? "").toUpperCase();
+            valid = (control.value ?? "").toUpperCase() === (otherVal ?? "").toUpperCase();
         } else {
             valid = control.value === otherVal;
         }

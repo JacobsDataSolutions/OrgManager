@@ -1,4 +1,4 @@
-// Copyright ©2020 Jacobs Data Solutions
+// Copyright ©2021 Jacobs Data Solutions
 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the
 // License at
@@ -15,6 +15,7 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -22,7 +23,7 @@ namespace JDS.OrgManager.Application.System.Commands.SeedInitialData
 {
     public class SeedInitialDataCommand : IRequest
     {
-        public IEnumerable<TenantViewModel> Tenants { get; set; }
+        public IEnumerable<TenantViewModel> Tenants { get; set; } = Enumerable.Empty<TenantViewModel>();
 
         public class SeedInitialDataCommandHandler : IRequestHandler<SeedInitialDataCommand>
         {

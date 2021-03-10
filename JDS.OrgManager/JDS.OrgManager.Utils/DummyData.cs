@@ -1,4 +1,4 @@
-// Copyright ©2020 Jacobs Data Solutions
+// Copyright ©2021 Jacobs Data Solutions
 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the
 // License at
@@ -9,13 +9,14 @@
 // CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 using CsvHelper;
 using JDS.OrgManager.Application.Common.Employees;
-using JDS.OrgManager.Application.Common.PaidTimeOffPolicies;
+using JDS.OrgManager.Application.Common.TimeOff;
 using JDS.OrgManager.Domain.Common.People;
 using JDS.OrgManager.Utils.Streets;
 using System;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 
 namespace JDS.OrgManager.Utils
@@ -38,15 +39,14 @@ namespace JDS.OrgManager.Utils
 
         static DummyData()
         {
-            using (var reader = new StreamReader(@"..\JDS.OrgManager.Utils\bin\Debug\netcoreapp3.1\Streets\chicago-street-names.csv"))
-            {
-                using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
-                {
-                    csv.Configuration.RegisterClassMap<StreetClassMap>();
-                    var records = csv.GetRecords<Street>();
-                    streets = (from s in records where !ignoreSuffixes.Contains(s.Suffix) && !ignoreSuffixDirections.Contains(s.SuffixDirection) && !s.Name.Contains("RAMP") select s).ToArray();
-                }
-            }
+            var assembly = Assembly.GetExecutingAssembly();
+            var resourceName = assembly.GetManifestResourceNames().Single(str => str.EndsWith("chicago-street-names.csv"));
+            using var stream = assembly.GetManifestResourceStream(resourceName);
+            using var reader = new StreamReader(stream);
+            using var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
+            csv.Context.RegisterClassMap<StreetClassMap>();
+            var records = csv.GetRecords<Street>();
+            streets = (from s in records where !ignoreSuffixes.Contains(s.Suffix) && !ignoreSuffixDirections.Contains(s.SuffixDirection) && !s.Name.Contains("RAMP") select s).ToArray();
         }
 
         public static bool CoinToss() => random.Next() % 2 == 0;
@@ -87,7 +87,7 @@ namespace JDS.OrgManager.Utils
                 Address2 = addr2,
                 City = "Chicago",
                 State = "IL",
-                Zip = GetRandomChitownZip(),
+                ZipCode = GetRandomChitownZip(),
                 DateHired = dateHired,
                 DateTerminated = random.Next(100) > 90 ? GetRandomTerminationDate(dateHired) : (DateTime?)null,
                 CurrencyCode = "USD",
@@ -117,9 +117,6 @@ namespace JDS.OrgManager.Utils
             return companyFounded.AddDays(random.Next((DateTime.Today - companyFounded).Days));
         }
 
-        public static DateTime GetRandomTerminationDate(DateTime startDate)
-        {
-            return startDate.AddDays(random.Next(90) + 90);
-        }
+        public static DateTime GetRandomTerminationDate(DateTime startDate) => startDate.AddDays(random.Next(90) + 90);
     }
 }

@@ -1,4 +1,4 @@
-// Copyright ©2020 Jacobs Data Solutions
+// Copyright ©2021 Jacobs Data Solutions
 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the
 // License at
@@ -10,26 +10,22 @@
 using JDS.OrgManager.Application.Abstractions.DbFacades;
 using MediatR;
 using System;
-using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace JDS.OrgManager.Application.HumanResources.Employees.Queries.GetEmployeeList
 {
-    public class GetEmployeeListQuery : IRequest<IReadOnlyList<GetEmployeeListViewModel>>
+    public class GetEmployeeListQuery : IRequest<GetEmployeeListViewModel[]>
     {
-        public class GetEmployeeListQueryHandler : IRequestHandler<GetEmployeeListQuery, IReadOnlyList<GetEmployeeListViewModel>>
+        public class GetEmployeeListQueryHandler : IRequestHandler<GetEmployeeListQuery, GetEmployeeListViewModel[]>
         {
             private readonly IApplicationReadDbFacade queryFacade;
 
-            public GetEmployeeListQueryHandler(IApplicationReadDbFacade queryFacade)
-            {
-                this.queryFacade = queryFacade ?? throw new ArgumentNullException(nameof(queryFacade));
-            }
+            public GetEmployeeListQueryHandler(IApplicationReadDbFacade queryFacade) => this.queryFacade = queryFacade ?? throw new ArgumentNullException(nameof(queryFacade));
 
-            public Task<IReadOnlyList<GetEmployeeListViewModel>> Handle(GetEmployeeListQuery request, CancellationToken cancellationToken) =>
-                queryFacade.QueryAsync<GetEmployeeListViewModel>(
-                    @"SELECT
+            public async Task<GetEmployeeListViewModel[]> Handle(GetEmployeeListQuery request, CancellationToken cancellationToken) =>
+                (await queryFacade.QueryAsync<GetEmployeeListViewModel>(@"SELECT
                         e.Id,
                         e.LastName,
                         e.FirstName,
@@ -37,7 +33,7 @@ namespace JDS.OrgManager.Application.HumanResources.Employees.Queries.GetEmploye
                         e.Gender,
                         e.EmployeeLevel,
                         e.DateHired,
-                        e.DateExited,
+                        e.DateTerminated,
                         (SELECT COUNT(DISTINCT EmployeeId) FROM EmployeeManagers s WITH(NOLOCK) WHERE s.ManagerId = e.Id) AS NumSubordinates,
                         m.Id AS ManagerId,
                         m.LastName AS ManagerLastName,
@@ -45,7 +41,7 @@ namespace JDS.OrgManager.Application.HumanResources.Employees.Queries.GetEmploye
                         m.MiddleName AS ManagerMiddleName
                         FROM Employees e WITH(NOLOCK)
                         LEFT JOIN EmployeeManagers em WITH(NOLOCK) ON em.EmployeeId = e.Id
-                        LEFT JOIN Employees m WITH(NOLOCK) ON em.ManagerId = m.Id");
+                        LEFT JOIN Employees m WITH(NOLOCK) ON em.ManagerId = m.Id", cancellationToken: cancellationToken)).ToArray();
         }
     }
 }

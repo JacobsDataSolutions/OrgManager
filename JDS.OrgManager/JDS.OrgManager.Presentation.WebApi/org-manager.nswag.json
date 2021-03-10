@@ -1,15 +1,9 @@
 {
-  "runtime": "NetCore31",
+  "runtime": "Net50",
   "defaultVariables": null,
   "documentGenerator": {
     "webApiToOpenApi": {
-      "controllerNames": [
-        "JDS.OrgManager.Presentation.WebApi.Controllers.CustomerController",
-        "JDS.OrgManager.Presentation.WebApi.Controllers.EmployeeController",
-        "JDS.OrgManager.Presentation.WebApi.Controllers.TenantController",
-        "JDS.OrgManager.Presentation.WebApi.Controllers.UserController",
-        "JDS.OrgManager.Presentation.WebApi.Controllers.TestController"
-      ],
+      "controllerNames": [],
       "isAspNetCore": true,
       "resolveJsonOptions": false,
       "defaultUrlTemplate": "api/{controller}/{id?}",
@@ -52,11 +46,11 @@
       "outputType": "Swagger2",
       "newLineBehavior": "Auto",
       "assemblyPaths": [
-        "bin/Debug/netcoreapp3.1/JDS.OrgManager.Presentation.WebApi.dll"
+        "bin/Debug/net5.0/JDS.OrgManager.Presentation.WebApi.dll"
       ],
       "assemblyConfig": null,
       "referencePaths": [
-        "bin/Debug/netcoreapp3.1/"
+        "bin/Debug/net5.0/"
       ],
       "useNuGetCache": false
     }
@@ -111,6 +105,7 @@
       "useGetBaseUrlMethod": false,
       "baseUrlTokenName": "API_BASE_URL",
       "queryNullValue": "",
+      "useAbortSignal": false,
       "inlineNamedDictionaries": false,
       "inlineNamedAny": false,
       "templateDirectory": null,
@@ -119,7 +114,7 @@
       "enumNameGeneratorType": null,
       "serviceHost": null,
       "serviceSchemes": null,
-      "output": "ClientApp/src/app/shared/nswag.ts",
+      "output": "../../JDS.OrgManager/JDS.OrgManager.Presentation.WebApi/ClientApp/src/app/shared/nswag.ts",
       "newLineBehavior": "Auto"
     }
   }

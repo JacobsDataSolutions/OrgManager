@@ -1,4 +1,4 @@
-﻿// Copyright ©2020 Jacobs Data Solutions
+﻿// Copyright ©2021 Jacobs Data Solutions
 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the
 // License at
@@ -16,10 +16,10 @@ namespace JDS.OrgManager.Application.Tenants
     {
         public Guid AssignmentKey { get; set; }
 
-        public int? Id { get; set; }
+        public int Id { get; set; }
 
-        public string Name { get; set; }
+        public string Name { get; set; } = default!;
 
-        public string Slug { get; set; }
+        public string Slug { get; set; } = default!;
     }
 }

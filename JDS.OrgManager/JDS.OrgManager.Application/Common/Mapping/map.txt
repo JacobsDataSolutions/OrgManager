@@ -1,0 +1,15 @@
+﻿CustomerViewModel->CustomerEntity
+Employee->EmployeeEntity
+Employee->EmployeeViewModel
+EmployeeEntity->Employee
+EmployeeViewModel->Employee
+IAddressEntity->Address
+IAddressViewModel->Address
+PaidTimeOffPolicy->PaidTimeOffPolicyEntity
+PaidTimeOffPolicyEntity->PaidTimeOffPolicy
+PaidTimeOffRequestEntity->PaidTimeOffRequest
+PaidTimeOffRequestEntity->PaidTimeOffRequestViewModel
+PaidTimeOffRequest->PaidTimeOffRequestViewModel
+PaidTimeOffRequest->PaidTimeOffRequestEntity
+ValidateRequestedPaidTimeOffHoursViewModel->PaidTimeOffRequest
+TenantViewModel->TenantEntity

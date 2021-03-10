@@ -1,4 +1,4 @@
-// Copyright ©2020 Jacobs Data Solutions
+// Copyright ©2021 Jacobs Data Solutions
 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the
 // License at
@@ -23,7 +23,8 @@ namespace JDS.OrgManager.Persistence.DbContexts
         public TContext CreateDbContext(string[] args)
         {
             var basePath = Directory.GetCurrentDirectory() + string.Format("{0}..{0}JDS.OrgManager.Presentation.WebApi", Path.DirectorySeparatorChar);
-            return Create(basePath, Environment.GetEnvironmentVariable(AspNetCoreEnvironment));
+            return Create(basePath, Environment.GetEnvironmentVariable(AspNetCoreEnvironment) ?? throw new PersistenceLayerException("Invalid configuration setting for Persistence DB context."));
+            //return Create(basePath, "Development");
         }
 
         protected abstract TContext CreateNewInstance(DbContextOptions<TContext> options);

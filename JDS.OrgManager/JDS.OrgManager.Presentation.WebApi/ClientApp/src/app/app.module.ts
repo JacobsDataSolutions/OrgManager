@@ -1,4 +1,4 @@
-// Copyright (c)2020 Jacobs Data Solutions
+// Copyright (c)2021 Jacobs Data Solutions
 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the
 // License at
@@ -15,15 +15,13 @@ import { CoreModule } from "./core/core.module";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app/app.component";
+import { HomeModule } from "./home/home.module";
 import { CustomerModule } from "./customers/customer.module";
-import { UnauthorizedComponent } from "./home/unauthorized/unauthorized.component";
 import { EmployeeModule } from "./employees/employee.module";
-import { TestComponent } from "./home/test/test.component";
-import { TestClient } from "./shared/nswag";
-import { HomeComponent } from './home/home.component';
 
 @NgModule({
     imports: [
+        HomeModule,
         CustomerModule,
         EmployeeModule,
 
@@ -37,8 +35,7 @@ import { HomeComponent } from './home/home.component';
         // app
         AppRoutingModule
     ],
-    declarations: [AppComponent, UnauthorizedComponent, TestComponent, HomeComponent],
-    bootstrap: [AppComponent],
-    providers: [TestClient]
+    declarations: [AppComponent],
+    bootstrap: [AppComponent]
 })
 export class AppModule {}

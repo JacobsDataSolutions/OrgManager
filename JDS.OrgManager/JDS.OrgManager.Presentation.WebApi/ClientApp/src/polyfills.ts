@@ -1,4 +1,4 @@
-// Copyright (c)2020 Jacobs Data Solutions
+// Copyright (c)2021 Jacobs Data Solutions
 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the
 // License at
@@ -23,7 +23,7 @@
  * Learn more in https://angular.io/guide/browser-support
  */
 
-/***************************************************************************************************
+/**
  * BROWSER POLYFILLS
  */
 
@@ -61,7 +61,7 @@
  *
  */
 
-/***************************************************************************************************
+/**
  * Zone JS is required by default for Angular itself.
  */
 import "zone.js/dist/zone";

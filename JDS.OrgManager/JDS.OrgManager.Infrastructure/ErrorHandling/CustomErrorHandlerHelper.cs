@@ -1,15 +1,21 @@
-﻿using System;
+﻿// Copyright ©2021 Jacobs Data Solutions
+
+// Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the
+// License at
+
+// http://www.apache.org/licenses/LICENSE-2.0
+
+// Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+// CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+using JDS.OrgManager.Application;
+using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Diagnostics;
 using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
-using JDS.OrgManager.Application;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Diagnostics;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Hosting;
 
 namespace JDS.OrgManager.Infrastructure.ErrorHandling
 {
@@ -23,6 +29,10 @@ namespace JDS.OrgManager.Infrastructure.ErrorHandling
 
         private static async Task WriteResponse(HttpContext httpContext, bool includeDetails)
         {
+            if (httpContext == null)
+            {
+                throw new ArgumentNullException(nameof(httpContext));
+            }
             // Try and retrieve the error from the ExceptionHandler middleware
             var exceptionDetails = httpContext.Features.Get<IExceptionHandlerFeature>();
             var ex = exceptionDetails?.Error;
@@ -65,6 +75,11 @@ namespace JDS.OrgManager.Infrastructure.ErrorHandling
                 if (traceId != null)
                 {
                     problem.Extensions["traceId"] = traceId;
+                }
+
+                if (httpContext.Response == null)
+                {
+                    throw new InfrastructureLayerException("Reponse was null.");
                 }
 
                 httpContext.Response.ContentType = "application/problem+json";

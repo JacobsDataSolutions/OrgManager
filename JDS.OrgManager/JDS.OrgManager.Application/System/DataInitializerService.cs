@@ -1,4 +1,4 @@
-﻿// Copyright ©2020 Jacobs Data Solutions
+﻿// Copyright ©2021 Jacobs Data Solutions
 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the
 // License at
@@ -22,10 +22,7 @@ namespace JDS.OrgManager.Application.System
     {
         private readonly IMediator mediator;
 
-        public DataInitializerService(IMediator mediator)
-        {
-            this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
-        }
+        public DataInitializerService(IMediator mediator) => this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
 
         public async Task InitializeDataForSystemAsync()
         {
@@ -38,7 +35,7 @@ namespace JDS.OrgManager.Application.System
 
             foreach (var tenant in tenants)
             {
-                await mediator.Send(new ProvisionTenantCommand { TenantId = (int)tenant.Id });
+                await mediator.Send(new ProvisionTenantCommand { TenantId = tenant.Id });
             }
         }
     }

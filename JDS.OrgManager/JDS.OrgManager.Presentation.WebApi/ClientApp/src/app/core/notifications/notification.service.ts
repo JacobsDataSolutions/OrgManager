@@ -1,4 +1,4 @@
-// Copyright (c)2020 Jacobs Data Solutions
+// Copyright (c)2021 Jacobs Data Solutions
 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the
 // License at
@@ -14,10 +14,7 @@ import { MatSnackBar, MatSnackBarConfig } from "@angular/material/snack-bar";
     providedIn: "root"
 })
 export class NotificationService {
-    constructor(
-        private readonly snackBar: MatSnackBar,
-        private readonly zone: NgZone
-    ) {}
+    constructor(private readonly snackBar: MatSnackBar, private readonly zone: NgZone) {}
 
     default(message: string) {
         this.show(message, {
@@ -42,7 +39,7 @@ export class NotificationService {
 
     warn(message: string) {
         this.show(message, {
-            duration: 3000,
+            duration: 2500,
             panelClass: "warning-notification-overlay"
         });
     }

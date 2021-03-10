@@ -1,4 +1,4 @@
-// Copyright (c)2020 Jacobs Data Solutions
+// Copyright (c)2021 Jacobs Data Solutions
 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the
 // License at
@@ -13,16 +13,23 @@ import { platformBrowserDynamic } from "@angular/platform-browser-dynamic";
 import { AppModule } from "./app/app.module";
 import { environment } from "./environments/environment";
 
+// Spliced in from ASP.NET Core scaffolding.
 export function getBaseUrl() {
     return document.getElementsByTagName("base")[0].href;
 }
 
+// Spliced in from ASP.NET Core scaffolding.
 const providers = [{ provide: "BASE_URL", useFactory: getBaseUrl, deps: [] }];
 
 if (environment.production) {
     enableProdMode();
 }
 
-platformBrowserDynamic()
+//platformBrowserDynamic()
+//  .bootstrapModule(AppModule)
+//  .catch((err) => console.error(err));
+
+// Spliced in from ASP.NET Core scaffolding.
+platformBrowserDynamic(providers)
     .bootstrapModule(AppModule)
-    .catch((err) => console.error(err));
+    .catch((err) => console.log(err));

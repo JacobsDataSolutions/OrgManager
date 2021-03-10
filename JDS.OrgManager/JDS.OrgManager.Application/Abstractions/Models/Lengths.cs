@@ -1,4 +1,4 @@
-﻿// Copyright ©2020 Jacobs Data Solutions
+﻿// Copyright ©2021 Jacobs Data Solutions
 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the
 // License at
@@ -45,6 +45,8 @@ namespace JDS.OrgManager.Application.Abstractions.Models
 
         public const int Name = 50;
 
+        public const int Notes = 500;
+
         public const int Slug = 25;
 
         public const int SocialSecurityNumber = 11;
@@ -55,6 +57,6 @@ namespace JDS.OrgManager.Application.Abstractions.Models
 
         public const int TimeOffType = 50;
 
-        public const int Zip = 10;
+        public const int ZipCode = 10;
     }
 }

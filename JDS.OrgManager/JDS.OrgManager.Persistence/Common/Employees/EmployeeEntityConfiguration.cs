@@ -1,4 +1,4 @@
-// Copyright ©2020 Jacobs Data Solutions
+// Copyright ©2021 Jacobs Data Solutions
 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the
 // License at
@@ -34,7 +34,7 @@ namespace JDS.OrgManager.Persistence.Common.Employees
             builder.Property(e => e.Salary).HasColumnType(PersistenceLayerConstants.SqlDecimalType);
             builder.Property(e => e.SocialSecurityNumber).HasMaxLength(Lengths.SocialSecurityNumber);
             builder.Property(e => e.State).HasMaxLength(Lengths.State).IsRequired();
-            builder.Property(e => e.Zip).HasMaxLength(Lengths.Zip).IsRequired();
+            builder.Property(e => e.ZipCode).HasMaxLength(Lengths.ZipCode).IsRequired();
 
             builder.Property(e => e.DateOfBirth).HasColumnType(PersistenceLayerConstants.SqlDateType);
             builder.Property(e => e.DateHired).HasColumnType(PersistenceLayerConstants.SqlDateType);

@@ -17,10 +17,11 @@ export class Lengths {
     static readonly middleName: number = 25;
     static readonly min: number = 4;
     static readonly _name: number = 50;
+    static readonly notes: number = 500;
     static readonly slug: number = 25;
     static readonly socialSecurityNumber: number = 11;
     static readonly state: number = 2;
     static readonly submittedBy: number = 80;
     static readonly timeOffType: number = 50;
-    static readonly zip: number = 10;
+    static readonly zipCode: number = 10;
 }

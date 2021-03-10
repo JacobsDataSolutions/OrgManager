@@ -1,4 +1,4 @@
-// Copyright (c)2020 Jacobs Data Solutions
+// Copyright (c)2021 Jacobs Data Solutions
 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the
 // License at
@@ -13,15 +13,15 @@ import { CommonModule } from "@angular/common";
 import { SharedModule } from "../shared/shared.module";
 import { CoreModule } from "../core/core.module";
 
-import { ManageTenantsComponent } from "./manage-tenants/manage-tenants.component";
-import { CustomerRoutingModule } from "./customer-routing.module";
-import { TenantClient, CustomerClient, UserClient } from "../shared/nswag";
 import { AddOrUpdateCustomerComponent } from "./add-or-update-customer/add-or-update-customer.component";
+import { ManageTenantsComponent } from "./manage-tenants/manage-tenants.component";
+import { CustomerClient, TenantClient, UserClient } from "../shared/nswag";
+import { CustomerHomeComponent } from "./customer-home/customer-home.component";
 
 @NgModule({
-    declarations: [ManageTenantsComponent, AddOrUpdateCustomerComponent],
-    imports: [CommonModule, SharedModule, CoreModule, CustomerRoutingModule],
+    declarations: [AddOrUpdateCustomerComponent, ManageTenantsComponent, CustomerHomeComponent],
+    imports: [CommonModule, SharedModule, CoreModule],
     exports: [],
-    providers: [CustomerClient, TenantClient, UserClient]
+    providers: [UserClient, TenantClient, CustomerClient]
 })
 export class CustomerModule {}

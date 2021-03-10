@@ -1,4 +1,4 @@
-// Copyright (c)2020 Jacobs Data Solutions
+// Copyright (c)2021 Jacobs Data Solutions
 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the
 // License at
@@ -11,15 +11,9 @@ import { Injectable } from "@angular/core";
 import { User, UserManager, WebStorageStateStore } from "oidc-client";
 import { BehaviorSubject, concat, from, Observable } from "rxjs";
 import { filter, map, mergeMap, take, tap } from "rxjs/operators";
-import {
-    ApplicationPaths,
-    ApplicationName
-} from "./api-authorization.constants";
+import { ApplicationPaths, ApplicationName } from "./api-authorization.constants";
 
-export type IAuthenticationResult =
-    | SuccessAuthenticationResult
-    | FailureAuthenticationResult
-    | RedirectAuthenticationResult;
+export type IAuthenticationResult = SuccessAuthenticationResult | FailureAuthenticationResult | RedirectAuthenticationResult;
 
 export interface SuccessAuthenticationResult {
     status: AuthenticationResultStatus.Success;
@@ -54,9 +48,7 @@ export class AuthorizeService {
 
     private popUpDisabled = true;
     private userManager: UserManager;
-    private userSubject: BehaviorSubject<IUser | null> = new BehaviorSubject(
-        null
-    );
+    private userSubject: BehaviorSubject<IUser | null> = new BehaviorSubject(null);
 
     public isAuthenticated(): Observable<boolean> {
         return this.getUser().pipe(map((u) => !!u));
@@ -104,13 +96,9 @@ export class AuthorizeService {
 
             try {
                 if (this.popUpDisabled) {
-                    throw new Error(
-                        "Popup disabled. Change 'authorize.service.ts:AuthorizeService.popupDisabled' to false to enable it."
-                    );
+                    throw new Error("Popup disabled. Change 'authorize.service.ts:AuthorizeService.popupDisabled' to false to enable it.");
                 }
-                user = await this.userManager.signinPopup(
-                    this.createArguments()
-                );
+                user = await this.userManager.signinPopup(this.createArguments());
                 this.userSubject.next(user.profile);
                 return this.success(state);
             } catch (popupError) {
@@ -123,15 +111,10 @@ export class AuthorizeService {
 
                 // PopUps might be blocked by the user, fallback to redirect
                 try {
-                    await this.userManager.signinRedirect(
-                        this.createArguments(state)
-                    );
+                    await this.userManager.signinRedirect(this.createArguments(state));
                     return this.redirect();
                 } catch (redirectError) {
-                    console.log(
-                        "Redirect authentication error: ",
-                        redirectError
-                    );
+                    console.log("Redirect authentication error: ", redirectError);
                     return this.error(redirectError);
                 }
             }
@@ -153,9 +136,7 @@ export class AuthorizeService {
     public async signOut(state: any): Promise<IAuthenticationResult> {
         try {
             if (this.popUpDisabled) {
-                throw new Error(
-                    "Popup disabled. Change 'authorize.service.ts:AuthorizeService.popupDisabled' to false to enable it."
-                );
+                throw new Error("Popup disabled. Change 'authorize.service.ts:AuthorizeService.popupDisabled' to false to enable it.");
             }
 
             await this.ensureUserManagerInitialized();
@@ -165,12 +146,10 @@ export class AuthorizeService {
         } catch (popupSignOutError) {
             console.log("Popup signout error: ", popupSignOutError);
             try {
-                await this.userManager.signoutRedirect(
-                    this.createArguments(state)
-                );
+                await this.userManager.signoutRedirect(this.createArguments(state));
                 return this.redirect();
             } catch (redirectSignOutError) {
-                console.log("Redirect signout error: ", popupSignOutError);
+                console.log("Redirect signout error: ", redirectSignOutError);
                 return this.error(redirectSignOutError);
             }
         }
@@ -209,9 +188,7 @@ export class AuthorizeService {
             return;
         }
 
-        const response = await fetch(
-            ApplicationPaths.ApiAuthorizationClientConfigurationUrl
-        );
+        const response = await fetch(ApplicationPaths.ApiAuthorizationClientConfigurationUrl);
         if (!response.ok) {
             throw new Error(`Could not load settings for '${ApplicationName}'`);
         }

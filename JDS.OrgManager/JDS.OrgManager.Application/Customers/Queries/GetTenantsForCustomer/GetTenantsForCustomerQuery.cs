@@ -1,4 +1,4 @@
-﻿// Copyright ©2020 Jacobs Data Solutions
+﻿// Copyright ©2021 Jacobs Data Solutions
 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the
 // License at
@@ -25,17 +25,13 @@ namespace JDS.OrgManager.Application.Customers.Queries.GetTenantsForCustomer
         {
             private readonly IApplicationReadDbFacade facade;
 
-            public GetTenantsForCustomerQueryHandler(IApplicationReadDbFacade facade)
-            {
-                this.facade = facade ?? throw new ArgumentNullException(nameof(facade));
-            }
+            public GetTenantsForCustomerQueryHandler(IApplicationReadDbFacade facade) => this.facade = facade ?? throw new ArgumentNullException(nameof(facade));
 
             public async Task<TenantViewModel[]> Handle(GetTenantsForCustomerQuery request, CancellationToken cancellationToken) =>
-                (await facade.QueryAsync<TenantViewModel>(
-                    @"SELECT t.Id, t.AssignmentKey, t.Name, t.Slug FROM Tenants t WITH(NOLOCK)
+                (await facade.QueryAsync<TenantViewModel>(@"SELECT t.Id, t.AssignmentKey, t.Name, t.Slug FROM Tenants t WITH(NOLOCK)
                     JOIN Customers c WITH(NOLOCK) ON t.CustomerId = c.Id
                     WHERE c.AspNetUsersId = @AspNetUsersId
-                    ", request)).ToArray();
+                    ", request, transaction: null, cancellationToken: cancellationToken)).ToArray();
         }
     }
 }

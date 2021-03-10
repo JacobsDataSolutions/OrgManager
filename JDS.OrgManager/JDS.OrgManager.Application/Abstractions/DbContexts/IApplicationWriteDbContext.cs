@@ -1,4 +1,4 @@
-// Copyright ©2020 Jacobs Data Solutions
+// Copyright ©2021 Jacobs Data Solutions
 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the
 // License at
@@ -9,7 +9,7 @@
 // CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 using JDS.OrgManager.Application.Common.Currencies;
 using JDS.OrgManager.Application.Common.Employees;
-using JDS.OrgManager.Application.Common.PaidTimeOffPolicies;
+using JDS.OrgManager.Application.Common.TimeOff;
 using JDS.OrgManager.Application.Customers;
 using JDS.OrgManager.Application.Tenants;
 using Microsoft.EntityFrameworkCore;
@@ -39,7 +39,11 @@ namespace JDS.OrgManager.Application.Abstractions.DbContexts
 
         DbSet<PaidTimeOffPolicyEntity> PaidTimeOffPolicies { get; }
 
+        DbSet<PaidTimeOffRequestEntity> PaidTimeOffRequests { get; }
+
         DbSet<TenantAspNetUserEntity> TenantAspNetUsers { get; }
+
+        DbSet<TenantDefaultEntity> TenantDefaults { get; }
 
         DbSet<TenantEntity> Tenants { get; }
 

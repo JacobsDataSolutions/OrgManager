@@ -1,4 +1,4 @@
-﻿// Copyright ©2020 Jacobs Data Solutions
+﻿// Copyright ©2021 Jacobs Data Solutions
 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the
 // License at
@@ -24,7 +24,7 @@ namespace JDS.OrgManager.Application.Customers.Commands.AddOrUpdateTenant
     {
         public int AspNetUsersId { get; set; }
 
-        public TenantViewModel Tenant { get; set; }
+        public TenantViewModel Tenant { get; set; } = default!;
 
         public class AddOrUpdateTenantCommandHandler : IRequestHandler<AddOrUpdateTenantCommand, TenantViewModel>
         {
@@ -57,7 +57,7 @@ namespace JDS.OrgManager.Application.Customers.Commands.AddOrUpdateTenant
                 {
                     var sqlTransaction = transaction.GetDbTransaction();
 
-                    TenantEntity tenantEntity = null;
+                    TenantEntity? tenantEntity = null;
 
                     // Check for existing slug/key on a different tenant.
                     var slug = tenantViewModel.Slug.Sluggify();
@@ -75,9 +75,9 @@ namespace JDS.OrgManager.Application.Customers.Commands.AddOrUpdateTenant
                     }
 
                     // Update.
-                    if (tenantViewModel.Id != null)
+                    if (tenantViewModel.Id != 0)
                     {
-                        var tenantId = (int)tenantViewModel.Id;
+                        var tenantId = tenantViewModel.Id;
                         tenantEntity = context.Tenants.Find(tenantId);
                         if (tenantEntity == null)
                         {
@@ -88,9 +88,13 @@ namespace JDS.OrgManager.Application.Customers.Commands.AddOrUpdateTenant
                     else
                     {
                         // Add.
-                        var customerId = await facade.QueryFirstOrDefaultAsync<int>("SELECT TOP 1 Id FROM Customers WHERE AspNetUsersId = @AspNetUsersId", request, sqlTransaction);
+                        var customerId = await facade.QueryFirstOrDefaultAsync<int?>("SELECT TOP 1 Id FROM Customers WHERE AspNetUsersId = @AspNetUsersId", request, sqlTransaction);
+                        if (customerId == null)
+                        {
+                            throw new ApplicationLayerException("Customer information doesn't exist for the specified user.");
+                        }
                         tenantEntity = mapper.Map(tenantViewModel);
-                        tenantEntity.CustomerId = customerId;
+                        tenantEntity.CustomerId = (int)customerId;
                         await context.Tenants.AddAsync(tenantEntity);
                         isNew = true;
                     }

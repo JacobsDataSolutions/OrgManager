@@ -1,4 +1,4 @@
-// Copyright ©2020 Jacobs Data Solutions
+// Copyright ©2021 Jacobs Data Solutions
 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the
 // License at
@@ -25,29 +25,23 @@ namespace JDS.OrgManager.Persistence.DbFacades
 
         private bool disposedValue = false;
 
-        public ApplicationReadDbFacade(IConfiguration configuration)
-        {
-            connection = new SqlConnection(configuration.GetConnectionString(PersistenceLayerConstants.ReadDatabaseConnectionStringName));
-        }
+        public ApplicationReadDbFacade(IConfiguration configuration) => connection = new SqlConnection(configuration.GetConnectionString(PersistenceLayerConstants.ReadDatabaseConnectionStringName));
 
-        // This code added to correctly implement the disposable pattern.
         public void Dispose()
         {
-            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-            Dispose(true);
-            // TODO: uncomment the following line if the finalizer is overridden above. GC.SuppressFinalize(this);
+            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
 
-        public async Task<IReadOnlyList<T>> QueryAsync<T>(string sql, object param = null, IDbTransaction transaction = null, CancellationToken cancellationToken = default)
-                    => (await connection.QueryAsync<T>(sql, param, transaction)).AsList();
+        public async Task<IReadOnlyList<T>> QueryAsync<T>(string sql, object? param = null, IDbTransaction? transaction = null, CancellationToken cancellationToken = default)
+                            => (await connection.QueryAsync<T>(sql, param, transaction)).AsList();
 
-        public async Task<T> QueryFirstOrDefaultAsync<T>(string sql, object param = null, IDbTransaction transaction = null, CancellationToken cancellationToken = default)
+        public async Task<T> QueryFirstOrDefaultAsync<T>(string sql, object? param = null, IDbTransaction? transaction = null, CancellationToken cancellationToken = default)
             => await connection.QueryFirstOrDefaultAsync<T>(sql, param, transaction);
 
-        public async Task<T> QuerySingleAsync<T>(string sql, object param = null, IDbTransaction transaction = null, CancellationToken cancellationToken = default)
+        public async Task<T> QuerySingleAsync<T>(string sql, object? param = null, IDbTransaction? transaction = null, CancellationToken cancellationToken = default)
             => await connection.QuerySingleAsync<T>(sql, param, transaction);
-
-        // To detect redundant calls
 
         protected virtual void Dispose(bool disposing)
         {
@@ -55,17 +49,17 @@ namespace JDS.OrgManager.Persistence.DbFacades
             {
                 if (disposing)
                 {
+                    // TODO: dispose managed state (managed objects)
                     connection.Dispose();
                 }
 
-                // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
-                // TODO: set large fields to null.
-
+                // TODO: free unmanaged resources (unmanaged objects) and override finalizer
+                // TODO: set large fields to null
                 disposedValue = true;
             }
         }
 
-        // TODO: override a finalizer only if Dispose(bool disposing) above has code to free unmanaged resources. ~ApplicationReadDbFacade() { // Do not change
-        // this code. Put cleanup code in Dispose(bool disposing) above. Dispose(false); }
+        // // TODO: override finalizer only if 'Dispose(bool disposing)' has code to free unmanaged resources ~ApplicationReadDbFacade() { // Do not change this
+        // code. Put cleanup code in 'Dispose(bool disposing)' method Dispose(disposing: false); }
     }
 }

@@ -1,4 +1,4 @@
-// Copyright ©2020 Jacobs Data Solutions
+// Copyright ©2021 Jacobs Data Solutions
 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the
 // License at
@@ -13,15 +13,15 @@ namespace JDS.OrgManager.Application.HumanResources.Employees.Queries.GetEmploye
 {
     public class GetEmployeeOrgChartViewModel
     {
-        public string FirstName { get; set; }
+        public string FirstName { get; set; } = default!;
 
         public int Id { get; set; }
 
-        public string LastName { get; set; }
+        public string LastName { get; set; } = default!;
 
         public int? ManagerId { get; set; }
 
-        public string MiddleName { get; set; }
+        public string? MiddleName { get; set; }
 
         public List<GetEmployeeOrgChartViewModel> Subordinates { get; set; } = new List<GetEmployeeOrgChartViewModel>();
     }

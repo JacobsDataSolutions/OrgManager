@@ -1,4 +1,4 @@
-// Copyright (c)2020 Jacobs Data Solutions
+// Copyright (c)2021 Jacobs Data Solutions
 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the
 // License at
@@ -16,22 +16,22 @@ describe("App", () => {
 
     beforeEach(() => (page = new AppPage()));
 
-    it('should redirect to "about" route', () => {
-        page.navigateTo();
-        expect(getCurrentRouteUrl()).toEqual("about");
-    });
+    //it('should redirect to "about" route', () => {
+    //  page.navigateTo();
+    //  expect(getCurrentRouteUrl()).toEqual('about');
+    //});
 
     it("should display current year in the footer", () => {
         page.navigateTo();
-        expect(page.getCurrentYear()).toEqual(
-            new Date().getFullYear().toString()
-        );
+        expect(page.getCurrentYear()).toEqual(new Date().getFullYear().toString());
     });
 
-    it('should have "About", "Features", "Examples" menus', () => {
-        page.navigateTo();
-        page.getAllMenus().then((menus) =>
-            expect(menus).toEqual(["About", "Features", "Examples"])
-        );
-    });
+    //it('should have "About", "Features", "Examples" menus', () => {
+    //  page.navigateTo();
+    //  page
+    //    .getAllMenus()
+    //    .then((menus) =>
+    //      expect(menus).toEqual(['About', 'Features', 'Examples'])
+    //    );
+    //});
 });

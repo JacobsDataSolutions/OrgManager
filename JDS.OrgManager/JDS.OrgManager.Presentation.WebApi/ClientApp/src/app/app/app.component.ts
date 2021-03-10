@@ -1,4 +1,4 @@
-// Copyright (c)2020 Jacobs Data Solutions
+// Copyright (c)2021 Jacobs Data Solutions
 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the
 // License at
@@ -11,18 +11,13 @@ import browser from "browser-detect";
 import { Component, OnInit } from "@angular/core";
 
 import { environment as env } from "../../environments/environment";
-import { OverlayContainer } from "@angular/cdk/overlay";
-
-// JDS
-import {
-    AuthorizeService,
-    AuthenticationResultStatus
-} from "../../api-authorization/authorize.service";
 
 import { routeAnimations, LocalStorageService } from "../core/core.module";
+import { AuthorizeService } from "../../api-authorization/authorize.service";
+import { OverlayContainer } from "@angular/cdk/overlay";
 
 @Component({
-    selector: "org-manager-root",
+    selector: "om-root",
     templateUrl: "./app.component.html",
     styleUrls: ["./app.component.scss"],
     animations: [routeAnimations]
@@ -33,16 +28,18 @@ export class AppComponent implements OnInit {
     version = env.versions.app;
     year = new Date().getFullYear();
     logo = require("../../assets/logo.png").default;
+    navigation = [
+        //{ link: "about", label: "About" },
+        //{ link: "feature-list", label: "Features" },
+        //{ link: "examples", label: "Examples" }
+    ];
+    navigationSideMenu = [{ link: "settings", label: "Settings" }];
 
     isAuthenticated = false;
     stickyHeader = true;
     theme = "default-theme";
 
-    constructor(
-        private authorizeService: AuthorizeService,
-        private storageService: LocalStorageService,
-        private overlayContainer: OverlayContainer
-    ) {}
+    constructor(private authorizeService: AuthorizeService, private storageService: LocalStorageService, private overlayContainer: OverlayContainer) {}
 
     private static isIEorEdgeOrSafari() {
         return ["ie", "edge", "safari"].includes(browser().name);
@@ -60,9 +57,7 @@ export class AppComponent implements OnInit {
 
         // Set theme.
         const classList = this.overlayContainer.getContainerElement().classList;
-        const toRemove = Array.from(classList).filter((item: string) =>
-            item.includes("-theme")
-        );
+        const toRemove = Array.from(classList).filter((item: string) => item.includes("-theme"));
         if (toRemove.length) {
             classList.remove(...toRemove);
         }

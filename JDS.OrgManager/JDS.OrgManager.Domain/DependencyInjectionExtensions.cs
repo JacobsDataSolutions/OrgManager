@@ -1,4 +1,4 @@
-// Copyright ©2020 Jacobs Data Solutions
+// Copyright ©2021 Jacobs Data Solutions
 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the
 // License at
@@ -10,6 +10,7 @@
 using JDS.OrgManager.Common.Abstractions.DateTimes;
 using JDS.OrgManager.Domain.Abstractions.Events;
 using JDS.OrgManager.Domain.Events;
+using JDS.OrgManager.Domain.HumanResources.TimeOff;
 using JDS.OrgManager.Domain.Models;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -21,6 +22,7 @@ namespace JDS.OrgManager.Domain
         public static IServiceCollection AddDomainLayer(this IServiceCollection services)
         {
             services.AddSingleton<IDomainEventDispatcher, DomainEventDispatcher>();
+            services.AddSingleton<PaidTimeOffRequestService>();
             return services;
         }
 

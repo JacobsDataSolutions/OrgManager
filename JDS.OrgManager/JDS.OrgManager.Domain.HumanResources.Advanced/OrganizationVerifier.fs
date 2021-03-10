@@ -1,4 +1,4 @@
-// Copyright ©2020 Jacobs Data Solutions
+// Copyright ©2021 Jacobs Data Solutions
 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the
 // License at
@@ -14,7 +14,7 @@ open System.Collections.Generic
 
 type OrganizationVerifier() =
     let rules = [
-        (fun (emp : Employee) -> emp.AssertAggregates());
+        (fun (emp : Employee) -> emp.ValidateAggregate());
         (fun emp -> emp.VerifyEmployeeManagerAndSubordinates());
         (fun emp -> emp.VerifyPtoHoursAreValid());
         (fun emp -> if emp.FirstName = "John" && emp.LastName = "Doe" then raise <| new EmployeeException("Invalid employee name!"))

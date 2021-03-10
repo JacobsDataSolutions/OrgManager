@@ -1,4 +1,4 @@
-﻿// Copyright ©2020 Jacobs Data Solutions
+﻿// Copyright ©2021 Jacobs Data Solutions
 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the
 // License at
@@ -19,10 +19,10 @@ namespace JDS.OrgManager.Presentation.WebApi.Controllers
 
         public IClientRequestParametersProvider ClientRequestParametersProvider { get; }
 
-        public OidcConfigurationController(IClientRequestParametersProvider clientRequestParametersProvider, ILogger<OidcConfigurationController> _logger)
+        public OidcConfigurationController(IClientRequestParametersProvider clientRequestParametersProvider, ILogger<OidcConfigurationController> logger)
         {
             ClientRequestParametersProvider = clientRequestParametersProvider;
-            logger = _logger;
+            this.logger = logger;
         }
 
         [HttpGet("_configuration/{clientId}")]

@@ -1,4 +1,4 @@
-﻿// Copyright ©2020 Jacobs Data Solutions
+﻿// Copyright ©2021 Jacobs Data Solutions
 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the
 // License at
@@ -26,12 +26,13 @@ namespace JDS.OrgManager.Persistence.Customers
             builder.Property(e => e.Address2).HasMaxLength(Lengths.Address2);
             builder.Property(e => e.AspNetUsersId);
             builder.Property(e => e.City).HasMaxLength(Lengths.City).IsRequired();
+            builder.Property(e => e.CompanyName).HasMaxLength(Lengths.Name).IsRequired();
             builder.Property(e => e.CurrencyCode).HasMaxLength(Lengths.CurrencyCode).IsRequired();
             builder.Property(e => e.FirstName).HasMaxLength(Lengths.FirstName).IsRequired();
             builder.Property(e => e.LastName).HasMaxLength(Lengths.LastName).IsRequired();
             builder.Property(e => e.MiddleName).HasMaxLength(Lengths.MiddleName);
             builder.Property(e => e.State).HasMaxLength(Lengths.State).IsRequired();
-            builder.Property(e => e.Zip).HasMaxLength(Lengths.Zip).IsRequired();
+            builder.Property(e => e.ZipCode).HasMaxLength(Lengths.ZipCode).IsRequired();
 
             builder.HasOne(e => e.Currency).WithMany().OnDelete(DeleteBehavior.NoAction).HasForeignKey(e => e.CurrencyCode);
         }

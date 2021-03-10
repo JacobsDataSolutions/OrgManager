@@ -1,4 +1,4 @@
-// Copyright ©2020 Jacobs Data Solutions
+// Copyright ©2021 Jacobs Data Solutions
 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the
 // License at
@@ -15,29 +15,29 @@ namespace JDS.OrgManager.Application.HumanResources.Employees.Queries.GetEmploye
 {
     public class GetEmployeeListViewModel : IViewModel
     {
-        public DateTime? DateExited { get; set; }
-
         public DateTime DateHired { get; set; }
+
+        public DateTime? DateTerminated { get; set; }
 
         public int EmployeeLevel { get; set; }
 
-        public string FirstName { get; set; }
+        public string FirstName { get; set; } = default!;
 
         public Gender Gender { get; set; }
 
         public int Id { get; set; }
 
-        public string LastName { get; set; }
+        public string LastName { get; set; } = default!;
 
-        public string ManagerFirstName { get; set; }
+        public string? ManagerFirstName { get; set; }
 
         public int? ManagerId { get; set; }
 
-        public string ManagerLastName { get; set; }
+        public string? ManagerLastName { get; set; }
 
-        public string ManagerMiddleName { get; set; }
+        public string? ManagerMiddleName { get; set; }
 
-        public string MiddleName { get; set; }
+        public string? MiddleName { get; set; }
 
         public int NumSubordinates { get; set; }
     }

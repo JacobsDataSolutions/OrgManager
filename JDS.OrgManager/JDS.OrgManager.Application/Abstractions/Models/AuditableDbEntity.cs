@@ -1,4 +1,4 @@
-﻿// Copyright ©2020 Jacobs Data Solutions
+﻿// Copyright ©2021 Jacobs Data Solutions
 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the
 // License at
@@ -13,11 +13,11 @@ namespace JDS.OrgManager.Application.Abstractions.Models
 {
     public abstract class AuditableDbEntity : IDbEntity
     {
-        public string CreatedBy { get; set; }
+        public string CreatedBy { get; set; } = default!;
 
         public DateTime CreatedUtc { get; set; }
 
-        public string LastModifiedBy { get; set; }
+        public string? LastModifiedBy { get; set; }
 
         public DateTime? LastModifiedUtc { get; set; }
     }
