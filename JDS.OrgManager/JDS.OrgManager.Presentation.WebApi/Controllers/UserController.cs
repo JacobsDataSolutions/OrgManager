@@ -1,4 +1,4 @@
-﻿// Copyright ©2020 Jacobs Data Solutions
+﻿// Copyright ©2021 Jacobs Data Solutions
 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the
 // License at
@@ -20,9 +20,9 @@ namespace JDS.OrgManager.Presentation.WebApi.Controllers
     [ApiController]
     public class UserController : CqrsControllerBase
     {
-        private readonly IMediator mediator;
-
         private static readonly TimeSpan userStatusSlidingExpiration = TimeSpan.FromMinutes(5.0);
+
+        private readonly IMediator mediator;
 
         public UserController(IMediator mediator) => this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
 

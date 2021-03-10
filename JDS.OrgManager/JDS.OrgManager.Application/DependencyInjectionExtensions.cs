@@ -1,4 +1,4 @@
-// Copyright ©2020 Jacobs Data Solutions
+// Copyright ©2021 Jacobs Data Solutions
 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the
 // License at
@@ -10,14 +10,8 @@
 using FastExpressionCompiler;
 using JDS.OrgManager.Application.Abstractions.Mapping;
 using JDS.OrgManager.Application.Behaviors;
-using JDS.OrgManager.Application.Common.Employees;
 using JDS.OrgManager.Application.Common.Mapping;
-using JDS.OrgManager.Application.Common.TimeOff;
-using JDS.OrgManager.Application.HumanResources.Employees.Commands.AddOrUpdateEmployee;
 using JDS.OrgManager.Application.System;
-using JDS.OrgManager.Application.Tenants;
-using JDS.OrgManager.Domain.HumanResources.Employees;
-using JDS.OrgManager.Domain.HumanResources.TimeOff;
 using Mapster;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;

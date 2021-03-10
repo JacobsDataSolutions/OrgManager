@@ -1,10 +1,49 @@
-﻿using System;
+﻿// Copyright ©2021 Jacobs Data Solutions
+
+// Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the
+// License at
+
+// http://www.apache.org/licenses/LICENSE-2.0
+
+// Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+// CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 using Microsoft.EntityFrameworkCore.Migrations;
+using System;
 
 namespace JDS.OrgManager.Persistence.Migrations
 {
     public partial class UpdatedModel : Migration
     {
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DropTable(
+                name: "TenantDefaults");
+
+            migrationBuilder.DropColumn(
+                name: "IsPending",
+                table: "Employees");
+
+            migrationBuilder.DropColumn(
+                name: "CompanyName",
+                table: "Customers");
+
+            migrationBuilder.AlterColumn<DateTime>(
+                name: "DateHired",
+                table: "Employees",
+                type: "date",
+                nullable: false,
+                defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                oldClrType: typeof(DateTime),
+                oldType: "date",
+                oldNullable: true);
+
+            migrationBuilder.AddColumn<int>(
+                name: "CompanyId",
+                table: "Customers",
+                type: "int",
+                nullable: true);
+        }
+
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
@@ -76,36 +115,6 @@ namespace JDS.OrgManager.Persistence.Migrations
                 name: "IX_TenantDefaults_TenantId_PaidTimeOffPolicyId",
                 table: "TenantDefaults",
                 columns: new[] { "TenantId", "PaidTimeOffPolicyId" });
-        }
-
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.DropTable(
-                name: "TenantDefaults");
-
-            migrationBuilder.DropColumn(
-                name: "IsPending",
-                table: "Employees");
-
-            migrationBuilder.DropColumn(
-                name: "CompanyName",
-                table: "Customers");
-
-            migrationBuilder.AlterColumn<DateTime>(
-                name: "DateHired",
-                table: "Employees",
-                type: "date",
-                nullable: false,
-                defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                oldClrType: typeof(DateTime),
-                oldType: "date",
-                oldNullable: true);
-
-            migrationBuilder.AddColumn<int>(
-                name: "CompanyId",
-                table: "Customers",
-                type: "int",
-                nullable: true);
         }
     }
 }

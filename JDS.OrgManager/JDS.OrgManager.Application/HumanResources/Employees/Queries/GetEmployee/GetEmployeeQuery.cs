@@ -1,4 +1,4 @@
-// Copyright ©2020 Jacobs Data Solutions
+// Copyright ©2021 Jacobs Data Solutions
 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the
 // License at
@@ -32,23 +32,23 @@ namespace JDS.OrgManager.Application.HumanResources.Employees.Queries.GetEmploye
                 queryFacade.QuerySingleAsync<EmployeeViewModel>(@"
                     SELECT TOP 1
                         t.AssignmentKey,
-                        Address1, 
+                        Address1,
                         Address2,
                         City,
-                        CurrencyCode, 
-                        DateTerminated, 
-                        DateHired, 
-                        DateOfBirth, 
-                        EmployeeLevel, 
-                        FirstName, 
-                        Gender, 
-                        e.Id, 
-                        LastName, 
-                        MiddleName, 
-                        PaidTimeOffPolicyId, 
-                        PtoHoursRemaining, 
-                        Salary, 
-                        State, 
+                        CurrencyCode,
+                        DateTerminated,
+                        DateHired,
+                        DateOfBirth,
+                        EmployeeLevel,
+                        FirstName,
+                        Gender,
+                        e.Id,
+                        LastName,
+                        MiddleName,
+                        PaidTimeOffPolicyId,
+                        PtoHoursRemaining,
+                        Salary,
+                        State,
                         ZipCode
                         FROM Employees e
                         JOIN [dbo].[AspNetUsers] u WITH(NOLOCK) ON u.Id = e.AspNetUsersId

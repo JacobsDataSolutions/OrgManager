@@ -1,4 +1,4 @@
-﻿// Copyright ©2020 Jacobs Data Solutions
+﻿// Copyright ©2021 Jacobs Data Solutions
 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the
 // License at
@@ -16,7 +16,6 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace JDS.OrgManager.Presentation.WebApi.Controllers
@@ -34,12 +33,12 @@ namespace JDS.OrgManager.Presentation.WebApi.Controllers
         public async Task<ActionResult<bool>> GetHasTenantAccess(int tenantId) => Ok(await mediator.Send(new GetUserHasTenantAccessQuery { AspNetUsersId = GetAspNetUsersId(), TenantId = tenantId }));
 
         [HttpGet("[action]")]
+        public async Task<ActionResult<TenantViewModel>> GetTenant(int tenantId) => Ok(await mediator.Send(new GetTenantQuery() { TenantId = tenantId }));
+
+        [HttpGet("[action]")]
         public async Task<ActionResult<int>> GetTenantIdFromAssignmentKey(Guid assignmentKey) => Ok(await mediator.Send(new GetTenantIdFromAssignmentKeyQuery() { AssignmentKey = assignmentKey }));
 
         [HttpGet("[action]")]
         public async Task<ActionResult<int>> GetTenantIdFromSlug(string slug) => Ok(await mediator.Send(new GetTenantIdFromSlugQuery() { Slug = slug }));
-
-        [HttpGet("[action]")]
-        public async Task<ActionResult<TenantViewModel>> GetTenant(int tenantId) => Ok(await mediator.Send(new GetTenantQuery() { TenantId = tenantId }));
     }
 }

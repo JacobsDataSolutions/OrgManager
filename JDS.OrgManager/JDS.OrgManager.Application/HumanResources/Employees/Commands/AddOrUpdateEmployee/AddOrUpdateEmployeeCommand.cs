@@ -1,4 +1,4 @@
-// Copyright ©2020 Jacobs Data Solutions
+// Copyright ©2021 Jacobs Data Solutions
 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the
 // License at
@@ -10,17 +10,13 @@
 using JDS.OrgManager.Application.Abstractions.DbContexts;
 using JDS.OrgManager.Application.Abstractions.DbFacades;
 using JDS.OrgManager.Application.Abstractions.Mapping;
-using JDS.OrgManager.Application.Abstractions.Models;
 using JDS.OrgManager.Application.Common.Employees;
 using JDS.OrgManager.Application.Common.TimeOff;
-using JDS.OrgManager.Common.Abstractions.DateTimes;
-using JDS.OrgManager.Domain.Common.People;
 using JDS.OrgManager.Domain.HumanResources.Employees;
 using JDS.OrgManager.Domain.HumanResources.TimeOff;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -38,17 +34,17 @@ namespace JDS.OrgManager.Application.HumanResources.Employees.Commands.AddOrUpda
         {
             private readonly IApplicationWriteDbContext context;
 
-            private readonly IApplicationWriteDbFacade facade;
+            private readonly IDbEntityToDomainEntityMapper<EmployeeEntity, Employee> employeeDbEntityToDomainEntityMapper;
+
+            private readonly IDomainEntityToViewModelMapper<Employee, EmployeeViewModel> employeeDomainEntityToViewModelMapper;
 
             private readonly IDomainEntityToDbEntityMapper<Employee, EmployeeEntity> employeeDomainToDbEntityMapper;
 
-            private readonly IDbEntityToDomainEntityMapper<EmployeeEntity, Employee> employeeDbEntityToDomainEntityMapper;
-
             private readonly IViewModelToDomainEntityMapper<EmployeeViewModel, Employee> employeeVmToDomainEntityMapper;
 
-            private readonly IDbEntityToDomainEntityMapper<PaidTimeOffPolicyEntity, PaidTimeOffPolicy> ptoPolicyDbEntityToDomainEntityMapper;
+            private readonly IApplicationWriteDbFacade facade;
 
-            private readonly IDomainEntityToViewModelMapper<Employee, EmployeeViewModel> employeeDomainEntityToViewModelMapper;
+            private readonly IDbEntityToDomainEntityMapper<PaidTimeOffPolicyEntity, PaidTimeOffPolicy> ptoPolicyDbEntityToDomainEntityMapper;
 
             public AddOrUpdateEmployeeCommandHandler(
                 IApplicationWriteDbContext context,
@@ -137,8 +133,7 @@ namespace JDS.OrgManager.Application.HumanResources.Employees.Commands.AddOrUpda
                 }
                 // End business logic.
 
-                // PERSISTENCE LAYER
-                // Convert back to persistence entity.
+                // PERSISTENCE LAYER Convert back to persistence entity.
                 var employeeEntity = employeeDomainToDbEntityMapper.Map(employee);
                 employeeEntity.TenantId = employeeViewModel.TenantId;
                 var entry = await context.Employees.AddAsync(employeeEntity);
@@ -173,7 +168,7 @@ namespace JDS.OrgManager.Application.HumanResources.Employees.Commands.AddOrUpda
 
                 // Kick off domain events.
                 if (isNewEmployee)
-                { 
+                {
                     employee.CreateEmployeeRegisteredEvent();
                 }
                 else

@@ -1,4 +1,4 @@
-// Copyright ©2020 Jacobs Data Solutions
+// Copyright ©2021 Jacobs Data Solutions
 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the
 // License at
@@ -15,9 +15,9 @@ namespace JDS.OrgManager.Application.HumanResources.Employees.Queries.GetEmploye
 {
     public class GetEmployeeListViewModel : IViewModel
     {
-        public DateTime? DateTerminated { get; set; }
-
         public DateTime DateHired { get; set; }
+
+        public DateTime? DateTerminated { get; set; }
 
         public int EmployeeLevel { get; set; }
 

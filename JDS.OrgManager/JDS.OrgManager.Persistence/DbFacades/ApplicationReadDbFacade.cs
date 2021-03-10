@@ -1,4 +1,4 @@
-// Copyright ©2020 Jacobs Data Solutions
+// Copyright ©2021 Jacobs Data Solutions
 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the
 // License at
@@ -27,8 +27,15 @@ namespace JDS.OrgManager.Persistence.DbFacades
 
         public ApplicationReadDbFacade(IConfiguration configuration) => connection = new SqlConnection(configuration.GetConnectionString(PersistenceLayerConstants.ReadDatabaseConnectionStringName));
 
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
+        }
+
         public async Task<IReadOnlyList<T>> QueryAsync<T>(string sql, object? param = null, IDbTransaction? transaction = null, CancellationToken cancellationToken = default)
-                    => (await connection.QueryAsync<T>(sql, param, transaction)).AsList();
+                            => (await connection.QueryAsync<T>(sql, param, transaction)).AsList();
 
         public async Task<T> QueryFirstOrDefaultAsync<T>(string sql, object? param = null, IDbTransaction? transaction = null, CancellationToken cancellationToken = default)
             => await connection.QueryFirstOrDefaultAsync<T>(sql, param, transaction);
@@ -52,18 +59,7 @@ namespace JDS.OrgManager.Persistence.DbFacades
             }
         }
 
-        // // TODO: override finalizer only if 'Dispose(bool disposing)' has code to free unmanaged resources
-        // ~ApplicationReadDbFacade()
-        // {
-        //     // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
-        //     Dispose(disposing: false);
-        // }
-
-        public void Dispose()
-        {
-            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
-            Dispose(disposing: true);
-            GC.SuppressFinalize(this);
-        }
+        // // TODO: override finalizer only if 'Dispose(bool disposing)' has code to free unmanaged resources ~ApplicationReadDbFacade() { // Do not change this
+        // code. Put cleanup code in 'Dispose(bool disposing)' method Dispose(disposing: false); }
     }
 }

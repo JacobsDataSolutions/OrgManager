@@ -1,4 +1,13 @@
-﻿using JDS.OrgManager.Application.Abstractions.DbContexts;
+﻿// Copyright ©2021 Jacobs Data Solutions
+
+// Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the
+// License at
+
+// http://www.apache.org/licenses/LICENSE-2.0
+
+// Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+// CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+using JDS.OrgManager.Application.Abstractions.DbContexts;
 using JDS.OrgManager.Application.Abstractions.DbFacades;
 using JDS.OrgManager.Application.Abstractions.Mapping;
 using JDS.OrgManager.Application.Common.Employees;
@@ -8,9 +17,7 @@ using JDS.OrgManager.Domain.HumanResources.TimeOff;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -77,10 +84,10 @@ namespace JDS.OrgManager.Application.HumanResources.TimeOff.Commands.SubmitNewPa
                 var submittedByEmployee = mapper.MapDbEntityToDomainEntity<EmployeeEntity, Employee>(submittedByEntity);
                 var paidTimeOffPolicy = mapper.MapDbEntityToDomainEntity<PaidTimeOffPolicyEntity, PaidTimeOffPolicy>(forEmployeeEntity.PaidTimeOffPolicy);
                 var existingRequests = (from req in forEmployeeEntity.ForPaidTimeOffRequests select mapper.MapDbEntityToDomainEntity<PaidTimeOffRequestEntity, PaidTimeOffRequest>(req)).ToList();
-                
-                // Build up the Domain aggregate entity so that complex business logic can be executed against it.
-                // In an enterprise (non-demo) solution this would likely involve special rules involving accrued hours, whether the company allows going negative in PTO hours,
-                // managerial overrides, etc. The point is that the entities, and the logic which operates against them, are separate from view models and database persistence models.
+
+                // Build up the Domain aggregate entity so that complex business logic can be executed against it. In an enterprise (non-demo) solution this
+                // would likely involve special rules involving accrued hours, whether the company allows going negative in PTO hours, managerial overrides,
+                // etc. The point is that the entities, and the logic which operates against them, are separate from view models and database persistence models.
                 var submittedRequest =
                     mapper.MapViewModelToDomainEntity<SubmitNewPaidTimeOffRequestViewModel, PaidTimeOffRequest>(request.PaidTimeOffRequest)
                     .WithForEmployee(forEmployee)
@@ -90,8 +97,8 @@ namespace JDS.OrgManager.Application.HumanResources.TimeOff.Commands.SubmitNewPa
                 // Ensure the aggregate is in a valid state with which to perform business logic.
                 submittedRequest.ValidateAggregate();
 
-                // Perform basic validation against the request to make sure that the employee is OK to submit this paid time off request.
-                // Once again, the logic inside the service is naive and overly-simplistic. A real-life solution would be much more involved.
+                // Perform basic validation against the request to make sure that the employee is OK to submit this paid time off request. Once again, the logic
+                // inside the service is naive and overly-simplistic. A real-life solution would be much more involved.
                 var validationResult = paidTimeOffRequestService.ValidatePaidTimeOffRequest(submittedRequest, existingRequests, paidTimeOffPolicy, today);
                 timeOffRequestViewModel.Result = validationResult;
                 if (validationResult != PaidTimeOffRequestValidationResult.OK)

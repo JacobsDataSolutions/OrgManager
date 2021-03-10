@@ -1,4 +1,4 @@
-﻿// Copyright ©2020 Jacobs Data Solutions
+﻿// Copyright ©2021 Jacobs Data Solutions
 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the
 // License at
@@ -29,7 +29,7 @@ namespace JDS.OrgManager.Presentation.WebApi.Controllers
 
         [HttpPost("[action]")]
         public async Task<ActionResult<EmployeeViewModel>> AddOrUpdateEmployee([FromBody] EmployeeViewModel employee) => Ok(await mediator.Send(new AddOrUpdateEmployeeCommand { AspNetUsersId = GetAspNetUsersId(), Employee = employee }));
-        
+
         [HttpGet("[action]")]
         public async Task<ActionResult<EmployeeViewModel>> GetEmployee() => Ok(await mediator.Send(new GetEmployeeQuery() { AspNetUsersId = GetAspNetUsersId() }));
     }

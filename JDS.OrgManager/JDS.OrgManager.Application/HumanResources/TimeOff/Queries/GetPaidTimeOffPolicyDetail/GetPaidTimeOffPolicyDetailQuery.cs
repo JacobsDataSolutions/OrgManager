@@ -1,4 +1,4 @@
-// Copyright ©2020 Jacobs Data Solutions
+// Copyright ©2021 Jacobs Data Solutions
 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the
 // License at
@@ -24,13 +24,13 @@ namespace JDS.OrgManager.Application.HumanResources.TimeOff.Queries.GetPaidTimeO
 
         public int Id { get; set; }
 
-        public int TenantId { get; set; }
-
         public bool RefreshCachedEntry { get; set; }
 
         public bool ReplaceCachedEntry { get; set; }
 
         public TimeSpan? SlidingExpiration { get; set; }
+
+        public int TenantId { get; set; }
 
         public class GetPaidTimeOffPolicyDetailQueryHandler : IRequestHandler<GetPaidTimeOffPolicyDetailQuery, GetPaidTimeOffPolicyDetailViewModel>
         {

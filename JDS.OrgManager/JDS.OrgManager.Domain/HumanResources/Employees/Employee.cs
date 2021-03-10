@@ -1,4 +1,4 @@
-// Copyright ©2020 Jacobs Data Solutions
+// Copyright ©2021 Jacobs Data Solutions
 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the
 // License at
@@ -7,7 +7,6 @@
 
 // Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
 // CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
-using JDS.OrgManager.Common.Abstractions.DateTimes;
 using JDS.OrgManager.Domain.Common.Addresses;
 using JDS.OrgManager.Domain.Common.Employees;
 using JDS.OrgManager.Domain.Common.Finance;
@@ -22,6 +21,14 @@ namespace JDS.OrgManager.Domain.HumanResources.Employees
 {
     public class Employee : DomainEntity<Employee>
     {
+        private Employee? manager;
+
+        private PaidTimeOffPolicy paidTimeOffPolicy = default!;
+
+        private List<PaidTimeOffRequest> paidTimeOffRequests = new List<PaidTimeOffRequest>();
+
+        private List<Employee> subordinates = new List<Employee>();
+
         public DateTime DateHired { get; init; }
 
         public DateTime DateOfBirth { get; init; }
@@ -38,18 +45,12 @@ namespace JDS.OrgManager.Domain.HumanResources.Employees
 
         public string LastName { get; init; } = default!;
 
-        private Employee? manager;
         public Employee? Manager { get => manager; init => manager = value; }
 
         public string? MiddleName { get; init; }
 
-        private PaidTimeOffPolicy paidTimeOffPolicy = default!;
         public PaidTimeOffPolicy PaidTimeOffPolicy { get => paidTimeOffPolicy; init => paidTimeOffPolicy = value; }
 
-        private List<Employee> subordinates = new List<Employee>();
-        public List<Employee> Subordinates { get => subordinates; init => subordinates = value; }
-
-        private List<PaidTimeOffRequest> paidTimeOffRequests = new List<PaidTimeOffRequest>();
         public List<PaidTimeOffRequest> PaidTimeOffRequests { get => paidTimeOffRequests; init => paidTimeOffRequests = value; }
 
         public decimal? PtoHoursRemaining { get; init; }
@@ -57,6 +58,12 @@ namespace JDS.OrgManager.Domain.HumanResources.Employees
         public Money Salary { get; init; } = default!;
 
         public SocialSecurityNumber SocialSecurityNumber { get; init; } = default!;
+
+        public List<Employee> Subordinates { get => subordinates; init => subordinates = value; }
+
+        public void CreateEmployeeRegisteredEvent() => AddDomainEvent(new EmployeeRegisteredEvent(this));
+
+        public void CreateEmployeeUpdatedEvent() => AddDomainEvent(new EmployeeUpdatedEvent(this));
 
         public override void ValidateAggregate()
         {
@@ -84,9 +91,6 @@ namespace JDS.OrgManager.Domain.HumanResources.Employees
                 subordinate.ValidateAggregate();
             }
         }
-
-        public void CreateEmployeeRegisteredEvent() => AddDomainEvent(new EmployeeRegisteredEvent(this));
-        public void CreateEmployeeUpdatedEvent() => AddDomainEvent(new EmployeeUpdatedEvent(this));
 
         public void VerifyEmployeeManagerAndSubordinates()
         {

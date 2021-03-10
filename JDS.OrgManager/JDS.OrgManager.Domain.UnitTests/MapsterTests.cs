@@ -1,11 +1,15 @@
-﻿using JDS.OrgManager.Domain.Common.Addresses;
+﻿// Copyright ©2021 Jacobs Data Solutions
+
+// Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the
+// License at
+
+// http://www.apache.org/licenses/LICENSE-2.0
+
+// Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+// CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+using JDS.OrgManager.Domain.Common.Addresses;
 using Mapster;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace JDS.OrgManager.Domain.UnitTests
@@ -23,20 +27,20 @@ namespace JDS.OrgManager.Domain.UnitTests
         }
 
         [Fact]
-        public void CanMapToCSharp9RecordTypeWithInitProperties()
+        public void CanMapToCSharp9RecordTypeWithGetPropertiesAndConstructor()
         {
             var person = new PersonTestClass { FirstName = "John", MiddleName = "Paul", LastName = "Doe" };
-            var record = person.Adapt<CSharp9RecordTypeWithInitProperties>();
+            var record = person.Adapt<CSharp9RecordTypeWithGetPropertiesAndConstructor>();
             Assert.Equal("John", record.FirstName);
             Assert.Equal("Paul", record.MiddleName);
             Assert.Equal("Doe", record.LastName);
         }
 
         [Fact]
-        public void CanMapToCSharp9RecordTypeWithGetPropertiesAndConstructor()
+        public void CanMapToCSharp9RecordTypeWithInitProperties()
         {
             var person = new PersonTestClass { FirstName = "John", MiddleName = "Paul", LastName = "Doe" };
-            var record = person.Adapt<CSharp9RecordTypeWithGetPropertiesAndConstructor>();
+            var record = person.Adapt<CSharp9RecordTypeWithInitProperties>();
             Assert.Equal("John", record.FirstName);
             Assert.Equal("Paul", record.MiddleName);
             Assert.Equal("Doe", record.LastName);
@@ -66,9 +70,10 @@ namespace JDS.OrgManager.Domain.UnitTests
     public class PersonTestClass
     {
         public string FirstName { get; init; } = default!;
-        public string? MiddleName { get; init; }
+
         public string LastName { get; init; } = default!;
 
+        public string? MiddleName { get; init; }
     }
 
     public record CSharp9RecordTypeWithConstructorSyntax(string FirstName, string LastName, string? MiddleName = default) { }
@@ -78,7 +83,6 @@ namespace JDS.OrgManager.Domain.UnitTests
         public string FirstName { get; init; } = default!;
         public string? MiddleName { get; init; }
         public string LastName { get; init; } = default!;
-
     }
 
     public record CSharp9RecordTypeWithGetPropertiesAndConstructor
