@@ -8,7 +8,8 @@
 // Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
 // CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 using JDS.OrgManager.Application.HumanResources.Employees;
-using JDS.OrgManager.Application.HumanResources.Employees.Commands.RegisterOrUpdateEmployee;
+using JDS.OrgManager.Application.HumanResources.Employees.Commands.AddOrUpdateEmployee;
+using JDS.OrgManager.Application.HumanResources.Employees.Queries.GetEmployee;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -27,6 +28,9 @@ namespace JDS.OrgManager.Presentation.WebApi.Controllers
         public EmployeeController(IMediator mediator) => this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
 
         [HttpPost("[action]")]
-        public async Task<ActionResult<EmployeeViewModel>> RegisterNewEmployee([FromBody] EmployeeViewModel employee) => Ok(await mediator.Send(new RegisterOrUpdateEmployeeCommand { AspNetUsersId = GetAspNetUsersId(), Employee = employee }));
+        public async Task<ActionResult<EmployeeViewModel>> AddOrUpdateEmployee([FromBody] EmployeeViewModel employee) => Ok(await mediator.Send(new AddOrUpdateEmployeeCommand { AspNetUsersId = GetAspNetUsersId(), Employee = employee }));
+        
+        [HttpGet("[action]")]
+        public async Task<ActionResult<EmployeeViewModel>> GetEmployee() => Ok(await mediator.Send(new GetEmployeeQuery() { AspNetUsersId = GetAspNetUsersId() }));
     }
 }

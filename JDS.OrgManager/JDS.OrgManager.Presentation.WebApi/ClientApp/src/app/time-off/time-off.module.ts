@@ -12,7 +12,7 @@ import { EmployeePaidTimeOffRequestsComponent } from "./employee-paid-time-off-r
 @NgModule({
     declarations: [SubmitTimeOffRequestComponent, EmployeePaidTimeOffRequestsComponent],
     imports: [CommonModule, SharedModule, CoreModule],
-    exports: [],
+    exports: [SubmitTimeOffRequestComponent, EmployeePaidTimeOffRequestsComponent],
     providers: [TimeOffClient]
 })
 export class TimeOffModule {}

@@ -8,10 +8,11 @@ import { AddOrUpdateEmployeeComponent } from "./add-or-update-employee/add-or-up
 import { EmployeeHomeComponent } from "./employee-home/employee-home.component";
 import { RouterModule } from "@angular/router";
 import { EmployeeClient, UserClient, TimeOffClient, TenantClient } from "../shared/nswag";
+import { TimeOffModule } from "../time-off/time-off.module";
 
 @NgModule({
     declarations: [AddOrUpdateEmployeeComponent, EmployeeHomeComponent],
-    imports: [CommonModule, SharedModule, CoreModule, RouterModule],
+    imports: [CommonModule, SharedModule, CoreModule, RouterModule, TimeOffModule],
     exports: [],
     providers: [EmployeeClient, UserClient, TimeOffClient, TenantClient]
 })

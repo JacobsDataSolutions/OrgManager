@@ -16,11 +16,11 @@ import { Lengths } from "../../shared/lengths";
     changeDetection: ChangeDetectionStrategy.Default
 })
 export class AddOrUpdateCustomerComponent implements OnInit, OnDestroy {
+    routeAnimationsElements = ROUTE_ANIMATIONS_ELEMENTS;
     lengths = Lengths;
     private ngUnsubscribe = new Subject();
     states = States;
     currencies = Currencies;
-    routeAnimationsElements = ROUTE_ANIMATIONS_ELEMENTS;
     form = this.fb.group({
         companyName: ["", [Validators.required, Validators.maxLength(Lengths._name)]],
         firstName: ["", [Validators.required, Validators.maxLength(Lengths.firstName)]],

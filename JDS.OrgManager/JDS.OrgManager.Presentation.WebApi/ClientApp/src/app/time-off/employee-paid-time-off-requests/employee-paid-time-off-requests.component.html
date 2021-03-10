@@ -1,36 +1,42 @@
-<h3>Paid Time Off Requests</h3>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="main-heading">Submit New Time Off Request</h1>
+        </div>
+    </div>
 
-<mat-table class="pto-requests-table mat-elevation-z8" [dataSource]="paidTimeOffRequests">
-    <ng-container matColumnDef="startDate">
-        <mat-header-cell *matHeaderCellDef> Start Date </mat-header-cell>
-        <mat-cell *matCellDef="let request"> {{request.startDate | date:'shortDate'}} </mat-cell>
-    </ng-container>
+    <mat-table class="pto-requests-table mat-elevation-z8" [dataSource]="paidTimeOffRequests">
+        <ng-container matColumnDef="startDate">
+            <mat-header-cell *matHeaderCellDef> Start Date </mat-header-cell>
+            <mat-cell *matCellDef="let request"> {{request.startDate | date:'shortDate'}} </mat-cell>
+        </ng-container>
 
-    <ng-container matColumnDef="endDate">
-        <mat-header-cell *matHeaderCellDef> End Date </mat-header-cell>
-        <mat-cell *matCellDef="let request"> {{request.endDate | date:'shortDate'}} </mat-cell>
-    </ng-container>
+        <ng-container matColumnDef="endDate">
+            <mat-header-cell *matHeaderCellDef> End Date </mat-header-cell>
+            <mat-cell *matCellDef="let request"> {{request.endDate | date:'shortDate'}} </mat-cell>
+        </ng-container>
 
-    <ng-container matColumnDef="hoursRequested">
-        <mat-header-cell *matHeaderCellDef> Hours Requested </mat-header-cell>
-        <mat-cell *matCellDef="let request"> {{request.hoursRequested}} </mat-cell>
-    </ng-container>
+        <ng-container matColumnDef="hoursRequested">
+            <mat-header-cell *matHeaderCellDef> Hours Requested </mat-header-cell>
+            <mat-cell *matCellDef="let request"> {{request.hoursRequested}} </mat-cell>
+        </ng-container>
 
-    <ng-container matColumnDef="submittedByName">
-        <mat-header-cell *matHeaderCellDef> Submitted By </mat-header-cell>
-        <mat-cell *matCellDef="let request"> {{request.submittedByName}} </mat-cell>
-    </ng-container>
+        <ng-container matColumnDef="submittedByName">
+            <mat-header-cell *matHeaderCellDef> Submitted By </mat-header-cell>
+            <mat-cell *matCellDef="let request"> {{request.submittedByName}} </mat-cell>
+        </ng-container>
 
-    <ng-container matColumnDef="status">
-        <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
-        <mat-cell *matCellDef="let request"> {{getStatus(request.status)}} </mat-cell>
-    </ng-container>
+        <ng-container matColumnDef="status">
+            <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
+            <mat-cell *matCellDef="let request"> {{getStatus(request.status)}} </mat-cell>
+        </ng-container>
 
-    <ng-container matColumnDef="notes">
-        <mat-header-cell *matHeaderCellDef> Notes </mat-header-cell>
-        <mat-cell *matCellDef="let request"> {{request.notes}} </mat-cell>
-    </ng-container>
+        <ng-container matColumnDef="notes">
+            <mat-header-cell *matHeaderCellDef> Notes </mat-header-cell>
+            <mat-cell *matCellDef="let request"> {{request.notes}} </mat-cell>
+        </ng-container>
 
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-</mat-table>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+</div>

@@ -1,9 +1,0 @@
-$org-manager-black-primary: mat-palette($mat-grey, 700, 300, 900);
-$org-manager-black-accent: mat-palette($mat-blue-grey, 400);
-$org-manager-black-warn: mat-palette($mat-red, 500);
-
-$org-manager-black-theme: mat-dark-theme(
-    $org-manager-black-primary,
-    $org-manager-black-accent,
-    $org-manager-black-warn
-);

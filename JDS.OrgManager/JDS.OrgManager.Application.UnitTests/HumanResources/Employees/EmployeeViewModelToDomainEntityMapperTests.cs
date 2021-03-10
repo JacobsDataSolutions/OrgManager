@@ -10,7 +10,7 @@
 using AutoFixture;
 using JDS.OrgManager.Application.Common.Mapping;
 using JDS.OrgManager.Application.HumanResources.Employees;
-using JDS.OrgManager.Application.HumanResources.Employees.Commands.RegisterOrUpdateEmployee;
+using JDS.OrgManager.Application.HumanResources.Employees.Commands.AddOrUpdateEmployee;
 using JDS.OrgManager.Utils;
 using System.Linq;
 using Xunit;

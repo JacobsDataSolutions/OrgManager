@@ -14,7 +14,7 @@
             You have no current PTO requests.
         </div>
         <div class="col-md-12" *ngIf="paidTimeOffRequests?.length">
-            <om-employee-paid-time-off-requests [paidTimeOffRequests]="paidTimeOffRequests"></om-employee-paid-time-off-requests>
+            <om-employee-paid-time-off-requests [paidTimeOffRequests]="paidTimeOffRequests$ | async"></om-employee-paid-time-off-requests>
         </div>
     </div>
 </div>

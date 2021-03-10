@@ -13,7 +13,7 @@ using JDS.OrgManager.Application.Behaviors;
 using JDS.OrgManager.Application.Common.Employees;
 using JDS.OrgManager.Application.Common.Mapping;
 using JDS.OrgManager.Application.Common.TimeOff;
-using JDS.OrgManager.Application.HumanResources.Employees.Commands.RegisterOrUpdateEmployee;
+using JDS.OrgManager.Application.HumanResources.Employees.Commands.AddOrUpdateEmployee;
 using JDS.OrgManager.Application.System;
 using JDS.OrgManager.Application.Tenants;
 using JDS.OrgManager.Domain.HumanResources.Employees;

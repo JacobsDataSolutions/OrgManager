@@ -1,4 +1,14 @@
-<!--<div class="container">
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h1 class="main-heading">Employee Details</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+
+        </div>
+    </div>
     <form [formGroup]="form" (ngSubmit)="save()">
         <div class="row justify-content-center">
             <div class="col-md-8">
@@ -17,10 +27,10 @@
                                 Assignment Key is required.
                             </mat-error>
                             <mat-error *ngIf="form.get('assignmentKey').hasError('maxlength')">
-                                Max length is 36.
+                                Max length is {{ lengths.guid }}.
                             </mat-error>
                             <mat-error *ngIf="form.get('assignmentKey').hasError('minlength')">
-                                Min length is 36.
+                                Min length is {{ lengths.guid }}.
                             </mat-error>
                         </mat-form-field>
                     </div>
@@ -32,14 +42,14 @@
                                 First name is required.
                             </mat-error>
                             <mat-error *ngIf="form.get('firstName').hasError('maxlength')">
-                                Max length is 25.
+                                Max length is {{ lengths.firstName }}.
                             </mat-error>
                         </mat-form-field>
                         <mat-form-field class="col" [ngClass]="routeAnimationsElements">
                             <input matInput placeholder="Middle Name (optional)"
                                    formControlName="middleName">
                             <mat-error *ngIf="form.get('middleName').hasError('maxlength')">
-                                Max length is 25.
+                                Max length is {{ lengths.middleName }}.
                             </mat-error>
                         </mat-form-field>
                         <mat-form-field class="col" [ngClass]="routeAnimationsElements">
@@ -49,7 +59,7 @@
                                 Last name is required.
                             </mat-error>
                             <mat-error *ngIf="form.get('lastName').hasError('maxlength')">
-                                Max length is 35.
+                                Max length is {{ lengths.lastName }}.
                             </mat-error>
                         </mat-form-field>
                     </div>
@@ -80,14 +90,14 @@
                                 Address is required.
                             </mat-error>
                             <mat-error *ngIf="form.get('address1').hasError('maxlength')">
-                                Max length is 50.
+                                Max length is {{ lengths.address1 }}.
                             </mat-error>
                         </mat-form-field>
                         <mat-form-field class="col" [ngClass]="routeAnimationsElements">
                             <input matInput placeholder="Address Line 2 (optional)"
                                    formControlName="address2">
                             <mat-error *ngIf="form.get('address2').hasError('maxlength')">
-                                Max length is 15.
+                                Max length is {{ lengths.address2 }}.
                             </mat-error>
                         </mat-form-field>
                     </div>
@@ -99,7 +109,7 @@
                                 City is required.
                             </mat-error>
                             <mat-error *ngIf="form.get('city').hasError('maxlength')">
-                                Max length is 30.
+                                Max length is {{ lengths.city }}.
                             </mat-error>
                         </mat-form-field>
                         <mat-form-field class="col" [ngClass]="routeAnimationsElements">
@@ -114,12 +124,12 @@
                         </mat-form-field>
                         <mat-form-field class="col" [ngClass]="routeAnimationsElements">
                             <input matInput placeholder="Zip Code"
-                                   formControlName="zip">
-                            <mat-error *ngIf="form.get('zip').hasError('required')">
+                                   formControlName="zipCode">
+                            <mat-error *ngIf="form.get('zipCode').hasError('required')">
                                 Zip is required.
                             </mat-error>
-                            <mat-error *ngIf="form.get('zip').hasError('maxlength')">
-                                Max length is 10.
+                            <mat-error *ngIf="form.get('zipCode').hasError('maxlength')">
+                                Max length is {{ lengths.zipCode }}.
                             </mat-error>
                         </mat-form-field>
                     </div>
@@ -128,7 +138,7 @@
                             <input matInput placeholder="External Employee ID (optional)"
                                    formControlName="externalEmployeeId">
                             <mat-error *ngIf="form.get('externalEmployeeId').hasError('maxlength')">
-                                Max length is 25.
+                                Max length is {{ lengths.externalEmployeeId }}.
                             </mat-error>
                         </mat-form-field>
                     </div>
@@ -142,4 +152,4 @@
             </div>
         </div>
     </form>
-</div>-->
+</div>

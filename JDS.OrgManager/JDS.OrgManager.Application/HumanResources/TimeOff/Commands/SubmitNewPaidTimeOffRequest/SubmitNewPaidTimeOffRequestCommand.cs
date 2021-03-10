@@ -55,12 +55,12 @@ namespace JDS.OrgManager.Application.HumanResources.TimeOff.Commands.SubmitNewPa
 
                 // PERSISTENCE LAYER
 
-                var submittedByEntity = await facade.QueryFirstOrDefaultAsync<EmployeeEntity>(@"SELECT TOP 1 * FROM Employees WITH(NOLOCK) WHERE AspNetUsersId = @AspNetUsersId AND TenantId = @TenantId", new { request.AspNetUsersId, request.TenantId });
+                var submittedByEntity = await facade.QueryFirstOrDefaultAsync<EmployeeEntity>(@"SELECT TOP 1 * FROM Employees WITH(NOLOCK) WHERE AspNetUsersId = @AspNetUsersId AND TenantId = @TenantId", new { request.AspNetUsersId, request.PaidTimeOffRequest.TenantId });
 
                 var forEmployeeEntity =
                     timeOffRequestViewModel.ForEmployeeId == null ?
-                    context.Employees.Include(e => e.PaidTimeOffPolicy).Include(e => e.ForPaidTimeOffRequests).FirstOrDefault(e => e.AspNetUsersId == request.AspNetUsersId && e.TenantId == request.TenantId) :
-                    context.Employees.Include(e => e.PaidTimeOffPolicy).Include(e => e.ForPaidTimeOffRequests).FirstOrDefault(e => e.Id == timeOffRequestViewModel.ForEmployeeId && e.TenantId == request.TenantId)
+                    context.Employees.Include(e => e.PaidTimeOffPolicy).Include(e => e.ForPaidTimeOffRequests).FirstOrDefault(e => e.AspNetUsersId == request.AspNetUsersId && e.TenantId == request.PaidTimeOffRequest.TenantId) :
+                    context.Employees.Include(e => e.PaidTimeOffPolicy).Include(e => e.ForPaidTimeOffRequests).FirstOrDefault(e => e.Id == timeOffRequestViewModel.ForEmployeeId && e.TenantId == request.PaidTimeOffRequest.TenantId)
                     ;
 
                 // TODO: if submitting on behalf of another employee, use the domain layer to validate that they have the privileges to do so.

@@ -5,7 +5,6 @@ import { TestComponent } from "./home/test/test.component";
 import { HomeComponent } from "./home/home.component";
 import { LetsGetStartedComponent } from "./home/lets-get-started/lets-get-started.component";
 import { EmployeeRegisteredComponent } from "./home/employee-registered/employee-registered.component";
-import { RegisterNewEmployeeComponent } from "./home/register-new-employee/register-new-employee.component";
 import { AuthorizeGuard } from "../api-authorization/authorize.guard";
 import { AddOrUpdateCustomerComponent } from "./customers/add-or-update-customer/add-or-update-customer.component";
 import { ManageTenantsComponent } from "./customers/manage-tenants/manage-tenants.component";
@@ -26,11 +25,6 @@ const routes: Routes = [
     {
         path: "employee-registered",
         component: EmployeeRegisteredComponent
-    },
-    {
-        path: "register-new-employee",
-        component: RegisterNewEmployeeComponent,
-        canActivate: [AuthorizeGuard]
     },
     {
         path: "unauthorized",
@@ -56,17 +50,17 @@ const routes: Routes = [
         component: TestComponent
     },
     {
-        path: "t/:slug",
+        path: "t/:tenantSlug",
         component: EmployeeHomeComponent,
         canActivate: [AuthorizeGuard]
     },
     {
-        path: "t/:slug/employee",
+        path: "t/:tenantSlug/employee",
         component: EmployeeHomeComponent,
         canActivate: [AuthorizeGuard]
     },
     {
-        path: "t/:slug/employee/update",
+        path: "t/:tenantSlug/employee/update",
         component: AddOrUpdateEmployeeComponent,
         canActivate: [AuthorizeGuard]
     }

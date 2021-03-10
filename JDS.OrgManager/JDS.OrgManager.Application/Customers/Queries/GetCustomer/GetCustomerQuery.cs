@@ -18,7 +18,8 @@ namespace JDS.OrgManager.Application.Customers.Queries.GetCustomer
 
             public async Task<CustomerViewModel?> Handle(GetCustomerQuery request, CancellationToken cancellationToken)
             {
-                var customer = await facade.QueryFirstOrDefaultAsync<CustomerViewModel?>(@"SELECT c.[Id]
+                var customer = await facade.QueryFirstOrDefaultAsync<CustomerViewModel?>(@"SELECT
+                      c.[Id]
                       ,[Address1]
                       ,[Address2]
                       ,[City]

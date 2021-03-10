@@ -33,7 +33,7 @@ export class EmployeeHomeComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.tenantService
-            .getCachedTenantIdFromSlug(this.route.snapshot.paramMap.get("slug"))
+            .getCachedTenantIdFromSlug(this.route.snapshot.paramMap.get("tenantSlug"))
             .pipe(takeUntil(this.ngUnsubscribe))
             .subscribe((tenantId) => {
                 this.tenantId = tenantId;
