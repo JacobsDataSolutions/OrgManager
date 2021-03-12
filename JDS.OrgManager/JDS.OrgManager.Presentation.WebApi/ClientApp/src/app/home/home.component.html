@@ -1,24 +1,26 @@
 <div class="container">
-  <div class="row mt-5">
-    <div class="col-12 text-center">
-      <h2>Org Manager - Home</h2>
+    <div class="row mt-3">
+        <div class="col text-center">
+            <h1 class="main-heading">Org Manager</h1>
+        </div>
     </div>
-  </div>
-  <div class="row mt-3" [ngClass]="routeAnimationsElements" rtl>
-    <div class="col-auto" [ngClass]="routeAnimationsElements">
-      <div class="main-image">
-        <img alt="Org Manager" src="/assets/corporate.jpg" />
-      </div>
+    <div class="row">
+        <div class="col text-center">
+            <h2>Your Comprehensive Organization Management Tool</h2>
+        </div>
     </div>
-    <div class="col" [ngClass]="routeAnimationsElements">
-      <p><strong>Org Manager</strong> is a comprehensive organization management tool for your company.</p>
-      <p>Start managing your organization efficiently and effectively.</p>
-      <p>Click below to sign up, or <a [routerLink]='["/authentication/login"]'>log in</a> if you already have an account.</p>
-      <div class="my-5">
-        <button mat-button mat-stroked-button color="accent" (click)="onSignUpClick()">
-          <span>Sign Up</span>
-        </button>
-      </div>
+    <div class="row mt-3" [ngClass]="routeAnimationsElements">
+        <div class="col" [ngClass]="routeAnimationsElements">
+            <div class="main-image">
+                <img alt="Org Manager" src="/assets/corporate.jpg" />
+            </div>
+        </div>
     </div>
-  </div>
+    <div class="row mt-3" [ngClass]="routeAnimationsElements">
+        <div class="col text-center" [ngClass]="routeAnimationsElements">
+            <p><strong>Org Manager</strong> is a comprehensive organization management tool for your company.</p>
+            <p>Start managing your organization efficiently and effectively.</p>
+            <p>Click <a class="pointer-link" (click)="onSignUpClick()">here</a> to sign up, or <a [routerLink]='["/authentication/login"]'>log in</a> if you already have an account.</p>
+        </div>
+    </div>
 </div>

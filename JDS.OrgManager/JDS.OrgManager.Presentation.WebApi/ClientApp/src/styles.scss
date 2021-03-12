@@ -46,3 +46,20 @@
     @include angular-material-theme($om-nature-theme);
     @include custom-components-theme($om-nature-theme);
 }
+
+.invisible {
+    display: block;
+    visibility: hidden;
+    height: 0;
+    width: 0;
+}
+
+.main-heading {
+    text-transform: uppercase;
+    margin: 0 0 20px 0;
+}
+
+.pointer-link {
+    color: #03a9f4;
+    cursor: pointer;
+}

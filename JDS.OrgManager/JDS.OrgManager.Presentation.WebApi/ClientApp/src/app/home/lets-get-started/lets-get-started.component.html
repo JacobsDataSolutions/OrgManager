@@ -1,28 +1,33 @@
 <div class="container">
-  <div class="row mt-5">
-    <div class="col-12 text-center">
-      <h2>Please choose from one of the options below</h2>
+    <div class="row mt-3">
+        <div class="col text-center">
+            <h1 class="main-heading">Register</h1>
+        </div>
     </div>
-  </div>
-  <!-- Force next columns to break to new line -->
-  <div class="row mt-5">
-    <div class="col-6 text-center" [ngClass]="routeAnimationsElements">
-      <div>I am an Employer, and I would like to set up my organization.</div>
-      <br />
-      <div>
-        <button mat-button mat-stroked-button color="accent" (click)="employerRegisterClick()">
-          <span>Register</span>
-        </button>
-      </div>
+    <div class="row">
+        <div class="col text-center">
+            <h2>Please choose from one of the options below</h2>
+        </div>
     </div>
-    <div class="col-6 text-center" [ngClass]="routeAnimationsElements">
-      <div>I am an Employee, and I have been given a Registration Assignment Key from my employer.</div>
-      <br />
-      <div>
-        <button mat-button mat-stroked-button color="accent" (click)="employeeRegisterClick()">
-          <span>Register</span>
-        </button>
-      </div>
+    <!-- Force next columns to break to new line -->
+    <div class="row mt-5">
+        <div class="col-6 text-center" [ngClass]="routeAnimationsElements">
+            <div>I am an Employer, and I would like to set up my organization.</div>
+            <br />
+            <div>
+                <button mat-button mat-stroked-button color="accent" (click)="employerRegisterClick()">
+                    <span>Register</span>
+                </button>
+            </div>
+        </div>
+        <div class="col-6 text-center" [ngClass]="routeAnimationsElements">
+            <div>I am an Employee, and I have been given a Registration Assignment Key from my employer.</div>
+            <br />
+            <div>
+                <button mat-button mat-stroked-button color="accent" (click)="employeeRegisterClick()">
+                    <span>Register</span>
+                </button>
+            </div>
+        </div>
     </div>
-  </div>
 </div>

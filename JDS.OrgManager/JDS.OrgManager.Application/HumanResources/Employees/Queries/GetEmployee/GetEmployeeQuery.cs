@@ -49,7 +49,8 @@ namespace JDS.OrgManager.Application.HumanResources.Employees.Queries.GetEmploye
                         PtoHoursRemaining,
                         Salary,
                         State,
-                        ZipCode
+                        ZipCode,
+                        SocialSecurityNumber
                         FROM Employees e
                         JOIN [dbo].[AspNetUsers] u WITH(NOLOCK) ON u.Id = e.AspNetUsersId
                         JOIN [dbo].[Tenants] t WITH(NOLOCK) ON e.TenantId = t.Id

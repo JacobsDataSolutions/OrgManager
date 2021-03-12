@@ -42,6 +42,8 @@ namespace JDS.OrgManager.Application.Common.Employees
 
         public int EmployeeLevel { get; set; }
 
+        public string? ExternalEmployeeId { get; set; }
+
         public string FirstName { get; set; } = default!;
 
         public ICollection<PaidTimeOffRequestEntity> ForPaidTimeOffRequests { get; set; }

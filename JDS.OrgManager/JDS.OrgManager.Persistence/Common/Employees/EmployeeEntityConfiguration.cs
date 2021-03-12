@@ -27,6 +27,7 @@ namespace JDS.OrgManager.Persistence.Common.Employees
             builder.Property(e => e.Address2).HasMaxLength(Lengths.Address2);
             builder.Property(e => e.City).HasMaxLength(Lengths.City).IsRequired();
             builder.Property(e => e.CurrencyCode).HasMaxLength(Lengths.CurrencyCode).IsRequired();
+            builder.Property(e => e.ExternalEmployeeId).HasMaxLength(Lengths.ExternalEmployeeId);
             builder.Property(e => e.FirstName).HasMaxLength(Lengths.FirstName).IsRequired();
             builder.Property(e => e.LastName).HasMaxLength(Lengths.LastName).IsRequired();
             builder.Property(e => e.MiddleName).HasMaxLength(Lengths.MiddleName);

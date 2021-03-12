@@ -1,7 +1,12 @@
-<div class="container" rtl>
+<div class="container">
+    <div class="row mt-3">
+        <div class="col text-center">
+            <h1 class="main-heading">Customer Tenants</h1>
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-6">
-            <h2>Manage Tenants</h2>
+            <h2 class="text-center">Add/Update Tenants</h2>
             <mat-card *ngFor="let tenant of tenants" [ngClass]="routeAnimationsElements"
                       (click)=select(tenant)>
                 <b>{{tenant.name}}</b><br />
@@ -113,7 +118,6 @@
                     </p>
                 </ng-template>
             </ng-container>
-
         </div>
     </div>
 </div>

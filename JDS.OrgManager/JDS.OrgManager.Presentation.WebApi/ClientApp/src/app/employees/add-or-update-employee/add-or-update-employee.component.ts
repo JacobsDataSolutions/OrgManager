@@ -10,14 +10,15 @@
 import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
 import { FormBuilder, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
-import { Observable, Subject } from "rxjs";
+import { forkJoin, Observable, Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 import { NotificationService, ROUTE_ANIMATIONS_ELEMENTS } from "../../core/core.module";
 import { Currencies, States } from "../../shared/consts";
 import { Lengths } from "../../shared/lengths";
-import { EmployeeClient, EmployeeViewModel } from "../../shared/nswag";
+import { EmployeeClient, EmployeeViewModel, TenantClient, TenantViewModel, UserClient, UserStatusViewModel } from "../../shared/nswag";
 import { GuidValidator } from "../../shared/utils";
 import { isValidGuidValidator } from "../../shared/validator-functions";
+import { TenantService } from "../../tenants/tenant.service";
 
 @Component({
     selector: "om-add-or-update-employee",
@@ -34,6 +35,10 @@ export class AddOrUpdateEmployeeComponent implements OnInit {
 
     tenantSlug: string;
     hasValidAssignmentKey = false;
+    tenantId = 0;
+    userStatus: UserStatusViewModel = {} as UserStatusViewModel;
+    tenant: TenantViewModel = {} as TenantViewModel;
+
     form = this.fb.group({
         assignmentKey: ["", [Validators.required, Validators.maxLength(Lengths.guid), Validators.minLength(Lengths.guid), isValidGuidValidator()]],
         firstName: ["", [Validators.required, Validators.maxLength(Lengths.firstName)]],
@@ -46,7 +51,13 @@ export class AddOrUpdateEmployeeComponent implements OnInit {
         city: ["", [Validators.required, Validators.maxLength(Lengths.city)]],
         state: ["", [Validators.required]],
         zipCode: ["", [Validators.required, Validators.maxLength(Lengths.zipCode)]],
-        externalEmployeeId: ["", [Validators.maxLength(Lengths.externalEmployeeId)]]
+        externalEmployeeId: ["", [Validators.maxLength(Lengths.externalEmployeeId)]],
+        currencyCode: ["", [Validators.required]],
+        socialSecurityNumber: ["", [Validators.required, Validators.maxLength(Lengths.socialSecurityNumber)]],
+        paidTimeOffPolicyId: [0, []],
+        employeeLevel: [0, []],
+        dateHired: ["", []],
+        salary: [0, []]
     });
 
     formValueChanges$: Observable<EmployeeViewModel>;
@@ -56,27 +67,39 @@ export class AddOrUpdateEmployeeComponent implements OnInit {
         private fb: FormBuilder,
         private employeeClient: EmployeeClient,
         private router: Router,
-        private notificationService: NotificationService
+        private notificationService: NotificationService,
+        private userClient: UserClient,
+        private tenantClient: TenantClient,
+        private tenantService: TenantService
     ) {}
 
     ngOnInit(): void {
         this.route.queryParamMap.subscribe((p) => {
             let assignmentKey: string;
-            this.tenantSlug = p.get("tenantSlug");
-            this.employeeClient
-                .getEmployee()
+            this.tenantService
+                .getCachedTenantIdFromSlug(this.route.snapshot.paramMap.get("tenantSlug"))
                 .pipe(takeUntil(this.ngUnsubscribe))
-                .subscribe((employee) => {
-                    if (employee) {
-                        assignmentKey = employee.assignmentKey;
-                        this.form.patchValue(employee);
-                    } else {
-                        assignmentKey = p.get("assignmentKey");
-                        if (assignmentKey) {
-                            this.form.patchValue({ assignmentKey: assignmentKey });
-                        }
-                    }
-                    this.hasValidAssignmentKey = GuidValidator.isValidGuid(assignmentKey);
+                .subscribe((tenantId) => {
+                    this.tenantId = tenantId;
+                    forkJoin(this.userClient.getUserStatus(tenantId), this.tenantClient.getTenant(tenantId)).subscribe(([userStatus, tenant]) => {
+                        this.userStatus = userStatus;
+                        this.tenant = tenant;
+                        this.employeeClient
+                            .getEmployee()
+                            .pipe(takeUntil(this.ngUnsubscribe))
+                            .subscribe((employee) => {
+                                if (employee) {
+                                    assignmentKey = employee.assignmentKey;
+                                    this.form.patchValue(employee);
+                                } else {
+                                    assignmentKey = p.get("assignmentKey");
+                                    if (assignmentKey) {
+                                        this.form.patchValue({ assignmentKey: assignmentKey });
+                                    }
+                                }
+                                this.hasValidAssignmentKey = GuidValidator.isValidGuid(assignmentKey);
+                            });
+                    });
                 });
         });
     }
@@ -90,6 +113,7 @@ export class AddOrUpdateEmployeeComponent implements OnInit {
         if (this.form.valid) {
             const employee = new EmployeeViewModel();
             employee.init(this.form.value);
+            employee.tenantId = this.tenantId;
             this.employeeClient
                 .addOrUpdateEmployee(employee)
                 .pipe(takeUntil(this.ngUnsubscribe))

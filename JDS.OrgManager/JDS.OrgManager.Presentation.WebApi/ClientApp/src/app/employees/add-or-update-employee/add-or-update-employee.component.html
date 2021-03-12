@@ -1,20 +1,15 @@
 <div class="container">
-    <div class="row">
-        <div class="col">
+    <div class="row mt-3">
+        <div class="col text-center">
             <h1 class="main-heading">Employee Details</h1>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-
         </div>
     </div>
     <form [formGroup]="form" (ngSubmit)="save()">
         <div class="row justify-content-center">
-            <div class="col-md-8">
+            <div class="col-md-10">
                 <mat-card>
-                    <span class="d-flex justify-content-between align-items-baseline">
-                        <h2>Enter your employee information</h2>
+                    <span class="justify-content-between align-items-baseline">
+                        <h2 class="text-center">Enter your employee information</h2>
                     </span>
                     <div class="row">
                         <mat-form-field class="col" *ngIf="!hasValidAssignmentKey" [ngClass]="routeAnimationsElements">
@@ -141,12 +136,31 @@
                                 Max length is {{ lengths.externalEmployeeId }}.
                             </mat-error>
                         </mat-form-field>
+                        <mat-form-field class="col" [ngClass]="routeAnimationsElements">
+                            <mat-select placeholder="Currency" formControlName="currencyCode">
+                                <mat-option *ngFor="let currency of currencies" [value]="currency">
+                                    {{currency}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="form.get('currencyCode').hasError('required')">
+                                Currency is required.
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="col" [ngClass]="routeAnimationsElements">
+                            <input matInput placeholder="SSN"
+                                   formControlName="socialSecurityNumber">
+                            <mat-error *ngIf="form.get('socialSecurityNumber').hasError('maxlength')">
+                                Max length is {{ lengths.socialSecurityNumber }}.
+                            </mat-error>
+                        </mat-form-field>
                     </div>
                     <div class="row buttons d-flex justify-content-between pad">
-                        <button type="button" mat-raised-button color="accent"
-                                [ngClass]="routeAnimationsElements" (click)="save()" [disabled]="!form.valid">
-                            Save
-                        </button>
+                        <div class="col">
+                            <button type="button" mat-raised-button color="accent"
+                                    [ngClass]="routeAnimationsElements" (click)="save()" [disabled]="!form.valid">
+                                Save
+                            </button>
+                        </div>
                     </div>
                 </mat-card>
             </div>
