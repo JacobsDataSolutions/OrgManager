@@ -22,16 +22,16 @@ For all of these accounts, the default password is "P@ssw0rd1".
 
 Routes to screens in the app that are (semi) functional at the moment are:
 
-/
-/lets-get-started
-/employee-registered
-/customer/update
-/customer/manage-tenants
-/t/*tenant slug*/
-/t/*tenant slug*/employee
-/t/*tenant slug*/employee/update
-/test
-/unauthorized
+* /
+* /lets-get-started
+* /employee-registered
+* /customer/update
+* /customer/manage-tenants
+* /t/*tenant slug*/
+* /t/*tenant slug*/employee
+* /t/*tenant slug*/employee/update
+* /test
+* /unauthorized
 
 ^^^ In the above routes, replace "tenant slug" with the actual slug for the tenant that the test user has access to, for example, "test-tenant-10".
 
