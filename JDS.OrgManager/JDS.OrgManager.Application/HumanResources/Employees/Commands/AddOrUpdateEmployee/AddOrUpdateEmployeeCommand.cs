@@ -24,23 +24,25 @@ using EmployeeException = JDS.OrgManager.Application.Common.Employees.EmployeeEx
 
 namespace JDS.OrgManager.Application.HumanResources.Employees.Commands.AddOrUpdateEmployee
 {
-    public class AddOrUpdateEmployeeCommand : IRequest<EmployeeViewModel>
+    public class AddOrUpdateEmployeeCommand : IRequest<AddOrUpdateEmployeeViewModel>
     {
         public int AspNetUsersId { get; init; }
 
-        public EmployeeViewModel Employee { get; set; } = default!;
+        public AddOrUpdateEmployeeViewModel Employee { get; set; } = default!;
 
-        public class AddOrUpdateEmployeeCommandHandler : IRequestHandler<AddOrUpdateEmployeeCommand, EmployeeViewModel>
+        public class AddOrUpdateEmployeeCommandHandler : IRequestHandler<AddOrUpdateEmployeeCommand, AddOrUpdateEmployeeViewModel>
         {
             private readonly IApplicationWriteDbContext context;
 
+            private readonly IViewModelToDbEntityMapper<AddOrUpdateEmployeeViewModel, EmployeeEntity> employeeVmToDbEntityMapper;
+
             private readonly IDbEntityToDomainEntityMapper<EmployeeEntity, Employee> employeeDbEntityToDomainEntityMapper;
 
-            private readonly IDomainEntityToViewModelMapper<Employee, EmployeeViewModel> employeeDomainEntityToViewModelMapper;
+            private readonly IDomainEntityToViewModelMapper<Employee, AddOrUpdateEmployeeViewModel> employeeDomainEntityToViewModelMapper;
 
             private readonly IDomainEntityToDbEntityMapper<Employee, EmployeeEntity> employeeDomainToDbEntityMapper;
 
-            private readonly IViewModelToDomainEntityMapper<EmployeeViewModel, Employee> employeeVmToDomainEntityMapper;
+            private readonly IViewModelToDomainEntityMapper<AddOrUpdateEmployeeViewModel, Employee> employeeVmToDomainEntityMapper;
 
             private readonly IApplicationWriteDbFacade facade;
 
@@ -49,8 +51,9 @@ namespace JDS.OrgManager.Application.HumanResources.Employees.Commands.AddOrUpda
             public AddOrUpdateEmployeeCommandHandler(
                 IApplicationWriteDbContext context,
                 IApplicationWriteDbFacade facade,
-                IViewModelToDomainEntityMapper<EmployeeViewModel, Employee> employeeVmToDomainEntityMapper,
-                IDomainEntityToViewModelMapper<Employee, EmployeeViewModel> employeeDomainEntityToViewModelMapper,
+                IViewModelToDomainEntityMapper<AddOrUpdateEmployeeViewModel, Employee> employeeVmToDomainEntityMapper,
+                IViewModelToDbEntityMapper<AddOrUpdateEmployeeViewModel, EmployeeEntity> employeeVmToDbEntityMapper,
+                IDomainEntityToViewModelMapper<Employee, AddOrUpdateEmployeeViewModel> employeeDomainEntityToViewModelMapper,
                 IDomainEntityToDbEntityMapper<Employee, EmployeeEntity> employeeDomainToDbEntityMapper,
                 IDbEntityToDomainEntityMapper<EmployeeEntity, Employee> employeeDbEntityToDomainEntityMapper,
                 IDbEntityToDomainEntityMapper<PaidTimeOffPolicyEntity, PaidTimeOffPolicy> ptoPolicyDbEntityToDomainEntityMapper
@@ -58,6 +61,7 @@ namespace JDS.OrgManager.Application.HumanResources.Employees.Commands.AddOrUpda
             {
                 this.context = context ?? throw new ArgumentNullException(nameof(context));
                 this.facade = facade ?? throw new ArgumentNullException(nameof(facade));
+                this.employeeVmToDbEntityMapper = employeeVmToDbEntityMapper ?? throw new ArgumentNullException(nameof(employeeVmToDbEntityMapper));
                 this.employeeVmToDomainEntityMapper = employeeVmToDomainEntityMapper ?? throw new ArgumentNullException(nameof(employeeVmToDomainEntityMapper));
                 this.employeeDomainEntityToViewModelMapper = employeeDomainEntityToViewModelMapper ?? throw new ArgumentNullException(nameof(employeeDomainEntityToViewModelMapper));
                 this.employeeDomainToDbEntityMapper = employeeDomainToDbEntityMapper ?? throw new ArgumentNullException(nameof(employeeDomainToDbEntityMapper));
@@ -65,22 +69,21 @@ namespace JDS.OrgManager.Application.HumanResources.Employees.Commands.AddOrUpda
                 this.ptoPolicyDbEntityToDomainEntityMapper = ptoPolicyDbEntityToDomainEntityMapper ?? throw new ArgumentNullException(nameof(ptoPolicyDbEntityToDomainEntityMapper));
             }
 
-            public async Task<EmployeeViewModel> Handle(AddOrUpdateEmployeeCommand request, CancellationToken cancellationToken)
+            public async Task<AddOrUpdateEmployeeViewModel> Handle(AddOrUpdateEmployeeCommand request, CancellationToken cancellationToken)
             {
                 // APPLICATION LAYER
                 var employeeViewModel = request.Employee;
                 var tenantId = employeeViewModel.TenantId;
 
-                // DOMAIN LAYER
-                var employee = employeeVmToDomainEntityMapper.Map(employeeViewModel);
-
-                var isNewEmployee = employee.Id == 0;
+                var isNewEmployee = employeeViewModel.Id == 0;
 
                 if (tenantId == 0)
                 {
                     throw new ApplicationLayerException("Invalid tenant ID.");
                 }
 
+                // PERISTENCE LAYER: Hydrate existing employee or get defaults for tenant.
+                EmployeeEntity? employeeEntity = null;
                 if (isNewEmployee)
                 {
                     // Even though this is a read operation, we are using the Write dapper facade because commands should only talk to the Write database (never
@@ -91,32 +94,66 @@ namespace JDS.OrgManager.Application.HumanResources.Employees.Commands.AddOrUpda
                         throw new AccessDeniedException($"Invalid assignment key specified: {employeeViewModel.AssignmentKey}.");
                     }
                     tenantId = (int)t;
+                    employeeEntity = await facade.QueryFirstOrDefaultAsync<EmployeeEntity>(@"
+                        SELECT TOP (1) [TenantId]
+                              ,[CurrencyCode]
+                              ,[EmployeeLevel]
+                              ,[PaidTimeOffPolicyId]
+                          FROM [OrgManager].[dbo].[TenantDefaults] td WITH(NOLOCK)
+                          WHERE TenantId = @TenantId", employeeViewModel, null, cancellationToken);
+                    employeeEntity.PtoHoursRemaining = 0.0m;
+                    employeeEntity.AspNetUsersId = request.AspNetUsersId;
+                    employeeEntity.IsPending = true;
                 }
-
-                // Look up manager from DB.
-                EmployeeEntity? managerEntity = null;
-                if (employeeViewModel.ManagerId != null)
+                else
                 {
-                    managerEntity = await context.Employees.FindAsync(employeeViewModel.ManagerId);
-                    if (managerEntity == null)
-                    {
-                        throw new EmployeeException($"Manager with ID {employeeViewModel.ManagerId} not found.");
-                    }
-                    // Convert to domain entity as well.
-                    employee = employee.WithManager(employeeDbEntityToDomainEntityMapper.Map(managerEntity));
+                    employeeEntity = 
+                        await context.Employees
+                        .Include(e => e.Managers)
+                        .Include(e => e.Subordinates)
+                        .AsNoTracking()
+                        .FirstOrDefaultAsync(e => e.Id == employeeViewModel.Id && e.TenantId == tenantId, cancellationToken);
                 }
 
-                // Look up subordinates and map those to domain entities.
-                var subordinateIds = employeeViewModel.SubordinateIds.ToArray();
-                var subordinateEntities = await (from e in context.Employees.AsNoTracking() where subordinateIds.Contains(e.Id) select e).ToArrayAsync();
-                employee = employee.WithSubordinates(from e in subordinateEntities select employeeDbEntityToDomainEntityMapper.Map(e));
+                // Perform updates against persistence entity.
+                employeeVmToDbEntityMapper.Map(employeeViewModel, employeeEntity);
 
-                // Get PTO policy for this employee and map to domain entity.
-                var policyEntity = await context.PaidTimeOffPolicies.AsNoTracking().FirstOrDefaultAsync(p => p.Id == employeeViewModel.PaidTimeOffPolicyId);
+                // Look up subordinates.
+                var subordinateIds = (from e in employeeEntity.Subordinates select e.EmployeeId).ToList();
+                var subordinateEntities = await (from e in context.Employees.AsNoTracking() where subordinateIds.Contains(e.Id) && e.TenantId == tenantId select e).ToListAsync();
+
+                // Get PTO policy for this employee.
+                var policyEntity = await context.PaidTimeOffPolicies.AsNoTracking().FirstOrDefaultAsync(p => p.Id == employeeEntity.PaidTimeOffPolicyId && p.TenantId == tenantId);
                 if (policyEntity == null)
                 {
                     throw new EmployeeException($"PTO policy not found.");
                 }
+
+                // Look up manager from DB.
+                EmployeeEntity? managerEntity = null;
+                if (employeeEntity.Managers.Any())
+                {
+                    var managerId = employeeEntity.Managers.First().ManagerId;
+                    managerEntity = await context.Employees.AsNoTracking().FirstOrDefaultAsync(e => e.Id == managerId && e.TenantId == tenantId);
+                    if (managerEntity == null)
+                    {
+                        throw new EmployeeException($"Manager with ID {managerId} not found.");
+                    }
+                }
+
+                // DOMAIN LAYER
+                var employee = employeeDbEntityToDomainEntityMapper.Map(employeeEntity);
+
+                // Map manager to domain entity.
+                if (managerEntity != null)
+                {
+                    employee = employee.WithManager(employeeDbEntityToDomainEntityMapper.Map(managerEntity));
+                }
+
+                // Map subordinates to domain entities.
+                employee = employee.WithSubordinates(from e in subordinateEntities select employeeDbEntityToDomainEntityMapper.Map(e));
+
+                // Map PTO policy to domain entity.
                 var policy = ptoPolicyDbEntityToDomainEntityMapper.Map(policyEntity);
                 employee = employee.WithPaidTimeOffPolicy(policy);
 
@@ -134,8 +171,7 @@ namespace JDS.OrgManager.Application.HumanResources.Employees.Commands.AddOrUpda
                 // End business logic.
 
                 // PERSISTENCE LAYER Convert back to persistence entity.
-                var employeeEntity = employeeDomainToDbEntityMapper.Map(employee);
-                employeeEntity.TenantId = employeeViewModel.TenantId;
+                employeeDomainToDbEntityMapper.Map(employee, employeeEntity);
                 var entry = await context.Employees.AddAsync(employeeEntity);
 
                 if (!isNewEmployee)
@@ -143,25 +179,12 @@ namespace JDS.OrgManager.Application.HumanResources.Employees.Commands.AddOrUpda
                     entry.State = EntityState.Modified;
                 }
 
-                // Delete previous entity relationships.
-                context.EmployeeManagers.RemoveRange(context.EmployeeManagers.Where(em => em.EmployeeId == employee.Id));
-                context.EmployeeManagers.RemoveRange(context.EmployeeManagers.Where(em => em.ManagerId == employee.Id));
+                // We are not updating employee/manager relationships at this time.
+                employeeEntity.Subordinates.Clear();
+                employeeEntity.Managers.Clear();
 
                 // Commit transaction to DB.
                 await context.SaveChangesAsync(cancellationToken);
-
-                // Create new relationships.
-                if (employee.Manager != null)
-                {
-                    await context.EmployeeManagers.AddAsync(new EmployeeManagerEntity { TenantId = tenantId, EmployeeId = employeeEntity.Id, ManagerId = employee.Manager.Id });
-                }
-                await context.EmployeeManagers.AddRangeAsync(from s in subordinateEntities select new EmployeeManagerEntity { TenantId = tenantId, EmployeeId = s.Id, ManagerId = employeeEntity.Id });
-
-                // Commit transaction to DB.
-                if (context.HasChanges)
-                {
-                    await context.SaveChangesAsync(cancellationToken);
-                }
 
                 // Set ID of domain entity.
                 employee.Id = employeeEntity.Id;
@@ -178,7 +201,8 @@ namespace JDS.OrgManager.Application.HumanResources.Employees.Commands.AddOrUpda
                 await employee.DispatchDomainEventsAsync();
 
                 // Map from domain entity back to VM (command) and return that.
-                return employeeDomainEntityToViewModelMapper.Map(employee);
+                employeeDomainEntityToViewModelMapper.Map(employee, employeeViewModel);
+                return employeeViewModel;
             }
         }
     }

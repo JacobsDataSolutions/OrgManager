@@ -64,7 +64,7 @@
                                 <mat-option [value]="0">Male</mat-option>
                                 <mat-option [value]="1">Female</mat-option>
                             </mat-select>
-                            <mat-error *ngIf="form.get('state').hasError('required')">
+                            <mat-error *ngIf="form.get('gender').hasError('required')">
                                 Gender is required.
                             </mat-error>
                         </mat-form-field>
@@ -137,27 +137,20 @@
                             </mat-error>
                         </mat-form-field>
                         <mat-form-field class="col" [ngClass]="routeAnimationsElements">
-                            <mat-select placeholder="Currency" formControlName="currencyCode">
-                                <mat-option *ngFor="let currency of currencies" [value]="currency">
-                                    {{currency}}
-                                </mat-option>
-                            </mat-select>
-                            <mat-error *ngIf="form.get('currencyCode').hasError('required')">
-                                Currency is required.
-                            </mat-error>
-                        </mat-form-field>
-                        <mat-form-field class="col" [ngClass]="routeAnimationsElements">
                             <input matInput placeholder="SSN"
                                    formControlName="socialSecurityNumber">
                             <mat-error *ngIf="form.get('socialSecurityNumber').hasError('maxlength')">
                                 Max length is {{ lengths.socialSecurityNumber }}.
+                            </mat-error>
+                            <mat-error *ngIf="form.get('socialSecurityNumber').hasError('required')">
+                                SSN is required.
                             </mat-error>
                         </mat-form-field>
                     </div>
                     <div class="row buttons d-flex justify-content-between pad">
                         <div class="col">
                             <button type="button" mat-raised-button color="accent"
-                                    [ngClass]="routeAnimationsElements" (click)="save()" [disabled]="!form.valid">
+                                    [ngClass]="routeAnimationsElements" (click)="save()" [disabled]="form.pristine || !form.valid">
                                 Save
                             </button>
                         </div>

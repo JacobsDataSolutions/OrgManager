@@ -1,4 +1,4 @@
-ï»¿// Copyright ï¿½2021 Jacobs Data Solutions
+// Copyright ©2021 Jacobs Data Solutions
 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the
 // License at
@@ -10,6 +10,7 @@
 using JDS.OrgManager.Application.Abstractions.Mapping;
 using JDS.OrgManager.Application.Common.Addresses;
 using JDS.OrgManager.Application.HumanResources.Employees;
+using JDS.OrgManager.Application.HumanResources.Employees.Commands.AddOrUpdateEmployee;
 using JDS.OrgManager.Domain.Common.Addresses;
 using JDS.OrgManager.Domain.Common.Finance;
 using JDS.OrgManager.Domain.HumanResources.Employees;
@@ -18,15 +19,14 @@ using System;
 
 namespace JDS.OrgManager.Application.Common.Mapping
 {
-    public partial class EmployeeViewModelToDomainEntityMapper
+    public partial class AddOrUpdateEmployeeViewModelToDomainEntityMapper
     {
         private readonly IViewModelToValueObjectMapper<IAddressViewModel, Address> addressMapper;
 
-        public EmployeeViewModelToDomainEntityMapper(IViewModelToValueObjectMapper<IAddressViewModel, Address> addressMapper) => this.addressMapper = addressMapper ?? throw new ArgumentNullException(nameof(addressMapper));
+        public AddOrUpdateEmployeeViewModelToDomainEntityMapper(IViewModelToValueObjectMapper<IAddressViewModel, Address> addressMapper) => this.addressMapper = addressMapper ?? throw new ArgumentNullException(nameof(addressMapper));
 
-        protected override TypeAdapterSetter<EmployeeViewModel, Employee> Configure(TypeAdapterSetter<EmployeeViewModel, Employee> typeAdapterSetter)
+        protected override TypeAdapterSetter<AddOrUpdateEmployeeViewModel, Employee> Configure(TypeAdapterSetter<AddOrUpdateEmployeeViewModel, Employee> typeAdapterSetter)
             => base.Configure(typeAdapterSetter)
-                .Map(dest => dest.HomeAddress, src => addressMapper.Map(src))
-                .Map(dest => dest.Salary, src => new Money(src.Salary, Currency.GetByCode(src.CurrencyCode)));
+                .Map(dest => dest.HomeAddress, src => addressMapper.Map(src));
     }
 }

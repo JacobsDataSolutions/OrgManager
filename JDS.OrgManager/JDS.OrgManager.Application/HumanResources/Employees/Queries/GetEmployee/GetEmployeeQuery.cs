@@ -29,7 +29,7 @@ namespace JDS.OrgManager.Application.HumanResources.Employees.Queries.GetEmploye
             }
 
             public Task<EmployeeViewModel> Handle(GetEmployeeQuery request, CancellationToken cancellationToken) =>
-                queryFacade.QuerySingleAsync<EmployeeViewModel>(@"
+                queryFacade.QueryFirstOrDefaultAsync<EmployeeViewModel>(@"
                     SELECT TOP 1
                         t.AssignmentKey,
                         Address1,
@@ -40,6 +40,7 @@ namespace JDS.OrgManager.Application.HumanResources.Employees.Queries.GetEmploye
                         DateHired,
                         DateOfBirth,
                         EmployeeLevel,
+                        ExternalEmployeeId,
                         FirstName,
                         Gender,
                         e.Id,

@@ -37,11 +37,15 @@ namespace JDS.OrgManager.Domain.HumanResources.Employees
 
         public int EmployeeLevel { get; init; }
 
+        public string? ExternalEmployeeId { get; init; }
+
         public string FirstName { get; init; } = default!;
 
         public Gender Gender { get; init; }
 
         public Address HomeAddress { get; init; } = default!;
+
+        public bool IsPending { get; init; }
 
         public string LastName { get; init; } = default!;
 
@@ -68,39 +72,46 @@ namespace JDS.OrgManager.Domain.HumanResources.Employees
         public override void ValidateAggregate()
         {
             base.ValidateAggregate();
-            if (DateHired < EmployeeConstants.MinimumValidDateOfHire)
-            {
-                throw new EmployeeException($"Invalid date of hire: {DateHired:d}.");
-            }
             if (DateOfBirth < EmployeeConstants.MinimumValidDateOfBirth)
             {
                 throw new EmployeeException($"Invalid date of birth: {DateOfBirth:d}.");
             }
-            if (Manager?.Subordinates?.Any() == true)
-            {
-                throw new EmployeeException("To avoid cyclical references, a manager instance may not have any subordinates for this employee aggregate.");
-            }
-            if (Salary.Amount <= 0.0m)
-            {
-                throw new EmployeeException($"Invalid salary: {Salary.Amount}");
-            }
 
-            Manager?.ValidateAggregate();
-            foreach (var subordinate in Subordinates)
+            if (!IsPending)
             {
-                subordinate.ValidateAggregate();
+                if (DateHired < EmployeeConstants.MinimumValidDateOfHire)
+                {
+                    throw new EmployeeException($"Invalid date of hire: {DateHired:d}.");
+                }
+                if (Manager?.Subordinates?.Any() == true)
+                {
+                    throw new EmployeeException("To avoid cyclical references, a manager instance may not have any subordinates for this employee aggregate.");
+                }
+                if (Salary.Amount <= 0.0m)
+                {
+                    throw new EmployeeException($"Invalid salary: {Salary.Amount}");
+                }
+
+                Manager?.ValidateAggregate();
+                foreach (var subordinate in Subordinates)
+                {
+                    subordinate.ValidateAggregate();
+                }
             }
         }
 
         public void VerifyEmployeeManagerAndSubordinates()
         {
-            if (Manager?.EmployeeLevel <= EmployeeLevel)
+            if (!IsPending)
             {
-                throw new EmployeeException("Invalid manager level specified: must be greater than this employee's level.");
-            }
-            if (Subordinates.Any(e => e.EmployeeLevel >= EmployeeLevel))
-            {
-                throw new EmployeeException("Invalid subordinate level specified: must be less than this employee's level.");
+                if (Manager?.EmployeeLevel <= EmployeeLevel)
+                {
+                    throw new EmployeeException("Invalid manager level specified: must be greater than this employee's level.");
+                }
+                if (Subordinates.Any(e => e.EmployeeLevel >= EmployeeLevel))
+                {
+                    throw new EmployeeException("Invalid subordinate level specified: must be less than this employee's level.");
+                }
             }
         }
 

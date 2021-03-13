@@ -389,7 +389,7 @@ export class EmployeeClient {
         this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
     }
 
-    addOrUpdateEmployee(employee?: EmployeeViewModel | null | undefined): Observable<EmployeeViewModel | null> {
+    addOrUpdateEmployee(employee?: AddOrUpdateEmployeeViewModel | null | undefined): Observable<AddOrUpdateEmployeeViewModel | null> {
         let url_ = this.baseUrl + "/api/Employee/AddOrUpdateEmployee";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -412,14 +412,14 @@ export class EmployeeClient {
                 try {
                     return this.processAddOrUpdateEmployee(<any>response_);
                 } catch (e) {
-                    return <Observable<EmployeeViewModel | null>><any>_observableThrow(e);
+                    return <Observable<AddOrUpdateEmployeeViewModel | null>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<EmployeeViewModel | null>><any>_observableThrow(response_);
+                return <Observable<AddOrUpdateEmployeeViewModel | null>><any>_observableThrow(response_);
         }));
     }
 
-    protected processAddOrUpdateEmployee(response: HttpResponseBase): Observable<EmployeeViewModel | null> {
+    protected processAddOrUpdateEmployee(response: HttpResponseBase): Observable<AddOrUpdateEmployeeViewModel | null> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -430,7 +430,7 @@ export class EmployeeClient {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 ? EmployeeViewModel.fromJS(resultData200) : <any>null;
+            result200 = resultData200 ? AddOrUpdateEmployeeViewModel.fromJS(resultData200) : <any>null;
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -438,7 +438,7 @@ export class EmployeeClient {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<EmployeeViewModel | null>(<any>null);
+        return _observableOf<AddOrUpdateEmployeeViewModel | null>(<any>null);
     }
 
     getEmployee(): Observable<EmployeeViewModel | null> {
@@ -1546,6 +1546,103 @@ export interface IDeleteTenantViewModel {
     tenantId: number;
 }
 
+export class AddOrUpdateEmployeeViewModel implements IAddOrUpdateEmployeeViewModel {
+    address1!: string;
+    address2?: string | undefined;
+    assignmentKey!: string;
+    city!: string;
+    dateOfBirth!: Date;
+    externalEmployeeId?: string | undefined;
+    firstName!: string;
+    gender!: Gender;
+    id!: number;
+    lastName!: string;
+    middleName?: string | undefined;
+    socialSecurityNumber!: string;
+    state!: string;
+    tenantId!: number;
+    zipCode!: string;
+
+    constructor(data?: IAddOrUpdateEmployeeViewModel) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.address1 = _data["address1"];
+            this.address2 = _data["address2"];
+            this.assignmentKey = _data["assignmentKey"];
+            this.city = _data["city"];
+            this.dateOfBirth = _data["dateOfBirth"] ? new Date(_data["dateOfBirth"].toString()) : <any>undefined;
+            this.externalEmployeeId = _data["externalEmployeeId"];
+            this.firstName = _data["firstName"];
+            this.gender = _data["gender"];
+            this.id = _data["id"];
+            this.lastName = _data["lastName"];
+            this.middleName = _data["middleName"];
+            this.socialSecurityNumber = _data["socialSecurityNumber"];
+            this.state = _data["state"];
+            this.tenantId = _data["tenantId"];
+            this.zipCode = _data["zipCode"];
+        }
+    }
+
+    static fromJS(data: any): AddOrUpdateEmployeeViewModel {
+        data = typeof data === 'object' ? data : {};
+        let result = new AddOrUpdateEmployeeViewModel();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["address1"] = this.address1;
+        data["address2"] = this.address2;
+        data["assignmentKey"] = this.assignmentKey;
+        data["city"] = this.city;
+        data["dateOfBirth"] = this.dateOfBirth ? this.dateOfBirth.toISOString() : <any>undefined;
+        data["externalEmployeeId"] = this.externalEmployeeId;
+        data["firstName"] = this.firstName;
+        data["gender"] = this.gender;
+        data["id"] = this.id;
+        data["lastName"] = this.lastName;
+        data["middleName"] = this.middleName;
+        data["socialSecurityNumber"] = this.socialSecurityNumber;
+        data["state"] = this.state;
+        data["tenantId"] = this.tenantId;
+        data["zipCode"] = this.zipCode;
+        return data; 
+    }
+}
+
+export interface IAddOrUpdateEmployeeViewModel {
+    address1: string;
+    address2?: string | undefined;
+    assignmentKey: string;
+    city: string;
+    dateOfBirth: Date;
+    externalEmployeeId?: string | undefined;
+    firstName: string;
+    gender: Gender;
+    id: number;
+    lastName: string;
+    middleName?: string | undefined;
+    socialSecurityNumber: string;
+    state: string;
+    tenantId: number;
+    zipCode: string;
+}
+
+export enum Gender {
+    Male = 0,
+    Female = 1,
+}
+
 export class EmployeeViewModel implements IEmployeeViewModel {
     address1!: string;
     address2?: string | undefined;
@@ -1683,11 +1780,6 @@ export interface IEmployeeViewModel {
     subordinateIds: number[];
     tenantId: number;
     zipCode: string;
-}
-
-export enum Gender {
-    Male = 0,
-    Female = 1,
 }
 
 export class GetPaidTimeOffPolicyDetailViewModel implements IGetPaidTimeOffPolicyDetailViewModel {

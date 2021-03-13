@@ -13,6 +13,7 @@ using JDS.OrgManager.Application.Common.Employees;
 using JDS.OrgManager.Application.Common.TimeOff;
 using JDS.OrgManager.Application.Customers;
 using JDS.OrgManager.Application.HumanResources.Employees;
+using JDS.OrgManager.Application.HumanResources.Employees.Commands.AddOrUpdateEmployee;
 using JDS.OrgManager.Application.HumanResources.TimeOff;
 using JDS.OrgManager.Application.HumanResources.TimeOff.Queries.ValidateRequestedPaidTimeOffHours;
 using JDS.OrgManager.Application.Tenants;
@@ -22,6 +23,15 @@ using JDS.OrgManager.Domain.HumanResources.TimeOff;
 
 namespace JDS.OrgManager.Application.Common.Mapping
 {
+    public partial class AddOrUpdateEmployeeDomainEntityToViewModelMapper : MapperBase<Employee, AddOrUpdateEmployeeViewModel>, IDomainEntityToViewModelMapper<Employee, AddOrUpdateEmployeeViewModel>
+    { }
+
+    public partial class AddOrUpdateEmployeeViewModelToDbEntityMapper : MapperBase<AddOrUpdateEmployeeViewModel, EmployeeEntity>, IViewModelToDbEntityMapper<AddOrUpdateEmployeeViewModel, EmployeeEntity>
+    { }
+
+    public partial class AddOrUpdateEmployeeViewModelToDomainEntityMapper : MapperBase<AddOrUpdateEmployeeViewModel, Employee>, IViewModelToDomainEntityMapper<AddOrUpdateEmployeeViewModel, Employee>
+    { }
+
     public partial class AddressDbEntityToValueObjectMapper : MapperBase<IAddressEntity, Address>, IDbEntityToValueObjectMapper<IAddressEntity, Address>
     { }
 

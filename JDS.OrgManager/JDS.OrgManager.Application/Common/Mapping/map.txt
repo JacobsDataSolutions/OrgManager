@@ -1,8 +1,11 @@
 ﻿CustomerViewModel->CustomerEntity
 Employee->EmployeeEntity
-Employee->EmployeeViewModel
 EmployeeEntity->Employee
 EmployeeViewModel->Employee
+Employee->EmployeeViewModel
+Employee->AddOrUpdateEmployeeViewModel
+AddOrUpdateEmployeeViewModel->Employee
+AddOrUpdateEmployeeViewModel->EmployeeEntity
 IAddressEntity->Address
 IAddressViewModel->Address
 PaidTimeOffPolicy->PaidTimeOffPolicyEntity

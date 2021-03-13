@@ -15,7 +15,7 @@ import { takeUntil } from "rxjs/operators";
 import { NotificationService, ROUTE_ANIMATIONS_ELEMENTS } from "../../core/core.module";
 import { Currencies, States } from "../../shared/consts";
 import { Lengths } from "../../shared/lengths";
-import { EmployeeClient, EmployeeViewModel, TenantClient, TenantViewModel, UserClient, UserStatusViewModel } from "../../shared/nswag";
+import { AddOrUpdateEmployeeViewModel, EmployeeClient, TenantClient, TenantViewModel, UserClient, UserStatusViewModel } from "../../shared/nswag";
 import { GuidValidator } from "../../shared/utils";
 import { isValidGuidValidator } from "../../shared/validator-functions";
 import { TenantService } from "../../tenants/tenant.service";
@@ -52,15 +52,11 @@ export class AddOrUpdateEmployeeComponent implements OnInit {
         state: ["", [Validators.required]],
         zipCode: ["", [Validators.required, Validators.maxLength(Lengths.zipCode)]],
         externalEmployeeId: ["", [Validators.maxLength(Lengths.externalEmployeeId)]],
-        currencyCode: ["", [Validators.required]],
         socialSecurityNumber: ["", [Validators.required, Validators.maxLength(Lengths.socialSecurityNumber)]],
-        paidTimeOffPolicyId: [0, []],
-        employeeLevel: [0, []],
-        dateHired: ["", []],
-        salary: [0, []]
+        id: [0, []]
     });
 
-    formValueChanges$: Observable<EmployeeViewModel>;
+    formValueChanges$: Observable<AddOrUpdateEmployeeViewModel>;
 
     constructor(
         private route: ActivatedRoute,
@@ -111,7 +107,7 @@ export class AddOrUpdateEmployeeComponent implements OnInit {
 
     save() {
         if (this.form.valid) {
-            const employee = new EmployeeViewModel();
+            const employee = new AddOrUpdateEmployeeViewModel();
             employee.init(this.form.value);
             employee.tenantId = this.tenantId;
             this.employeeClient

@@ -28,7 +28,7 @@ namespace JDS.OrgManager.Presentation.WebApi.Controllers
         public EmployeeController(IMediator mediator) => this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
 
         [HttpPost("[action]")]
-        public async Task<ActionResult<EmployeeViewModel>> AddOrUpdateEmployee([FromBody] EmployeeViewModel employee) => Ok(await mediator.Send(new AddOrUpdateEmployeeCommand { AspNetUsersId = GetAspNetUsersId(), Employee = employee }));
+        public async Task<ActionResult<AddOrUpdateEmployeeViewModel>> AddOrUpdateEmployee([FromBody] AddOrUpdateEmployeeViewModel employee) => Ok(await mediator.Send(new AddOrUpdateEmployeeCommand { AspNetUsersId = GetAspNetUsersId(), Employee = employee }));
 
         [HttpGet("[action]")]
         public async Task<ActionResult<EmployeeViewModel>> GetEmployee() => Ok(await mediator.Send(new GetEmployeeQuery() { AspNetUsersId = GetAspNetUsersId() }));
