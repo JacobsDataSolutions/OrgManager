@@ -40,49 +40,49 @@ Thank you for your interest, and happy coding...
 ## Screen Mockups
 
 ### Front Page
-![](images/Front-Page.png?raw=true)
+![](https://blob.jacobsdata.com/org-manager/Front-Page.png)
 
 ### Registration Main
-![](images/Registration-Main-Page.png?raw=true)
+![](https://blob.jacobsdata.com/org-manager/Registration-Main-Page.png)
 
 ### Employee Registration
-![](images/Employee-Registration.png?raw=true)
+![](https://blob.jacobsdata.com/org-manager/Employee-Registration.png)
 
 ### Employer Registration
-![](images/Employer-Registration.png?raw=true)
+![](https://blob.jacobsdata.com/org-manager/Employer-Registration.png)
 
 ### Registration Complete
-![](images/Registration-Complete.png?raw=true)
+![](https://blob.jacobsdata.com/org-manager/Registration-Complete.png)
 
 ### Add/Edit Customer Information
-![](images/Add-Edit-Customer-Information.png?raw=true)
+![](https://blob.jacobsdata.com/org-manager/Add-Edit-Customer-Information.png)
 
 ### Add/Update Tenants
-![](images/Customer-Add-Update-Tenants.png?raw=true)
+![](https://blob.jacobsdata.com/org-manager/Customer-Add-Update-Tenants.png)
 
 ### Add/Edit Employee Information
-![](images/Add-Edit-Employee-Information.png?raw=true)
+![](https://blob.jacobsdata.com/org-manager/Add-Edit-Employee-Information.png)
 
 ### Submit PTO
-![](images/Employee-Home-PTO-Subscreen.png?raw=true)
+![](https://blob.jacobsdata.com/org-manager/Employee-Home-PTO-Subscreen.png)
 
 ### Submit Org Feedback
-![](images/Employee-Home-Org-Feedback-Subscreen.png?raw=true)
+![](https://blob.jacobsdata.com/org-manager/Employee-Home-Org-Feedback-Subscreen.png)
 
 ### Upgrade/Downgrade/Cancel
-![](images/Upgrade-Downgrade-Cancel.png?raw=true)
+![](https://blob.jacobsdata.com/org-manager/Upgrade-Downgrade-Cancel.png)
 
 ### Help/Support
-![](images/Help-Support.png?raw=true)
+![](https://blob.jacobsdata.com/org-manager/Help-Support.png)
 
 ### Privacy Policy
-![](images/Privacy-Policy.png?raw=true)
+![](https://blob.jacobsdata.com/org-manager/Privacy-Policy.png)
 
 ### About
-![](images/About.png?raw=true)
+![](https://blob.jacobsdata.com/org-manager/About.png)
 
 ### Terms and Conditions
-![](images/Terms-and-Conditions.png?raw=true)
+![](https://blob.jacobsdata.com/org-manager/Terms-and-Conditions.png)
 
 ### Testimonials
-![](images/Testimonials.png?raw=true)
+![](https://blob.jacobsdata.com/org-manager/Testimonials.png)
