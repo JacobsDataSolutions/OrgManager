@@ -12,6 +12,7 @@ using JDS.OrgManager.Application.Abstractions.DbFacades;
 using JDS.OrgManager.Application.Abstractions.Mapping;
 using JDS.OrgManager.Application.Common.Employees;
 using JDS.OrgManager.Application.Common.TimeOff;
+using JDS.OrgManager.Domain.Common.Addresses;
 using JDS.OrgManager.Domain.HumanResources.Employees;
 using JDS.OrgManager.Domain.HumanResources.TimeOff;
 using MediatR;

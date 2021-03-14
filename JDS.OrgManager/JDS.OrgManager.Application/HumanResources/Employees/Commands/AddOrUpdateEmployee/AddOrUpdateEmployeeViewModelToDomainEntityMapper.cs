@@ -13,6 +13,7 @@ using JDS.OrgManager.Application.HumanResources.Employees;
 using JDS.OrgManager.Application.HumanResources.Employees.Commands.AddOrUpdateEmployee;
 using JDS.OrgManager.Domain.Common.Addresses;
 using JDS.OrgManager.Domain.Common.Finance;
+using JDS.OrgManager.Domain.Common.People;
 using JDS.OrgManager.Domain.HumanResources.Employees;
 using Mapster;
 using System;
@@ -27,6 +28,8 @@ namespace JDS.OrgManager.Application.Common.Mapping
 
         protected override TypeAdapterSetter<AddOrUpdateEmployeeViewModel, Employee> Configure(TypeAdapterSetter<AddOrUpdateEmployeeViewModel, Employee> typeAdapterSetter)
             => base.Configure(typeAdapterSetter)
-                .Map(dest => dest.HomeAddress, src => addressMapper.Map(src));
+                .Map(dest => dest.HomeAddress, src => addressMapper.Map(src))
+                .Map(dest => dest.SocialSecurityNumber, src => new SocialSecurityNumber(src.SocialSecurityNumber))
+            ;
     }
 }

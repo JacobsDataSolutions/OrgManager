@@ -33,15 +33,24 @@ namespace JDS.OrgManager.Application.UnitTests.Common.PaidTimeOffPolicies
         [Fact]
         public void Map_WorksAsExpected()
         {
-            var e = new PaidTimeOffPolicy { AllowsUnlimitedPto = true, EmployeeLevel = 6, IsDefaultForEmployeeLevel = true, MaxPtoHours = 55.0m, Name = "HELLO", PtoAccrualRate = 10.0M, Id = 67 };
-            var d = mapper.Map(e);
-            Assert.Equal(e.Id, d.Id);
-            Assert.Equal(e.AllowsUnlimitedPto, d.AllowsUnlimitedPto);
-            Assert.Equal(e.EmployeeLevel, d.EmployeeLevel);
-            Assert.Equal(e.IsDefaultForEmployeeLevel, d.IsDefaultForEmployeeLevel);
-            Assert.Equal(e.MaxPtoHours, d.MaxPtoHours);
-            Assert.Equal(e.Name, d.Name);
-            Assert.Equal(e.PtoAccrualRate, d.PtoAccrualRate);
+            var p = new PaidTimeOffPolicy
+            { 
+                AllowsUnlimitedPto = true,
+                EmployeeLevel = 6,
+                IsDefaultForEmployeeLevel = true,
+                MaxPtoHours = 55.0m,
+                Name = "HELLO",
+                PtoAccrualRate = 10.0M,
+                Id = 67
+            };
+            var d = mapper.Map(p);
+            Assert.Equal(p.Id, d.Id);
+            Assert.Equal(p.AllowsUnlimitedPto, d.AllowsUnlimitedPto);
+            Assert.Equal(p.EmployeeLevel, d.EmployeeLevel);
+            Assert.Equal(p.IsDefaultForEmployeeLevel, d.IsDefaultForEmployeeLevel);
+            Assert.Equal(p.MaxPtoHours, d.MaxPtoHours);
+            Assert.Equal(p.Name, d.Name);
+            Assert.Equal(p.PtoAccrualRate, d.PtoAccrualRate);
         }
     }
 }
