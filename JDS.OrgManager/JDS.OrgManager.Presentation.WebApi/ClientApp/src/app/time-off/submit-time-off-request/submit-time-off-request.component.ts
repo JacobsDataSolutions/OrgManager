@@ -7,12 +7,13 @@
 
 // Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
 // CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
-import { Component, OnInit, ChangeDetectionStrategy, Input, OnDestroy } from "@angular/core";
+import { Component, OnInit, ChangeDetectionStrategy, Input, OnDestroy, OnChanges, SimpleChanges } from "@angular/core";
 import {
     UserStatusViewModel,
     PaidTimeOffRequestViewModel,
     PaidTimeOffRequestValidationResult,
-    TimeOffClient
+    TimeOffClient,
+    ValidateRequestedPaidTimeOffHoursViewModel
     //SubmitNewTimeOffRequestViewModel,
     //TimeOffRequestValidationResult
 } from "../../shared/nswag";
@@ -22,7 +23,7 @@ import { Validators, FormBuilder, AsyncValidatorFn, AbstractControl } from "@ang
 import { ROUTE_ANIMATIONS_ELEMENTS, NotificationService } from "../../core/core.module";
 import { TenantService } from "../../tenants/tenant.service";
 import { Observable, of, Subject } from "rxjs";
-import { debounceTime, switchMap, take, takeUntil } from "rxjs/operators";
+import { debounceTime, map, switchMap, take, takeUntil } from "rxjs/operators";
 import { isEmptyInputValue } from "../../shared/functions";
 
 @Component({
@@ -31,22 +32,23 @@ import { isEmptyInputValue } from "../../shared/functions";
     styleUrls: ["./submit-time-off-request.component.scss"],
     changeDetection: ChangeDetectionStrategy.Default
 })
-export class SubmitTimeOffRequestComponent implements OnInit, OnDestroy {
+export class SubmitTimeOffRequestComponent implements OnInit, OnDestroy, OnChanges {
     routeAnimationsElements = ROUTE_ANIMATIONS_ELEMENTS;
     private ngUnsubscribe = new Subject();
 
     tenantId = 0;
     userStatus: UserStatusViewModel;
-    form = this.fb.group({
-        timeOffTypeId: [0, [Validators.required]],
-        startDate: [undefined, [Validators.required]],
-        endDate: [undefined, [Validators.required]],
-        forEmployeeId: [undefined],
-        hoursRequested: [0],
-        result: PaidTimeOffRequestValidationResult.OK,
-        status: [undefined],
-        tenantId: [0]
-    });
+    form = this.fb.group(
+        {
+            startDate: [undefined, [Validators.required]],
+            endDate: [undefined, [Validators.required]],
+            forEmployeeId: [undefined, []],
+            hoursRequested: [0, []],
+            result: [PaidTimeOffRequestValidationResult.OK, []],
+            tenantId: [0, []]
+        },
+        { asyncValidator: requestedPaidTimeOffHoursValidator(this.timeOffClient, this.ngUnsubscribe) }
+    );
 
     constructor(
         private tenantService: TenantService,
@@ -56,6 +58,8 @@ export class SubmitTimeOffRequestComponent implements OnInit, OnDestroy {
         private route: ActivatedRoute
     ) {}
 
+    ngOnChanges(changes: SimpleChanges): void {}
+
     ngOnDestroy(): void {
         this.ngUnsubscribe.next();
         this.ngUnsubscribe.complete();
@@ -63,7 +67,7 @@ export class SubmitTimeOffRequestComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.tenantService
-            .getCachedTenantIdFromSlug(this.route.snapshot.paramMap.get("slug"))
+            .getCachedTenantIdFromSlug(this.route.snapshot.paramMap.get("tenantSlug"))
             .pipe(takeUntil(this.ngUnsubscribe))
             .subscribe((tenantId) => {
                 this.tenantId = tenantId;
@@ -82,25 +86,56 @@ export class SubmitTimeOffRequestComponent implements OnInit, OnDestroy {
         //    }
         //});
     }
+}
 
-    //requestedPaidTimeOffHoursValidator(): AsyncValidatorFn {
-    //    return (control: AbstractControl): Promise<{ [key: string]: any } | null> | Observable<{ [key: string]: any } | null> => {
-    //        if (isEmptyInputValue(control.value)) {
-    //            return of(null);
-    //        } else if (this.editMode && (control.value as string).toLowerCase() === this.initialFileNamePattern.toLowerCase()) {
-    //            return of(null);
-    //        } else {
-    //            return control.valueChanges.pipe(
-    //                debounceTime(500),
-    //                take(1),
-    //                switchMap((_) =>
-    //                    this.marketReportsClient.getFileNamePatternExists(control.value).pipe(
-    //                        map((name) => (name ? { exists: { value: control.value } } : null)),
-    //                        takeUntil(this.ngUnsubscribe)
-    //                    )
-    //                )
-    //            );
-    //        }
-    //    };
-    //}
+export function requestedPaidTimeOffHoursValidator(timeOffClient: TimeOffClient, ngUnsubscribe: Subject<unknown>): AsyncValidatorFn {
+    return (control: AbstractControl): Promise<{ [key: string]: any } | null> | Observable<{ [key: string]: any } | null> => {
+        if (isEmptyInputValue(control.value)) {
+            return of(null);
+        } else {
+            return control.valueChanges.pipe(
+                debounceTime(500),
+                switchMap((_) => {
+                    const viewModel = new ValidateRequestedPaidTimeOffHoursViewModel({
+                        startDate: control.get("startDate").value as Date,
+                        endDate: control.get("endDate").value as Date,
+                        hoursRequested: control.get("hoursRequested").value as number,
+                        forEmployeeId: null,
+                        tenantId: control.get("tenantId").value as number
+                    });
+                    if (viewModel.hoursRequested && viewModel.startDate && viewModel.endDate) {
+                        return timeOffClient.validateRequestedPaidTimeOffHours(viewModel).pipe(
+                            map((resp: PaidTimeOffRequestValidationResult) => {
+                                let msg = "";
+                                switch (resp) {
+                                    case PaidTimeOffRequestValidationResult.NotEnoughHours:
+                                        msg = "Not enough time accrued.";
+                                        break;
+                                    case PaidTimeOffRequestValidationResult.OverlapsWithExisting:
+                                        msg = "Overlaps with an existing PTO request.";
+                                        break;
+                                    case PaidTimeOffRequestValidationResult.InThePast:
+                                        msg = "Cannot be in the past.";
+                                        break;
+                                    case PaidTimeOffRequestValidationResult.TooFarInTheFuture:
+                                        msg = "Too far into the future.";
+                                        break;
+                                    case PaidTimeOffRequestValidationResult.StartDateAfterEndDate:
+                                        msg = "Start date must be before end date.";
+                                        break;
+                                    case PaidTimeOffRequestValidationResult.OK:
+                                        return null;
+                                }
+                                return {
+                                    invalid: { value: msg }
+                                };
+                            }),
+                            takeUntil(ngUnsubscribe)
+                        );
+                    }
+                    return of(null);
+                })
+            );
+        }
+    };
 }

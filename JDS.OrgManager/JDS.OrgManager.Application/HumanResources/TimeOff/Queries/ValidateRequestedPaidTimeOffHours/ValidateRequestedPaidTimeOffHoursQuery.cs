@@ -19,6 +19,7 @@ namespace JDS.OrgManager.Application.HumanResources.TimeOff.Queries.ValidateRequ
 {
     public class ValidateRequestedPaidTimeOffHoursQuery : IRequest<PaidTimeOffRequestValidationResult>
     {
+        public int AspNetUsersId { get; set; }
         public ValidateRequestedPaidTimeOffHoursViewModel ValidationRequest { get; set; } = default!;
 
         public class ValidateRequestedPaidTimeOffHoursQueryHandler : IRequestHandler<ValidateRequestedPaidTimeOffHoursQuery, PaidTimeOffRequestValidationResult>
@@ -41,9 +42,12 @@ namespace JDS.OrgManager.Application.HumanResources.TimeOff.Queries.ValidateRequ
 
             public async Task<PaidTimeOffRequestValidationResult> Handle(ValidateRequestedPaidTimeOffHoursQuery request, CancellationToken cancellationToken)
             {
-                var tentativeRequest = mapper.Map(request.ValidationRequest);
+                var viewModel = request.ValidationRequest;
+                var tentativeRequest = mapper.Map(viewModel);
                 var today = DateTime.Today;
+                var parms = new { request.AspNetUsersId, viewModel.EndDate, viewModel.StartDate, viewModel.ForEmployeeId, viewModel.HoursRequested, viewModel.TenantId };
 
+                // TODO: add domain validation/authorization if submitting on behalf of another employee (i.e. manager is submitting).
                 var paidTimeOffPolicy = await facade.QueryFirstOrDefaultAsync<PaidTimeOffPolicy>(@"
                     SELECT TOP 1 p.[Id]
                           ,p.[AllowsUnlimitedPto]
@@ -54,8 +58,8 @@ namespace JDS.OrgManager.Application.HumanResources.TimeOff.Queries.ValidateRequ
                           ,p.[PtoAccrualRate]
                       FROM PaidTimeOffPolicies p WITH(NOLOCK)
                       JOIN Employees e WITH(NOLOCK) ON e.PaidTimeOffPolicyId = p.Id AND e.TenantId = p.TenantId
-                      WHERE e.Id = @ForEmployeeId AND e.TenantId = @TenantId
-                ", request.ValidationRequest, cancellationToken: cancellationToken);
+                      WHERE ((@ForEmployeeId IS NULL AND e.AspNetUsersId = @AspNetUsersId) OR e.Id = @ForEmployeeId) AND e.TenantId = @TenantId
+                ", parms, cancellationToken: cancellationToken);
                 if (paidTimeOffPolicy == null)
                 {
                     throw new NotFoundException("PTO policy not found or invalid.");

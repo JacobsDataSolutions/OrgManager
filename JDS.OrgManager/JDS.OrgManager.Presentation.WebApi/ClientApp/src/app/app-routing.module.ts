@@ -20,6 +20,7 @@ import { ManageTenantsComponent } from "./customers/manage-tenants/manage-tenant
 import { CustomerHomeComponent } from "./customers/customer-home/customer-home.component";
 import { EmployeeHomeComponent } from "./employees/employee-home/employee-home.component";
 import { AddOrUpdateEmployeeComponent } from "./employees/add-or-update-employee/add-or-update-employee.component";
+import { SubmitTimeOffRequestComponent } from "./time-off/submit-time-off-request/submit-time-off-request.component";
 
 const routes: Routes = [
     {
@@ -71,6 +72,11 @@ const routes: Routes = [
     {
         path: "t/:tenantSlug/employee/update",
         component: AddOrUpdateEmployeeComponent,
+        canActivate: [AuthorizeGuard]
+    },
+    {
+        path: "t/:tenantSlug/employee/submit-pto-request",
+        component: SubmitTimeOffRequestComponent,
         canActivate: [AuthorizeGuard]
     }
 ];

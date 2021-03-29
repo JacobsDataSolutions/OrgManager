@@ -20,13 +20,13 @@ import { RouterModule } from "@angular/router";
 import { EmployeeRegisteredComponent } from "./employee-registered/employee-registered.component";
 import { CoreModule } from "../core/core.module";
 import { UnauthorizedComponent } from "./unauthorized/unauthorized.component";
-import { UserClient } from "../shared/nswag";
+import { UserClient, TestClient } from "../shared/nswag";
 
 @NgModule({
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     declarations: [HomeComponent, LetsGetStartedComponent, EmployeeRegisteredComponent, UnauthorizedComponent],
     imports: [RouterModule, CoreModule, CommonModule, SharedModule],
     exports: [],
-    providers: [UserClient]
+    providers: [UserClient, TestClient]
 })
 export class HomeModule {}

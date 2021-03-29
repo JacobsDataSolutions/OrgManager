@@ -16,7 +16,7 @@ namespace JDS.OrgManager.Application.HumanResources.TimeOff.Queries.ValidateRequ
     {
         public DateTime EndDate { get; set; }
 
-        public int ForEmployeeId { get; set; }
+        public int? ForEmployeeId { get; set; }
 
         public int HoursRequested { get; set; }
 

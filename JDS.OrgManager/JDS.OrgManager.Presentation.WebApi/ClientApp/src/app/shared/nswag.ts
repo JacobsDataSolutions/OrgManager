@@ -2059,7 +2059,7 @@ export enum PaidTimeOffRequestValidationResult {
 
 export class ValidateRequestedPaidTimeOffHoursViewModel implements IValidateRequestedPaidTimeOffHoursViewModel {
     endDate!: Date;
-    forEmployeeId!: number;
+    forEmployeeId?: number | undefined;
     hoursRequested!: number;
     startDate!: Date;
     tenantId!: number;
@@ -2103,7 +2103,7 @@ export class ValidateRequestedPaidTimeOffHoursViewModel implements IValidateRequ
 
 export interface IValidateRequestedPaidTimeOffHoursViewModel {
     endDate: Date;
-    forEmployeeId: number;
+    forEmployeeId?: number | undefined;
     hoursRequested: number;
     startDate: Date;
     tenantId: number;

@@ -48,6 +48,6 @@ namespace JDS.OrgManager.Presentation.WebApi.Controllers
         public async Task<ActionResult<SubmitNewPaidTimeOffRequestViewModel>> SubmitNewPaidTimeOffRequest([FromBody] SubmitNewPaidTimeOffRequestViewModel request) => Ok(await mediator.Send(new SubmitNewPaidTimeOffRequestCommand { AspNetUsersId = GetAspNetUsersId(), PaidTimeOffRequest = request }));
 
         [HttpPost("[action]")]
-        public async Task<ActionResult<PaidTimeOffRequestValidationResult>> ValidateRequestedPaidTimeOffHours([FromBody] ValidateRequestedPaidTimeOffHoursViewModel request) => Ok(await mediator.Send(new ValidateRequestedPaidTimeOffHoursQuery { ValidationRequest = request }));
+        public async Task<ActionResult<PaidTimeOffRequestValidationResult>> ValidateRequestedPaidTimeOffHours([FromBody] ValidateRequestedPaidTimeOffHoursViewModel request) => Ok(await mediator.Send(new ValidateRequestedPaidTimeOffHoursQuery { AspNetUsersId = GetAspNetUsersId(), ValidationRequest = request }));
     }
 }
