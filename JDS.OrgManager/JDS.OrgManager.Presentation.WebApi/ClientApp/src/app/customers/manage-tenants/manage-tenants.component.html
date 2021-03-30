@@ -6,7 +6,7 @@
     </div>
     <div class="row">
         <div class="col-md-6">
-            <h2 class="text-center">Add/Update Tenants</h2>
+            <h4 class="text-left">Add/Update Tenants</h4>
             <mat-card *ngFor="let tenant of tenants" [ngClass]="routeAnimationsElements"
                       (click)=select(tenant)>
                 <b>{{tenant.name}}</b><br />
@@ -21,8 +21,8 @@
             </button>
         </div>
         <div class="col-md-6">
-            <span class="d-flex justify-content-between">
-                <h2>Edit tenant details</h2>
+            <div class="d-flex justify-content-between">
+                <h4 class="text-left">Edit tenant details</h4>
                 <span class="d-flex justify-content-end">
                     <span *ngIf="selectedTenant">
                         <button mat-icon-button color="accent" *ngIf="!(isEditing || isDeleting)">
@@ -42,7 +42,7 @@
                         </button>
                     </span>
                 </span>
-            </span>
+            </div>
 
             <form [formGroup]="form" [style.display]="isEditing ? 'block' : 'none'"
                   [ngClass]="routeAnimationsElements" #formDirective="ngForm">

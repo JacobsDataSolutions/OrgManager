@@ -95,7 +95,7 @@ namespace JDS.OrgManager.Utils
                 Salary = random.Next(50000) * level + 20000.0M,
                 SocialSecurityNumber = GenerateFakeSSN(),
                 PaidTimeOffPolicyId = paidTimeOffPolicies.First(p => p.EmployeeLevel == level && p.TenantId == tenantId).Id,
-                PtoHoursRemaining = 0.0m
+                PtoHoursRemaining = random.Next(10) + 10
             };
         }
 

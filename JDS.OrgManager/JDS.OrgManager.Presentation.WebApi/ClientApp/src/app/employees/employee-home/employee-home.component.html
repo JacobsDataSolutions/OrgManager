@@ -9,12 +9,6 @@
             <p><a (click)="manageEmployeesLinkClick()">Click here</a> to manage employees.</p>
         </div>
     </div>
-    <div class="row" *ngIf="paidTimeOffRequests$ | async as paidTimeOffRequests">
-        <div class="col-md-12" *ngIf="!paidTimeOffRequests?.length">
-            You have no current PTO requests.
-        </div>
-        <div class="col-md-12" *ngIf="paidTimeOffRequests?.length">
-            <om-employee-paid-time-off-requests [paidTimeOffRequests]="paidTimeOffRequests$ | async"></om-employee-paid-time-off-requests>
-        </div>
-    </div>
+    <om-employee-paid-time-off-requests [paidTimeOffRequests]="paidTimeOffRequests$ | async"></om-employee-paid-time-off-requests>
+    <om-submit-time-off-request (ptoRequestsUpdated)="onPtoRequestsUpdated()"></om-submit-time-off-request>
 </div>

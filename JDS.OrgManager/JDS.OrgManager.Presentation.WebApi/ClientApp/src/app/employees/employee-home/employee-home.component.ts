@@ -12,7 +12,7 @@ import { EmployeeClient, PaidTimeOffRequestViewModel, TenantClient, TenantViewMo
 import { ROUTE_ANIMATIONS_ELEMENTS } from "../../core/core.module";
 import { ActivatedRoute, Router } from "@angular/router";
 import { TenantService } from "../../tenants/tenant.service";
-import { forkJoin, Observable, Subject } from "rxjs";
+import { BehaviorSubject, forkJoin, Observable, Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
 @Component({
@@ -27,6 +27,7 @@ export class EmployeeHomeComponent implements OnInit, OnDestroy {
     routeAnimationsElements = ROUTE_ANIMATIONS_ELEMENTS;
     userStatus: UserStatusViewModel = {} as UserStatusViewModel;
     tenant: TenantViewModel = {} as TenantViewModel;
+    /*paidTimeOffRequests$ = new BehaviorSubject<PaidTimeOffRequestViewModel[]>();*/
     paidTimeOffRequests$: Observable<PaidTimeOffRequestViewModel[]>;
     tenantId = 0;
 
@@ -61,5 +62,9 @@ export class EmployeeHomeComponent implements OnInit, OnDestroy {
 
     manageEmployeesLinkClick() {
         this.router.navigate([this.tenantService.getTenantLink("manage-employees")]);
+    }
+
+    onPtoRequestsUpdated() {
+        this.paidTimeOffRequests$ = this.timeOffClient.getPaidTimeOffRequestsForEmployee(null, this.tenantId);
     }
 }

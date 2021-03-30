@@ -73,11 +73,6 @@ const routes: Routes = [
         path: "t/:tenantSlug/employee/update",
         component: AddOrUpdateEmployeeComponent,
         canActivate: [AuthorizeGuard]
-    },
-    {
-        path: "t/:tenantSlug/employee/submit-pto-request",
-        component: SubmitTimeOffRequestComponent,
-        canActivate: [AuthorizeGuard]
     }
 ];
 

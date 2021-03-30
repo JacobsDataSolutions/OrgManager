@@ -41,17 +41,17 @@ namespace JDS.OrgManager.Domain.HumanResources.TimeOff
                 (req.ApprovalStatus == PaidTimeOffRequestApprovalStatus.Approved || req.ApprovalStatus == PaidTimeOffRequestApprovalStatus.Submitted)
                 select req).ToList();
 
-            var availableHours = (tentativeRequest.StartDate.Month - today.Month) * paidTimeOffPolicy.PtoAccrualRate - requestsForCurrentYear.Sum(r => r.HoursRequested);
+            var availableHours = tentativeRequest.StartDate.Month * paidTimeOffPolicy.PtoAccrualRate - requestsForCurrentYear.Sum(r => r.HoursRequested);
 
             var validationResult =
                 tentativeRequest switch
                 {
-                    PaidTimeOffRequest req when req.StartDate > req.EndDate => PaidTimeOffRequestValidationResult.StartDateAfterEndDate,
-                    PaidTimeOffRequest req when req.StartDate < today => PaidTimeOffRequestValidationResult.InThePast,
+                    PaidTimeOffRequest req when req.StartDate.Date > req.EndDate.Date => PaidTimeOffRequestValidationResult.StartDateAfterEndDate,
+                    PaidTimeOffRequest req when req.StartDate.Date < today => PaidTimeOffRequestValidationResult.InThePast,
                     PaidTimeOffRequest req when requestsForCurrentYear.Any(r =>
-                        (r.StartDate >= req.StartDate && r.StartDate <= req.EndDate) ||
-                        (r.EndDate >= req.StartDate && r.EndDate <= req.EndDate) ||
-                        (req.StartDate >= r.StartDate && req.EndDate <= r.EndDate))
+                        (r.StartDate.Date >= req.StartDate.Date && r.StartDate.Date <= req.EndDate.Date) ||
+                        (r.EndDate.Date >= req.StartDate.Date && r.EndDate.Date <= req.EndDate.Date) ||
+                        (req.StartDate.Date >= r.StartDate.Date && req.EndDate.Date <= r.EndDate.Date))
                         => PaidTimeOffRequestValidationResult.OverlapsWithExisting,
                     PaidTimeOffRequest req when req.StartDate.Year > today.Year => PaidTimeOffRequestValidationResult.TooFarInTheFuture,
                     PaidTimeOffRequest req when req.HoursRequested > availableHours => PaidTimeOffRequestValidationResult.NotEnoughHours,

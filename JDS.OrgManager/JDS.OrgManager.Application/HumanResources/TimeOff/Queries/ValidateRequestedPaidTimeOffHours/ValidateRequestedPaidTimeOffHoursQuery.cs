@@ -65,17 +65,18 @@ namespace JDS.OrgManager.Application.HumanResources.TimeOff.Queries.ValidateRequ
                     throw new NotFoundException("PTO policy not found or invalid.");
                 }
                 var existingRequests = await facade.QueryAsync<PaidTimeOffRequest>(@"
-                    SELECT [Id]
-                          ,[ApprovalStatus]
-                          ,[EndDate]
-                          ,[ForEmployeeId]
-                          ,[HoursRequested]
-                          ,[StartDate]
-                          ,[Paid]
-                          ,[SubmittedById]
-                      FROM [PaidTimeOffRequests] WITH(NOLOCK)
-                      WHERE @ForEmployeeId = @ForEmployeeId AND TenantId = @TenantId
-                ", request.ValidationRequest, cancellationToken: cancellationToken);
+                    SELECT p.[Id]
+                          ,p.[ApprovalStatus]
+                          ,p.[EndDate]
+                          ,p.[ForEmployeeId]
+                          ,p.[HoursRequested]
+                          ,p.[StartDate]
+                          ,p.[Paid]
+                          ,p.[SubmittedById]
+                      FROM [PaidTimeOffRequests] p WITH(NOLOCK)
+                      JOIN Employees e WITH(NOLOCK) ON e.Id = p.ForEmployeeId AND e.TenantId = p.TenantId
+                      WHERE ((@ForEmployeeId IS NULL AND e.AspNetUsersId = @AspNetUsersId) OR e.Id = @ForEmployeeId) AND e.TenantId = @TenantId
+                ", parms, cancellationToken: cancellationToken);
 
                 return paidTimeOffRequestService.ValidatePaidTimeOffRequest(tentativeRequest, existingRequests, paidTimeOffPolicy, today);
             }
