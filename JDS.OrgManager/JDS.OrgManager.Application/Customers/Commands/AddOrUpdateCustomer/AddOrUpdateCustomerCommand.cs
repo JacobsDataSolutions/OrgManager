@@ -31,16 +31,12 @@ namespace JDS.OrgManager.Application.Customers.Commands.AddOrUpdateCustomer
 
             private readonly IViewModelToDbEntityMapper<CustomerViewModel, CustomerEntity> customerMapper;
 
-            private readonly IApplicationWriteDbFacade facade;
-
             public AddOrUpdateCustomerCommandHandler(
                 IApplicationWriteDbContext context,
-                IApplicationWriteDbFacade facade,
                 IViewModelToDbEntityMapper<CustomerViewModel, CustomerEntity> customerMapper
                 )
             {
                 this.context = context ?? throw new ArgumentNullException(nameof(context));
-                this.facade = facade ?? throw new ArgumentNullException(nameof(facade));
                 this.customerMapper = customerMapper ?? throw new ArgumentNullException(nameof(customerMapper));
             }
 
