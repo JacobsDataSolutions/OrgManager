@@ -19,4 +19,8 @@
     <ProjectReference Include="..\JDS.OrgManager.Domain\JDS.OrgManager.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Update="FSharp.Core" Version="5.0.1" />
+  </ItemGroup>
+
 </Project>
