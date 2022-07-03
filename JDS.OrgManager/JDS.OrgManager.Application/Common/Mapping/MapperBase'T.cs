@@ -27,7 +27,11 @@ namespace JDS.OrgManager.Application.Common.Mapping
             PerformAdditionalInitialization();
         }
 
-        public virtual TDestination Map(TSource source) => source.Adapt<TDestination>(Config);
+        //This overload of the Map() method respects polymorphic mapping...
+        public virtual TDestination Map(TSource source) => source.Adapt<TSource, TDestination>(Config);
+
+        //This one does not.
+        //public virtual TDestination Map(TSource source) => source.Adapt<TDestination>(Config);
 
         public virtual void Map(TSource source, TDestination destination) => source.Adapt(destination, typeof(TSource), typeof(TDestination), Config);
 
